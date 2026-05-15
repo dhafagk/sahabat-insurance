@@ -1,16 +1,11 @@
 // app/layout.tsx
 import type { Metadata } from 'next'
-import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google'
+import { Open_Sans } from 'next/font/google'
 import './globals.css'
 
-const fraunces = Fraunces({
+const openSans = Open_Sans({
   subsets: ['latin'],
-  variable: '--font-fraunces-var',
-})
-
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-jakarta-var',
+  variable: '--font-open-sans-var',
 })
 
 export const metadata: Metadata = {
@@ -27,7 +22,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${fraunces.variable} ${jakarta.variable} h-full antialiased`}
+      className={`${openSans.variable} h-full antialiased`}
     >
       <body className="min-h-full">{children}</body>
     </html>

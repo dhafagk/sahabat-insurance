@@ -50,7 +50,7 @@ export default function CtaBanner() {
           />
 
           <div className="relative z-10 flex flex-col items-center gap-6">
-            <h2 className="font-fraunces text-3xl sm:text-4xl lg:text-5xl font-bold text-white max-w-2xl leading-tight">
+            <h2 className="font-open-sans text-3xl sm:text-4xl lg:text-5xl font-bold text-white max-w-2xl leading-tight">
               Protected by a friend you can trust
             </h2>
             <p className="text-white/70 text-lg">

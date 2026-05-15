@@ -82,7 +82,7 @@ export default function WhyChooseUs() {
           <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-accent/20 text-accent text-sm font-semibold w-fit">
             Why Choose Us
           </span>
-          <h2 className="font-fraunces text-3xl sm:text-4xl font-bold text-white leading-tight">
+          <h2 className="font-open-sans text-3xl sm:text-4xl font-bold text-white leading-tight">
             Why Indonesians Trust Sahabat
           </h2>
           <p className="text-slate-400 leading-relaxed max-w-md">

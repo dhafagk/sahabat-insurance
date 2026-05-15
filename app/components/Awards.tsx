@@ -26,7 +26,7 @@ export default function Awards() {
           <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-4">
             Recognition
           </span>
-          <h2 className="font-fraunces text-3xl sm:text-4xl font-bold text-text-primary">
+          <h2 className="font-open-sans text-3xl sm:text-4xl font-bold text-text-primary">
             Awards &amp; Recognition
           </h2>
         </div>

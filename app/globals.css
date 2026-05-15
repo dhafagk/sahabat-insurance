@@ -10,8 +10,7 @@
   --color-text-muted: #64748b;
   --color-success: #16a34a;
   --color-dark: #0f172a;
-  --font-fraunces: var(--font-fraunces-var);
-  --font-jakarta: var(--font-jakarta-var);
+  --font-open-sans: var(--font-open-sans-var);
 }
 
 html {
@@ -21,7 +20,7 @@ html {
 body {
   background-color: #f8f9fc;
   color: #0f172a;
-  font-family: var(--font-jakarta-var), Arial, sans-serif;
+  font-family: var(--font-open-sans-var), Arial, sans-serif;
 }
 
 @keyframes float {
