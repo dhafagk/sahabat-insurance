@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem *)",
+      "PowerShell(New-Item *)",
+      "Bash(node -e \"const lr = require\\('lucide-react'\\); console.log\\('ExternalLink' in lr, 'Globe' in lr, 'Link' in lr, 'Share2' in lr\\)\")",
+      "Bash(npx tsc *)",
+      "Bash(npm install *)",
+      "Skill(superpowers:writing-plans)",
+      "Bash(node *)",
+      "Skill(superpowers:subagent-driven-development)"
+    ]
+  }
+}
