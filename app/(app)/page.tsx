@@ -8,7 +8,7 @@ import LatestNews from "./components/LatestNews";
 import CtaBanner from "./components/CtaBanner";
 import PromoStrip from "./components/PromoStrip";
 import Footer from "./components/Footer";
-import type { FooterData } from "./components/Footer";
+// import type { FooterData } from "./components/Footer";
 import type { HeroData } from "./components/Hero";
 import type {
   SectionMeta as ProductsSectionMeta,
@@ -39,26 +39,24 @@ export default async function Home() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const p = payload as any;
 
-  const [rawLanding, productsResult, newsResult, rawFooter] = await Promise.all(
-    [
-      p.findGlobal({ slug: "landing-page" }) as Promise<unknown>,
-      p.find({ collection: "products", sort: "order", limit: 100 }) as Promise<{
-        docs: unknown[];
-      }>,
-      p.find({
-        collection: "news",
-        where: { status: { equals: "published" } },
-        sort: "-date",
-        limit: 4,
-      }) as Promise<{ docs: unknown[] }>,
-      p.findGlobal({ slug: "footer", depth: 1 }) as Promise<unknown>,
-    ],
-  );
+  const [rawLanding, productsResult, newsResult] = await Promise.all([
+    p.findGlobal({ slug: "landing-page" }) as Promise<unknown>,
+    p.find({ collection: "products", sort: "order", limit: 100 }) as Promise<{
+      docs: unknown[];
+    }>,
+    p.find({
+      collection: "news",
+      where: { status: { equals: "published" } },
+      sort: "-date",
+      limit: 4,
+    }) as Promise<{ docs: unknown[] }>,
+    p.findGlobal({ slug: "footer", depth: 1 }) as Promise<unknown>,
+  ]);
 
   const landingPage = rawLanding as unknown as LandingPageData;
   const products = productsResult.docs as unknown as ProductItem[];
   const news = newsResult.docs as unknown as NewsItem[];
-  const footer = rawFooter as unknown as FooterData;
+  // const footer = rawFooter as unknown as FooterData;
 
   return (
     <>
@@ -74,7 +72,7 @@ export default async function Home() {
         <LatestNews news={news} sectionMeta={landingPage.newsSection} />
         <CtaBanner data={landingPage.ctaBanner} />
       </main>
-      <Footer data={footer} />
+      <Footer />
     </>
   );
 }
