@@ -142,23 +142,6 @@ export default async function ManajemenPage() {
             "linear-gradient(135deg, #0F172A 0%, #21408f 60%, #1E293B 100%)",
         }}
       >
-        <div
-          className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none opacity-10"
-          style={{
-            background: "radial-gradient(circle, #6366F1 0%, transparent 70%)",
-            transform: "translate(30%, -30%)",
-          }}
-          aria-hidden="true"
-        />
-        <div
-          className="absolute bottom-0 left-0 w-72 h-72 rounded-full pointer-events-none opacity-10"
-          style={{
-            background: "radial-gradient(circle, #06B6D4 0%, transparent 70%)",
-            transform: "translate(-30%, 30%)",
-          }}
-          aria-hidden="true"
-        />
-
         <div className="relative max-w-7xl mx-auto px-6">
           <nav
             className="flex items-center gap-1.5 text-xs text-white/50 mb-6"

@@ -249,7 +249,13 @@ export default async function PageDetail({ params }: PageProps) {
       <>
         <Navbar />
 
-        <div className="bg-navy pt-24 pb-16">
+        <div
+          className="relative pt-28 pb-20 overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(135deg, #0F172A 0%, #21408f 60%, #1E293B 100%)",
+          }}
+        >
           <div className="max-w-7xl mx-auto px-6">
             <nav
               className="flex items-center gap-1.5 text-xs text-white/50 mb-6"
@@ -262,9 +268,6 @@ export default async function PageDetail({ params }: PageProps) {
               <span className="text-white/80">{tabelDoc.title}</span>
             </nav>
 
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-accent/20 text-accent text-sm font-semibold mb-4">
-              Informasi Produk & Layanan
-            </span>
             <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-3">
               {tabelDoc.title}
             </h1>
@@ -316,7 +319,13 @@ export default async function PageDetail({ params }: PageProps) {
       <>
         <Navbar />
 
-        <div className="bg-navy pt-24 pb-16">
+        <div
+          className="relative pt-28 pb-20 overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(135deg, #0F172A 0%, #21408f 60%, #1E293B 100%)",
+          }}
+        >
           <div className="max-w-7xl mx-auto px-6">
             <nav
               className="flex items-center gap-1.5 text-xs text-white/50 mb-6"
