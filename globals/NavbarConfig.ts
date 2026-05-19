@@ -20,19 +20,28 @@ export const NavbarConfig: GlobalConfig = {
           required: true,
         },
         {
-          name: "categories",
+          name: "dropdownItems",
           type: "array",
-          label: "Dropdown Categories",
+          label: "Dropdown Items",
           fields: [
             {
-              name: "name",
+              name: "title",
               type: "text",
               required: true,
             },
             {
-              name: "items",
+              name: "description",
+              type: "text",
+            },
+            {
+              name: "href",
+              type: "text",
+              required: true,
+            },
+            {
+              name: "subItems",
               type: "array",
-              label: "Level 2 Items",
+              label: "Sub-items",
               fields: [
                 {
                   name: "title",
@@ -40,30 +49,9 @@ export const NavbarConfig: GlobalConfig = {
                   required: true,
                 },
                 {
-                  name: "description",
-                  type: "text",
-                },
-                {
                   name: "href",
                   type: "text",
                   required: true,
-                },
-                {
-                  name: "subItems",
-                  type: "array",
-                  label: "Level 3 Sub-items",
-                  fields: [
-                    {
-                      name: "title",
-                      type: "text",
-                      required: true,
-                    },
-                    {
-                      name: "href",
-                      type: "text",
-                      required: true,
-                    },
-                  ],
                 },
               ],
             },

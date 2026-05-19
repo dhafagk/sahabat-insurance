@@ -10,16 +10,10 @@ export interface NavItem {
   subItems?: NavSubItem[];
 }
 
-export interface NavCategory {
-  name: string;
-  id: string;
-  items: NavItem[];
-}
-
 export interface DesktopNavLink {
   href: string;
   label: string;
-  categories?: NavCategory[];
+  dropdownItems?: NavItem[];
 }
 
 export interface MobileNavItem {
@@ -28,12 +22,12 @@ export interface MobileNavItem {
   subItems?: { href: string; label: string }[];
 }
 
-export interface MobileCategory {
+export interface MobileSection {
   name: string;
   items: MobileNavItem[];
 }
 
 export interface NavbarData {
   desktop: DesktopNavLink[];
-  mobile: MobileCategory[];
+  mobile: MobileSection[];
 }

@@ -65,18 +65,15 @@ export default function NavbarClient({ data }: Props) {
         <NavigationMenu className="max-md:hidden" delayDuration={0}>
           <NavigationMenuList>
             {data.desktop.map((link, index) => {
-              if (link.categories && link.categories.length > 0) {
+              if (link.dropdownItems && link.dropdownItems.length > 0) {
                 return (
-                  <NavigationMenuItem key={index}>
+                  <NavigationMenuItem key={index} className="relative">
                     <NavigationMenuTrigger className="h-9 rounded-none px-3 py-1.5 font-medium text-text-primary hover:text-navy border-b-2 border-transparent hover:border-navy hover:bg-transparent transition-all bg-transparent data-[state=open]:border-navy data-[state=open]:bg-transparent data-[state=open]:text-navy">
                       {link.label}
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent className="z-50 overflow-hidden">
-                      <div className="h-1 w-full bg-gradient-to-r from-navy via-navy/80 to-blue-400" />
+                    <NavigationMenuContent className="z-50">
                       <div className="p-3">
-                        {link.categories.map((category) => (
-                          <CategoryItems key={category.id} items={category.items} />
-                        ))}
+                        <CategoryItems items={link.dropdownItems} />
                       </div>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
@@ -118,46 +115,48 @@ export default function NavbarClient({ data }: Props) {
 }
 
 function CategoryItems({ items }: { items: NavItem[] }) {
-  const hasAnySubItems = items.some((item) => item.subItems && item.subItems.length > 0);
-  const defaultActive = items.find((item) => item.subItems && item.subItems.length > 0) ?? null;
-  const [activeItem, setActiveItem] = React.useState<NavItem | null>(defaultActive);
+  const hasAnySubItems = items.some(
+    (item) => item.subItems && item.subItems.length > 0,
+  );
+  const [activeItem, setActiveItem] = React.useState<NavItem | null>(null);
 
   if (!hasAnySubItems) {
     return (
       <ul className="grid gap-0.5">
         {items.map((item) => (
-          <SimpleListItem key={item.title} title={item.title} href={item.href} />
+          <SimpleListItem
+            key={item.title}
+            title={item.title}
+            href={item.href}
+          />
         ))}
       </ul>
     );
   }
 
   return (
-    <div className="flex">
+    <div className="flex items-start" onMouseLeave={() => setActiveItem(null)}>
       {/* Level 2 */}
-      <ul className="grid gap-0.5 min-w-[200px]">
+      <ul className="grid gap-0.5 w-max">
         {items.map((item) => (
           <li key={item.title}>
             <NavigationMenuLink asChild>
               <Link
                 href={item.href}
-                className={cn(
-                  "group flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all",
-                  activeItem?.title === item.title
-                    ? "bg-slate-50 text-navy"
-                    : "text-text-primary hover:bg-slate-50 hover:text-navy",
-                )}
+                className="group/item flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all text-text-primary hover:bg-slate-50 hover:text-navy"
                 onMouseEnter={() => {
-                  if (item.subItems && item.subItems.length > 0) setActiveItem(item);
+                  setActiveItem(
+                    item.subItems && item.subItems.length > 0 ? item : null,
+                  );
                 }}
               >
                 <span className="flex-1 text-sm font-semibold leading-snug">
                   {item.title}
                 </span>
                 {item.subItems && item.subItems.length > 0 ? (
-                  <ChevronRight className="size-3.5 shrink-0 text-text-muted" />
+                  <ChevronRight className="size-3.5 shrink-0 text-text-muted opacity-0 group-hover/item:opacity-100 transition-all" />
                 ) : (
-                  <ArrowRight className="size-3.5 shrink-0 text-text-muted opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                  <ArrowRight className="size-3.5 shrink-0 text-text-muted opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" />
                 )}
               </Link>
             </NavigationMenuLink>
@@ -165,13 +164,11 @@ function CategoryItems({ items }: { items: NavItem[] }) {
         ))}
       </ul>
 
-      {/* Divider */}
-      <div className="w-px bg-slate-100 mx-2 self-stretch" />
-
-      {/* Level 3 sub-items panel */}
-      <div className="min-w-[170px]">
-        {activeItem?.subItems && activeItem.subItems.length > 0 && (
-          <>
+      {/* Level 3 panel */}
+      {activeItem?.subItems && activeItem.subItems.length > 0 && (
+        <>
+          <div className="w-px bg-slate-100 mx-2 self-stretch" />
+          <div className="w-max">
             <p className="text-xs font-semibold uppercase tracking-widest text-text-muted px-2 pt-1.5 pb-1">
               {activeItem.title}
             </p>
@@ -181,18 +178,18 @@ function CategoryItems({ items }: { items: NavItem[] }) {
                   <NavigationMenuLink asChild>
                     <Link
                       href={subItem.href}
-                      className="group flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-medium text-text-primary hover:bg-slate-50 hover:text-navy transition-all"
+                      className="group/sub flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-medium text-text-primary hover:bg-slate-50 hover:text-navy transition-all"
                     >
                       <span className="flex-1">{subItem.title}</span>
-                      <ArrowRight className="size-3 shrink-0 text-text-muted opacity-0 group-hover:opacity-100 transition-all" />
+                      <ArrowRight className="size-3 shrink-0 text-text-muted opacity-0 group-hover/sub:opacity-100 transition-all" />
                     </Link>
                   </NavigationMenuLink>
                 </li>
               ))}
             </ul>
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -207,14 +204,14 @@ function SimpleListItem({
       <NavigationMenuLink asChild>
         <Link
           href={href}
-          className="group flex items-start gap-3 rounded-lg px-3 py-2.5 hover:bg-slate-50 transition-all"
+          className="group/row flex items-start gap-3 rounded-lg px-3 py-2.5 hover:bg-slate-50 transition-all"
         >
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-text-primary group-hover:text-navy transition-colors leading-snug">
+            <p className="text-sm font-semibold text-text-primary group-hover/row:text-navy transition-colors leading-snug">
               {title}
             </p>
           </div>
-          <ArrowRight className="size-3.5 mt-0.5 shrink-0 text-text-muted opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+          <ArrowRight className="size-3.5 mt-0.5 shrink-0 text-text-muted opacity-0 -translate-x-1 group-hover/row:opacity-100 group-hover/row:translate-x-0 transition-all" />
         </Link>
       </NavigationMenuLink>
     </li>

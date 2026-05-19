@@ -919,21 +919,15 @@ export interface Navbar {
     | {
         label: string;
         href: string;
-        categories?:
+        dropdownItems?:
           | {
-              name: string;
-              items?:
+              title: string;
+              description?: string | null;
+              href: string;
+              subItems?:
                 | {
                     title: string;
-                    description?: string | null;
                     href: string;
-                    subItems?:
-                      | {
-                          title: string;
-                          href: string;
-                          id?: string | null;
-                        }[]
-                      | null;
                     id?: string | null;
                   }[]
                 | null;
@@ -1234,23 +1228,17 @@ export interface NavbarSelect<T extends boolean = true> {
     | {
         label?: T;
         href?: T;
-        categories?:
+        dropdownItems?:
           | T
           | {
-              name?: T;
-              items?:
+              title?: T;
+              description?: T;
+              href?: T;
+              subItems?:
                 | T
                 | {
                     title?: T;
-                    description?: T;
                     href?: T;
-                    subItems?:
-                      | T
-                      | {
-                          title?: T;
-                          href?: T;
-                          id?: T;
-                        };
                     id?: T;
                   };
               id?: T;

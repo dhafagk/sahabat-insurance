@@ -5,10 +5,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Button } from "./button";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import type { MobileCategory } from "../navbarTypes";
+import type { MobileSection } from "../navbarTypes";
 
 type MobileNavProps = {
-  nav: MobileCategory[];
+  nav: MobileSection[];
 };
 
 export function MobileNav({ nav }: MobileNavProps) {

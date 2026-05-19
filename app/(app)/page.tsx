@@ -39,19 +39,21 @@ export default async function Home() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const p = payload as any;
 
-  const [rawLanding, productsResult, newsResult, rawFooter] = await Promise.all([
-    p.findGlobal({ slug: "landing-page" }) as Promise<unknown>,
-    p.find({ collection: "products", sort: "order", limit: 100 }) as Promise<{
-      docs: unknown[];
-    }>,
-    p.find({
-      collection: "news",
-      where: { status: { equals: "published" } },
-      sort: "-date",
-      limit: 4,
-    }) as Promise<{ docs: unknown[] }>,
-    p.findGlobal({ slug: "footer", depth: 1 }) as Promise<unknown>,
-  ]);
+  const [rawLanding, productsResult, newsResult, rawFooter] = await Promise.all(
+    [
+      p.findGlobal({ slug: "landing-page" }) as Promise<unknown>,
+      p.find({ collection: "products", sort: "order", limit: 100 }) as Promise<{
+        docs: unknown[];
+      }>,
+      p.find({
+        collection: "news",
+        where: { status: { equals: "published" } },
+        sort: "-date",
+        limit: 4,
+      }) as Promise<{ docs: unknown[] }>,
+      p.findGlobal({ slug: "footer", depth: 1 }) as Promise<unknown>,
+    ],
+  );
 
   const landingPage = rawLanding as unknown as LandingPageData;
   const products = productsResult.docs as unknown as ProductItem[];

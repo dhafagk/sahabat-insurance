@@ -2,7 +2,12 @@ import { cache } from "react";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import NavbarClient from "./NavbarClient";
-import type { NavbarData, NavItem, DesktopNavLink, MobileCategory } from "./navbarTypes";
+import type {
+  NavbarData,
+  NavItem,
+  DesktopNavLink,
+  MobileSection,
+} from "./navbarTypes";
 
 const getPayloadInstance = cache(async () => getPayload({ config }));
 
@@ -94,21 +99,9 @@ const DEFAULT_COMPANY: NavItem[] = [
 
 const DEFAULT_NAV: NavbarData = {
   desktop: [
-    {
-      href: "#products",
-      label: "Products",
-      categories: [{ name: "Insurance Products", id: "products", items: DEFAULT_PRODUCTS }],
-    },
-    {
-      href: "#services",
-      label: "Services",
-      categories: [{ name: "Our Services", id: "services", items: DEFAULT_SERVICES }],
-    },
-    {
-      href: "#about",
-      label: "Company",
-      categories: [{ name: "About Sahabat", id: "company", items: DEFAULT_COMPANY }],
-    },
+    { href: "#products", label: "Products", dropdownItems: DEFAULT_PRODUCTS },
+    { href: "#services", label: "Services", dropdownItems: DEFAULT_SERVICES },
+    { href: "#about", label: "Company", dropdownItems: DEFAULT_COMPANY },
     { href: "#news", label: "News" },
   ],
   mobile: [
@@ -156,29 +149,26 @@ function mapPayloadToNavbarData(raw: any): NavbarData | null {
   const desktop: DesktopNavLink[] = items.map((item: any) => ({
     href: item.href ?? "#",
     label: item.label ?? "",
-    categories: Array.isArray(item.categories)
-      ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        item.categories.map((cat: any, idx: number) => ({
-          name: cat.name ?? "",
-          id: `cat-${idx}`,
+    dropdownItems: Array.isArray(item.dropdownItems)
+      ? item.dropdownItems.map(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          items: (cat.items ?? []).map((navItem: any): NavItem => ({
+          (navItem: any): NavItem => ({
             title: navItem.title ?? "",
             description: navItem.description ?? undefined,
             href: navItem.href ?? "#",
             subItems: Array.isArray(navItem.subItems)
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              ? navItem.subItems.map((sub: any) => ({
+              ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                navItem.subItems.map((sub: any) => ({
                   title: sub.title ?? "",
                   href: sub.href ?? "#",
                 }))
               : undefined,
-          })),
-        }))
+          }),
+        )
       : undefined,
   }));
 
-  const mobile: MobileCategory[] = [
+  const mobile: MobileSection[] = [
     {
       name: "Menu",
       items: [
@@ -187,19 +177,17 @@ function mapPayloadToNavbarData(raw: any): NavbarData | null {
       ],
     },
     ...desktop
-      .filter((link) => link.categories && link.categories.length > 0)
+      .filter((link) => link.dropdownItems && link.dropdownItems.length > 0)
       .map((link) => ({
         name: link.label,
-        items: (link.categories ?? []).flatMap((cat) =>
-          cat.items.map((navItem) => ({
-            href: navItem.href,
-            label: navItem.title,
-            subItems: navItem.subItems?.map((sub) => ({
-              href: sub.href,
-              label: sub.title,
-            })),
+        items: (link.dropdownItems ?? []).map((navItem) => ({
+          href: navItem.href,
+          label: navItem.title,
+          subItems: navItem.subItems?.map((sub) => ({
+            href: sub.href,
+            label: sub.title,
           })),
-        ),
+        })),
       })),
   ];
 
