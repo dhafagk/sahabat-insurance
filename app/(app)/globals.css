@@ -1,0 +1,94 @@
+/* app/globals.css */
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #21408f;
+  --color-accent: #6366f1;
+  --color-bg: #f8f9fc;
+  --color-card: #ffffff;
+  --color-text-primary: #0f172a;
+  --color-text-muted: #64748b;
+  --color-success: #16a34a;
+  --color-dark: #0f172a;
+  --font-open-sans: var(--font-open-sans-var);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f8f9fc;
+  color: #0f172a;
+  font-family: var(--font-open-sans-var), Arial, sans-serif;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delay-1 {
+  animation: float 3s ease-in-out 0.5s infinite;
+}
+
+.animate-float-delay-2 {
+  animation: float 3s ease-in-out 1s infinite;
+}
+
+.animate-float-delay-3 {
+  animation: float 3s ease-in-out 1.5s infinite;
+}
+
+/* Hero responsive background */
+.hero-section {
+  background-image: url(/bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* mobile: centre the image so it works as a full backdrop */
+  background-position: center center;
+}
+/* 
+@media (min-width: 640px) {
+  .hero-section {
+    background-position:;
+  }
+} */
+
+@media (min-width: 1024px) {
+  .hero-section {
+    background-position: 220px 100%;
+  }
+}
+
+/* Hero overlay — vertical gradient on mobile, horizontal on desktop */
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0.15) 0%,
+    rgba(15, 23, 42, 0.55) 45%,
+    rgba(15, 23, 42, 0.92) 100%
+  );
+}
+
+@media (min-width: 640px) {
+  .hero-overlay {
+    background: linear-gradient(
+      to right,
+      #eff6ff 0%,
+      #eff6ff 38%,
+      rgba(239, 246, 255, 0.85) 55%,
+      rgba(239, 246, 255, 0.3) 72%,
+      transparent 100%
+    );
+  }
+}

@@ -8,7 +8,20 @@
       "Bash(npm install *)",
       "Skill(superpowers:writing-plans)",
       "Bash(node *)",
-      "Skill(superpowers:subagent-driven-development)"
+      "Skill(superpowers:subagent-driven-development)",
+      "Bash(Remove-Item \"C:\\\\Users\\\\kdhafa\\\\Documents\\\\ngoding\\\\sahabat-insurance\\\\app\\\\\\(frontend\\)\\\\page.tsx\" -Force)",
+      "Bash(Remove-Item \"C:\\\\Users\\\\kdhafa\\\\Documents\\\\ngoding\\\\sahabat-insurance\\\\app\\\\\\(frontend\\)\\\\layout.tsx\" -Force)",
+      "Bash(Remove-Item \"C:\\\\Users\\\\kdhafa\\\\Documents\\\\ngoding\\\\sahabat-insurance\\\\app\\\\\\(frontend\\)\\\\styles.css\" -Force)",
+      "Bash(dir \"C:\\\\Users\\\\kdhafa\\\\Documents\\\\ngoding\\\\sahabat-insurance\")",
+      "Bash(C:/Users/kdhafa/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/brainstorming/scripts/start-server.sh *)",
+      "PowerShell(Get-Content *)",
+      "Bash(python *)",
+      "Bash(Select-Object FullName)",
+      "Skill(everything-claude-code:multi-frontend)",
+      "Bash(Move-Item *)",
+      "Bash(grep -v \"^$\")",
+      "PowerShell(Rename-Item *)",
+      "Skill(everything-claude-code:feature-dev)"
     ]
   }
 }
