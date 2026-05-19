@@ -30,7 +30,11 @@ interface ProductsProps {
   sectionMeta?: SectionMeta | null;
 }
 
-const DEFAULTS = {
+const DEFAULTS: {
+  badge: string;
+  heading: string;
+  products: ProductItem[];
+} = {
   badge: "Our Products",
   heading: "Comprehensive Protection for Every Need",
   products: [
