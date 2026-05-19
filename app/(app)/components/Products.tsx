@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ProductModal from "./ProductModal";
@@ -81,6 +82,10 @@ const DEFAULTS: {
   ],
 };
 
+export function toProductSlug(title: string) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
 const containerVariants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08 } },
@@ -110,15 +115,30 @@ function FallbackIcon() {
   );
 }
 
-export default function Products({ products, sectionMeta }: ProductsProps) {
+function ProductsInner({ products, sectionMeta }: ProductsProps) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const badge = sectionMeta?.badge ?? DEFAULTS.badge;
   const heading = sectionMeta?.heading ?? DEFAULTS.heading;
   const items = products?.length ? products : DEFAULTS.products;
-  const [selected, setSelected] = useState<ProductItem | null>(null);
+
+  const slug = searchParams.get("product");
+  const selected = slug
+    ? (items.find((p) => toProductSlug(p.title) === slug) ?? null)
+    : null;
+
+  const openProduct = (product: ProductItem) => {
+    router.push(`/?product=${toProductSlug(product.title)}`, { scroll: false });
+  };
+
+  const closeProduct = () => {
+    router.replace("/", { scroll: false });
+  };
 
   return (
     <section id="products" className="py-24 bg-bg" aria-label="Our products">
-      <ProductModal product={selected} onClose={() => setSelected(null)} />
+      <ProductModal product={selected} onClose={closeProduct} />
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
           <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-4">
@@ -152,7 +172,7 @@ export default function Products({ products, sectionMeta }: ProductsProps) {
               key={product.title}
               variants={cardVariants}
               whileHover={{ y: -8 }}
-              onClick={() => setSelected(product)}
+              onClick={() => openProduct(product)}
               className="bg-card rounded-2xl border border-slate-100 p-6 group transition-all duration-300 hover:border-navy hover:shadow-xl cursor-pointer"
             >
               <div
@@ -198,5 +218,13 @@ export default function Products({ products, sectionMeta }: ProductsProps) {
         </p>
       </div>
     </section>
+  );
+}
+
+export default function Products(props: ProductsProps) {
+  return (
+    <Suspense fallback={null}>
+      <ProductsInner {...props} />
+    </Suspense>
   );
 }

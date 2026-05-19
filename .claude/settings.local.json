@@ -22,7 +22,8 @@
       "Bash(grep -v \"^$\")",
       "PowerShell(Rename-Item *)",
       "Skill(everything-claude-code:feature-dev)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(git *)"
     ]
   }
 }
