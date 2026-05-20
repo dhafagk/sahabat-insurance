@@ -48,7 +48,7 @@ export default async function Home() {
       collection: "news",
       where: { status: { equals: "published" } },
       sort: "-date",
-      limit: 4,
+      limit: 3,
     }) as Promise<{ docs: unknown[] }>,
     p.findGlobal({ slug: "footer", depth: 1 }) as Promise<unknown>,
   ]);

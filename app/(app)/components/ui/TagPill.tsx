@@ -1,4 +1,4 @@
-import { TAG_COLORS } from '../LatestNews'
+import { TAG_COLORS } from '../newsUtils'
 
 interface TagPillProps {
   name: string

@@ -4,7 +4,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { TAG_COLORS, formatDate } from './LatestNews'
+import { TAG_COLORS, formatDate } from './newsUtils'
 import TagPill from './ui/TagPill'
 
 interface TagValue {
