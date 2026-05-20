@@ -73,12 +73,19 @@ interface BadgeBlock {
   accentLine?: "none" | "line1" | "line2";
 }
 
+interface SectionHeadingBlock {
+  blockType: "sectionHeading";
+  id?: string;
+  text?: string;
+}
+
 type ContentBlock =
   | LinkListBlock
   | ContactInfoBlock
   | TextContentBlock
   | ImageContentBlock
-  | BadgeBlock;
+  | BadgeBlock
+  | SectionHeadingBlock;
 
 // ── Footer column / lower footer types ────────────────────────────────────────
 
@@ -112,9 +119,18 @@ interface LowerFooter {
   copyrightText?: string;
 }
 
+interface ConsumerProtection {
+  title?: string;
+  description?: string;
+  organizationName?: string;
+  phone?: string;
+  href?: string;
+}
+
 export interface FooterData {
   upperColumns?: FooterColumn[];
   lowerFooter?: LowerFooter;
+  consumerProtection?: ConsumerProtection;
 }
 
 // ── Defaults ───────────────────────────────────────────────────────────────────
@@ -122,53 +138,40 @@ export interface FooterData {
 const DEFAULT_FOOTER: FooterData = {
   upperColumns: [
     {
-      title: "",
-      content: [
-        {
-          blockType: "imageContent",
-          image: { url: "/logo-white.png", alt: "Sahabat Insurance" },
-          href: "/",
-          width: 180,
-          height: 52,
-        },
-        {
-          blockType: "textContent",
-          content: "Berizin dan Diawasi\noleh Otoritas Jasa\nKeuangan",
-        },
-        {
-          blockType: "badge",
-          line1: "Pahami & Miliki",
-          line2: "Asuransi",
-          accentLine: "line2",
-        },
-      ],
-    },
-    {
-      title: "Profil Sahabat",
+      title: "PROFIL",
       content: [
         {
           blockType: "linkList",
           links: [
             { label: "Sejarah", href: "#about" },
-            { label: "Visi Dan Misi", href: "#about" },
-            { label: "Manajemen", href: "#about" },
+            { label: "Visi dan Misi", href: "/vision-and-mission" },
+            { label: "Manajemen", href: "/management" },
             { label: "Laporan Keuangan", href: "#about" },
-            { label: "Struktur Organisasi", href: "#about" },
-            { label: "Penghargaan", href: "#about" },
+            { label: "Laporan Keberlanjutan", href: "#about" },
             { label: "Tata Kelola Perusahaan", href: "#about" },
-            { label: "Literasi Keuangan", href: "#about" },
-            { label: "Inklusi Keuangan", href: "#about" },
-            { label: "CSR", href: "#about" },
+            { label: "Izin Usaha OJK", href: "#about" },
           ],
+        },
+        {
+          blockType: "imageContent",
+          image: { url: "/logo-white.png", alt: "Sahabat Insurance" },
+          href: "/",
+          width: 160,
+          height: 46,
+        },
+        {
+          blockType: "textContent",
+          content: "Sahabat Insurance\nBerizin dan Diawasi\nOleh OJK",
         },
       ],
     },
     {
-      title: "Produk Terbaru",
+      title: "PRODUK",
       content: [
         {
           blockType: "linkList",
           links: [
+            { label: "Cara Beli Polis", href: "#products" },
             { label: "Motor Vehicle Insurance", href: "#products" },
             { label: "Property All Risk Insurance", href: "#products" },
             { label: "Personal Accident Insurance", href: "#products" },
@@ -187,53 +190,76 @@ const DEFAULT_FOOTER: FooterData = {
       ],
     },
     {
-      title: "Kontak Layanan",
+      title: "LAYANAN",
       content: [
         {
-          blockType: "contactInfo",
-          companyName: "PT Asuransi Sahabat Artha Proteksi",
-          subheading: "Pengaduan Konsumen",
-          items: [
-            {
-              type: "phone",
-              value: "tel:02150508080",
-              displayText: "(021) 5050 8080",
-            },
-            {
-              type: "address",
-              value:
-                "Jl. Danau Sunter Utara Blok B 36A Kav. 16-17 Sunter Jakarta 14350",
-            },
-            {
-              type: "email",
-              value: "mailto:contact@sahabatinsurance.id",
-              displayText: "contact@sahabatinsurance.id",
-            },
+          blockType: "linkList",
+          links: [
+            { label: "Cek Polis", href: "/cekpremi" },
+            { label: "Renewal Polis", href: "#layanan" },
+            { label: "Bengkel Rekanan", href: "#layanan" },
+            { label: "Kebijakan Privasi", href: "#layanan" },
+            { label: "Syarat dan Ketentuan", href: "#layanan" },
+            { label: "Pusat Klaim", href: "#layanan" },
+            { label: "Prosedur Klaim", href: "#layanan" },
+            { label: "Literasi Keuangan", href: "#layanan" },
+            { label: "Pusat Pengaduan", href: "#layanan" },
+            { label: "Whistleblowing System", href: "#layanan" },
           ],
         },
       ],
     },
     {
-      title: "",
+      title: "BERITA",
       content: [
         {
-          blockType: "textContent",
-          content:
-            "Direktorat Jenderal\nPerlindungan Konsumen\ndan Tertib Niaga\nKementerian\nPerdagangan Republik\nIndonesia",
+          blockType: "linkList",
+          links: [
+            { label: "Tips & Trik", href: "#berita" },
+            { label: "Berita", href: "#berita" },
+          ],
         },
         {
-          blockType: "contactInfo",
-          items: [
-            {
-              type: "phone",
-              value: "tel:08531111010",
-              displayText: "0853 1111 1010",
-            },
+          blockType: "sectionHeading",
+          text: "HUBUNGI KAMI",
+        },
+        {
+          blockType: "linkList",
+          links: [
+            { label: "Lokasi Kantor", href: "#kontak" },
+            { label: "Daftar Agen", href: "#kontak" },
           ],
         },
       ],
     },
+    {
+      title: "CSR",
+      content: [
+        {
+          blockType: "linkList",
+          links: [{ label: "Aktifitas CSR", href: "#csr" }],
+        },
+      ],
+    },
+    {
+      title: "RATING",
+      content: [
+        {
+          blockType: "linkList",
+          links: [{ label: "FITCH Rating", href: "#rating" }],
+        },
+      ],
+    },
   ],
+  consumerProtection: {
+    title: "PERLINDUNGAN KONSUMEN",
+    description:
+      "Perlindungan konsumen berupa link yang dapat di klik ke halaman berikutnya berisi info dibawah ini:",
+    organizationName:
+      "Direktorat Jenderal Perlindungan Konsumen dan Tertib Niaga Kementerian Perdagangan Republik Indonesia",
+    phone: "0853 1111 1010",
+    href: "tel:08531111010",
+  },
   lowerFooter: {
     links: [
       { label: "Tentang Kami", href: "#about" },
@@ -509,6 +535,15 @@ function RenderBadge({ block }: { block: BadgeBlock }) {
   );
 }
 
+function RenderSectionHeading({ block }: { block: SectionHeadingBlock }) {
+  if (!block.text) return null;
+  return (
+    <h4 className="text-white font-semibold text-sm uppercase tracking-wide mt-2">
+      {block.text}
+    </h4>
+  );
+}
+
 function RenderBlock({ block }: { block: ContentBlock }) {
   switch (block.blockType) {
     case "linkList":
@@ -521,6 +556,8 @@ function RenderBlock({ block }: { block: ContentBlock }) {
       return <RenderImage block={block} />;
     case "badge":
       return <RenderBadge block={block} />;
+    case "sectionHeading":
+      return <RenderSectionHeading block={block} />;
     default:
       return null;
   }
@@ -538,24 +575,28 @@ export default function Footer({ data }: FooterProps) {
   const footer = data ?? DEFAULT_FOOTER;
   const upper = footer.upperColumns ?? DEFAULT_FOOTER.upperColumns ?? [];
   const lower = footer.lowerFooter ?? DEFAULT_FOOTER.lowerFooter ?? {};
+  const cp =
+    footer.consumerProtection ?? DEFAULT_FOOTER.consumerProtection ?? null;
 
   return (
     <footer style={{ background: "#0F172A" }} aria-label="Site footer">
       <div className="max-w-7xl mx-auto px-6 pt-14 pb-0">
-        {/* Upper grid — up to 5 columns */}
+        {/* Upper grid — up to 6 columns */}
         <div
-          className={`grid grid-cols-1 sm:grid-cols-2 gap-10 pb-12 ${
+          className={`grid grid-cols-1 sm:grid-cols-2 gap-8 pb-10 ${
             upper.length <= 3
               ? "lg:grid-cols-3"
               : upper.length === 4
                 ? "lg:grid-cols-4"
-                : "lg:grid-cols-5"
+                : upper.length === 5
+                  ? "lg:grid-cols-5"
+                  : "lg:grid-cols-6"
           }`}
         >
           {upper.map((col, i) => (
-            <div key={col.id ?? i} className="flex flex-col gap-4">
+            <div key={col.id ?? i} className="flex flex-col gap-3">
               {col.title && (
-                <h3 className="text-white font-semibold text-base">
+                <h3 className="text-white font-semibold text-sm uppercase tracking-wide border-b border-slate-700 pb-2">
                   {col.title}
                 </h3>
               )}
@@ -565,6 +606,51 @@ export default function Footer({ data }: FooterProps) {
             </div>
           ))}
         </div>
+
+        {/* Perlindungan Konsumen */}
+        {cp && (
+          <div className="border-t border-slate-800 pt-8 pb-8 flex flex-col md:flex-row md:items-start gap-6 md:gap-10">
+            <div className="flex-1">
+              <h3 className="text-white font-semibold text-sm uppercase tracking-wide mb-2">
+                {cp.title}
+              </h3>
+              {cp.description && (
+                <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                  {cp.description}
+                </p>
+              )}
+            </div>
+            <a
+              href={cp.href ?? "#"}
+              style={{ background: "#1E293B" }}
+              className="rounded-xl p-5 flex flex-col gap-3 min-w-[260px] max-w-xs border border-slate-700 hover:border-slate-500 transition-colors"
+            >
+              {cp.organizationName && (
+                <p className="text-white text-sm font-medium leading-relaxed">
+                  {cp.organizationName}
+                </p>
+              )}
+              {cp.phone && (
+                <div className="flex items-center gap-2 text-slate-300 text-sm">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    width={14}
+                    height={14}
+                    aria-hidden="true"
+                  >
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012.03 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+                  </svg>
+                  {cp.phone}
+                </div>
+              )}
+            </a>
+          </div>
+        )}
 
         {/* Lower bar */}
         <div className="border-t border-slate-800 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">

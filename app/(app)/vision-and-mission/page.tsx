@@ -122,7 +122,7 @@ export default async function VisiMisiPage() {
         className="relative pt-28 pb-20 overflow-hidden"
         style={{
           background:
-            "linear-gradient(135deg, #0F172A 0%, #21408f 60%, #1E293B 100%)",
+            "linear-gradient(135deg, #0F172A 0%, #2887C1 60%, #1E293B 100%)",
         }}
       >
         <div

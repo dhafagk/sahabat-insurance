@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy: #21408f;
+  --color-navy: #2887c1;
   --color-accent: #6366f1;
   --color-bg: #f8f9fc;
   --color-card: #ffffff;
@@ -70,24 +70,35 @@ body {
   }
 }
 
-/* Hero overlay — vertical gradient on mobile, horizontal on desktop */
+/* Hero overlay */
 .hero-overlay {
   background: linear-gradient(
     to bottom,
-    rgba(15, 23, 42, 0.15) 0%,
-    rgba(15, 23, 42, 0.55) 45%,
-    rgba(15, 23, 42, 0.92) 100%
+    rgba(40, 135, 193, 0.55) 40%,
+    rgba(40, 135, 193, 0.8) 85%,
+    rgba(40, 135, 193, 0.95) 100%
   );
 }
 
 @media (min-width: 640px) {
   .hero-overlay {
-    background: linear-gradient(
+    /* vertical color shift: #2887C1 top → #21408f bottom */
+    background: linear-gradient(to bottom, rgb(40, 135, 193) 0%, #21408f 100%);
+    /* horizontal fade applied as a mask */
+    -webkit-mask-image: linear-gradient(
       to right,
-      #eff6ff 0%,
-      #eff6ff 38%,
-      rgba(239, 246, 255, 0.85) 55%,
-      rgba(239, 246, 255, 0.3) 72%,
+      rgba(0, 0, 0, 0.97) 0%,
+      rgba(0, 0, 0, 0.92) 35%,
+      rgba(0, 0, 0, 0.65) 55%,
+      rgba(0, 0, 0, 0.25) 72%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.97) 0%,
+      rgba(0, 0, 0, 0.92) 35%,
+      rgba(0, 0, 0, 0.65) 55%,
+      rgba(0, 0, 0, 0.25) 72%,
       transparent 100%
     );
   }

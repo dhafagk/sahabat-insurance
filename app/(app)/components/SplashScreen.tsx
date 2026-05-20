@@ -21,7 +21,7 @@ export default function SplashScreen() {
           className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
           style={{
             background:
-              "linear-gradient(135deg, #1a3578 0%, #21408f 50%, #2a52b5 100%)",
+              "linear-gradient(135deg, #1a6ea3 0%, #2887C1 50%, #3fa0d6 100%)",
           }}
           exit={{ opacity: 0, y: -24 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}

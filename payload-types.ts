@@ -747,22 +747,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface LandingPage {
   id: number;
   hero?: {
-    taglines?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
-    stats?:
-      | {
-          value: string;
-          label: string;
-          id?: string | null;
-        }[]
-      | null;
     descriptionDesktop?: string | null;
     descriptionMobile?: string | null;
-    phoneNumber?: string | null;
     whatsappUrl?: string | null;
     ctaPrimaryLabel?: string | null;
     ctaPrimaryHref?: string | null;
@@ -815,6 +801,9 @@ export interface LandingPage {
     primaryLabel?: string | null;
     primaryHref?: string | null;
     whatsappUrl?: string | null;
+    contactAddress?: string | null;
+    contactPhone?: string | null;
+    contactEmail?: string | null;
     backgroundImage?: (number | null) | Media;
   };
   updatedAt?: string | null;
@@ -1050,22 +1039,8 @@ export interface LandingPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        taglines?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
-        stats?:
-          | T
-          | {
-              value?: T;
-              label?: T;
-              id?: T;
-            };
         descriptionDesktop?: T;
         descriptionMobile?: T;
-        phoneNumber?: T;
         whatsappUrl?: T;
         ctaPrimaryLabel?: T;
         ctaPrimaryHref?: T;
@@ -1116,6 +1091,9 @@ export interface LandingPageSelect<T extends boolean = true> {
         primaryLabel?: T;
         primaryHref?: T;
         whatsappUrl?: T;
+        contactAddress?: T;
+        contactPhone?: T;
+        contactEmail?: T;
         backgroundImage?: T;
       };
   updatedAt?: T;

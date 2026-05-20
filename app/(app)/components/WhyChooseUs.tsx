@@ -116,7 +116,7 @@ export default function WhyChooseUs({ data }: WhyChooseUsProps) {
     <section
       id="about"
       className="relative overflow-hidden"
-      style={{ background: "#0F172A" }}
+      style={{ background: "#2887C1" }}
       aria-label="Why choose Sahabat Insurance"
     >
       <div className="hidden lg:block absolute inset-y-0 right-0 w-1/2">
@@ -134,7 +134,7 @@ export default function WhyChooseUs({ data }: WhyChooseUsProps) {
         style={{
           left: "calc(50% - 48px)",
           width: "96px",
-          background: "#0F172A",
+          background: "#2887C1",
           transform: "skewX(-5deg)",
         }}
       />
@@ -147,13 +147,13 @@ export default function WhyChooseUs({ data }: WhyChooseUsProps) {
           transition={{ duration: 0.5 }}
           className="flex flex-col gap-6 lg:max-w-[50%] lg:pr-16"
         >
-          <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-accent/20 text-accent text-sm font-semibold w-fit">
+          <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/20 text-white text-sm font-semibold w-fit">
             {badge}
           </span>
           <h2 className="font-open-sans text-3xl sm:text-4xl font-bold text-white leading-tight">
             {heading}
           </h2>
-          <p className="text-slate-400 leading-relaxed max-w-md">
+          <p className="text-white/75 leading-relaxed max-w-md">
             {description}
           </p>
 
@@ -163,19 +163,19 @@ export default function WhyChooseUs({ data }: WhyChooseUsProps) {
               return (
                 <div
                   key={title}
-                  className="flex flex-col gap-1 border-t border-white/10 pt-3"
+                  className="flex flex-col gap-1 border-t border-white/25 pt-3"
                 >
                   <div className="flex items-center gap-2">
                     <Icon
                       size={15}
-                      style={{ color: "#6366F1" }}
+                      style={{ color: "white" }}
                       aria-hidden="true"
                     />
                     <h3 className="font-semibold text-white text-sm">
                       {title}
                     </h3>
                   </div>
-                  <p className="text-slate-400 text-xs leading-relaxed">
+                  <p className="text-white/70 text-xs leading-relaxed">
                     {body}
                   </p>
                 </div>
@@ -185,7 +185,7 @@ export default function WhyChooseUs({ data }: WhyChooseUsProps) {
 
           <a
             href={ctaHref}
-            className="inline-flex items-center justify-center w-fit px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-dark transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="inline-flex items-center justify-center w-fit px-6 py-3 rounded-full bg-white text-navy font-semibold hover:bg-white/90 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             {ctaLabel}
           </a>

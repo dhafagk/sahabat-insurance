@@ -14,7 +14,6 @@ import { cn } from "@/app/(app)/lib/utils";
 import { MobileNav } from "./ui/navbar";
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { buttonVariants } from "./ui/button";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import type { NavbarData, NavItem } from "./navbarTypes";
 
@@ -38,13 +37,13 @@ export default function NavbarClient({ data }: Props) {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed w-full z-50 transition-all duration-500",
         solid
-          ? "border-b border-slate-200/60 bg-white/90 backdrop-blur-md shadow-sm"
-          : "border-b border-transparent bg-transparent",
+          ? "bg-white/95 top-0 backdrop-blur-md shadow-lg border border-slate-200/60"
+          : "bg-transparent top-5 border-transparent",
       )}
     >
-      <div className="container mx-auto flex h-16 md:h-20 items-center justify-between gap-2 sm:gap-4 px-4 sm:px-6 max-w-7xl">
+      <div className="mx-auto flex h-16 md:h-20 justify-between items-center gap-2 sm:gap-4 px-4 sm:px-6 max-w-7xl">
         {/* Logo */}
         <Link
           href="/"
@@ -56,7 +55,10 @@ export default function NavbarClient({ data }: Props) {
             alt="Sahabat Insurance"
             width={200}
             height={68}
-            className="h-12 md:h-14 mt-1.5 md:mt-0 w-auto object-contain"
+            className={cn(
+              "h-12 md:h-14 mt-1.5 md:mt-0 w-auto object-contain transition-[filter] duration-300",
+              !solid && "brightness-0 invert",
+            )}
             priority
           />
         </Link>
@@ -68,7 +70,14 @@ export default function NavbarClient({ data }: Props) {
               if (link.dropdownItems && link.dropdownItems.length > 0) {
                 return (
                   <NavigationMenuItem key={index} className="relative">
-                    <NavigationMenuTrigger className="h-9 rounded-none px-3 py-1.5 font-medium text-text-primary hover:text-navy border-b-2 border-transparent hover:border-navy hover:bg-transparent transition-all bg-transparent data-[state=open]:border-navy data-[state=open]:bg-transparent data-[state=open]:text-navy">
+                    <NavigationMenuTrigger
+                      className={cn(
+                        "h-9 rounded-none px-3 py-1.5 font-medium border-b-2 border-transparent transition-all bg-transparent hover:bg-transparent",
+                        solid
+                          ? "text-text-primary hover:text-navy hover:border-navy data-[state=open]:border-navy data-[state=open]:bg-transparent data-[state=open]:text-navy"
+                          : "text-white hover:text-white hover:border-white/60 data-[state=open]:border-white data-[state=open]:bg-transparent data-[state=open]:text-white",
+                      )}
+                    >
                       {link.label}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent className="z-50">
@@ -85,7 +94,12 @@ export default function NavbarClient({ data }: Props) {
                   <NavigationMenuLink
                     href={link.href}
                     asChild
-                    className="text-sm h-9 rounded-none px-3 py-1.5 font-medium text-text-primary hover:text-navy border-b-2 border-transparent hover:border-navy hover:bg-transparent transition-all bg-transparent"
+                    className={cn(
+                      "text-sm h-9 rounded-none px-3 py-1.5 font-medium border-b-2 border-transparent transition-all bg-transparent hover:bg-transparent",
+                      solid
+                        ? "text-text-primary hover:text-navy hover:border-navy"
+                        : "text-white hover:text-white hover:border-white/60",
+                    )}
                   >
                     <Link href={link.href}>{link.label}</Link>
                   </NavigationMenuLink>
@@ -96,13 +110,15 @@ export default function NavbarClient({ data }: Props) {
         </NavigationMenu>
 
         {/* CTA + mobile hamburger */}
-        <div className="flex items-center justify-end gap-2">
+        <div
+          className={cn(
+            "flex md:hidden items-center justify-end gap-2",
+            !solid && "text-white",
+          )}
+        >
           <Link
             href="#contact"
-            className={cn(
-              buttonVariants({ variant: "default", size: "sm" }),
-              "hidden md:inline-flex bg-navy hover:bg-navy/90 text-white font-semibold px-5",
-            )}
+            className="hidden md:inline-flex items-center justify-center font-semibold px-5 text-sm h-9 rounded-full transition-all duration-200 bg-navy hover:bg-navy/90 text-white shadow-sm"
             aria-label="Hubungi Kami"
           >
             Hubungi Kami

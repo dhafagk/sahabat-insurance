@@ -1,10 +1,8 @@
 "use client";
 
-import { Suspense, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import ProductModal from "./ProductModal";
 
 interface ProductIcon {
   url?: string | null;
@@ -83,7 +81,10 @@ const DEFAULTS: {
 };
 
 export function toProductSlug(title: string) {
-  return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 const containerVariants = {
@@ -99,8 +100,8 @@ const cardVariants = {
 function FallbackIcon() {
   return (
     <svg
-      width="22"
-      height="22"
+      width="36"
+      height="36"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -115,33 +116,13 @@ function FallbackIcon() {
   );
 }
 
-function ProductsInner({ products, sectionMeta }: ProductsProps) {
-  const searchParams = useSearchParams();
-
+export default function Products({ products, sectionMeta }: ProductsProps) {
   const badge = sectionMeta?.badge ?? DEFAULTS.badge;
   const heading = sectionMeta?.heading ?? DEFAULTS.heading;
   const items = products?.length ? products : DEFAULTS.products;
 
-  const initialSlug = searchParams.get("product");
-  const [selected, setSelected] = useState<ProductItem | null>(
-    initialSlug
-      ? (items.find((p) => toProductSlug(p.title) === initialSlug) ?? null)
-      : null,
-  );
-
-  const openProduct = (product: ProductItem) => {
-    setSelected(product);
-    window.history.pushState(null, "", `/?product=${toProductSlug(product.title)}`);
-  };
-
-  const closeProduct = () => {
-    setSelected(null);
-    window.history.replaceState(null, "", "/");
-  };
-
   return (
     <section id="products" className="py-24 bg-bg" aria-label="Our products">
-      <ProductModal product={selected} onClose={closeProduct} />
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-10">
           <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-4">
@@ -152,17 +133,6 @@ function ProductsInner({ products, sectionMeta }: ProductsProps) {
           </h2>
         </div>
 
-        {/* <div className="relative w-full aspect-[16/7] sm:aspect-[21/6] rounded-xl overflow-hidden mb-12">
-          <Image
-            src="/assets/1.png"
-            alt="Sahabat Insurance team at work"
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
-        </div> */}
-
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -171,47 +141,36 @@ function ProductsInner({ products, sectionMeta }: ProductsProps) {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {items.map((product) => (
-            <motion.div
-              key={product.title}
-              variants={cardVariants}
-              whileHover={{ y: -8 }}
-              onClick={() => openProduct(product)}
-              className="bg-card rounded-2xl border border-slate-100 p-6 group transition-all duration-300 hover:border-navy hover:shadow-xl cursor-pointer"
-            >
-              <div
-                className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 bg-gradient-to-br from-slate-50 to-slate-100 group-hover:from-navy/5 group-hover:to-navy/10 transition-all duration-300 overflow-hidden"
-                aria-hidden="true"
+            <motion.div key={product.title} variants={cardVariants} whileHover={{ y: -8 }}>
+              <Link
+                href={`/products/${toProductSlug(product.title)}`}
+                className="block bg-card rounded-2xl border border-slate-100 p-6 group transition-all duration-300 hover:border-navy hover:shadow-xl"
               >
-                {product.icon?.url ? (
-                  <div className="w-8 h-8 relative flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                    <Image
-                      src={product.icon.url}
-                      alt={product.icon.alt ?? product.title}
-                      fill
-                      className="object-contain"
-                      sizes="32px"
-                    />
-                  </div>
-                ) : (
-                  <div className="group-hover:scale-110 transition-transform duration-300">
-                    <FallbackIcon />
-                  </div>
-                )}
-              </div>
+                <div
+                  className="w-24 h-24 rounded-2xl flex items-center justify-center mb-5 bg-gradient-to-br from-slate-50 to-slate-100 group-hover:from-navy/5 group-hover:to-navy/10 transition-all duration-300 overflow-hidden"
+                  aria-hidden="true"
+                >
+                  {product.icon?.url ? (
+                    <div className="w-16 h-16 relative flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <Image
+                        src={product.icon.url}
+                        alt={product.icon.alt ?? product.title}
+                        fill
+                        className="object-contain"
+                        sizes="64px"
+                      />
+                    </div>
+                  ) : (
+                    <div className="group-hover:scale-110 transition-transform duration-300">
+                      <FallbackIcon />
+                    </div>
+                  )}
+                </div>
 
-              <h3 className="font-semibold text-text-primary mb-2 text-base">
-                {product.title}
-              </h3>
-              <p className="text-sm text-text-muted leading-relaxed mb-4">
-                {product.description}
-              </p>
-
-              <span className="inline-flex items-center gap-1 text-sm font-medium text-accent">
-                Learn more
-                <span className="group-hover:translate-x-1 transition-transform duration-200 inline-block">
-                  →
-                </span>
-              </span>
+                <h3 className="font-semibold text-text-primary text-base">
+                  {product.title}
+                </h3>
+              </Link>
             </motion.div>
           ))}
         </motion.div>
@@ -221,13 +180,5 @@ function ProductsInner({ products, sectionMeta }: ProductsProps) {
         </p>
       </div>
     </section>
-  );
-}
-
-export default function Products(props: ProductsProps) {
-  return (
-    <Suspense fallback={null}>
-      <ProductsInner {...props} />
-    </Suspense>
   );
 }

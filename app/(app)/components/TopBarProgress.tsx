@@ -37,9 +37,9 @@ export default function TopBarProgress() {
             className="absolute inset-0 origin-left"
             style={{
               background:
-                "linear-gradient(90deg, #21408f 0%, #6366f1 60%, #21408f 100%)",
+                "linear-gradient(90deg, #2887C1 0%, #6366f1 60%, #2887C1 100%)",
               boxShadow:
-                "0 0 8px rgba(99,102,241,0.6), 0 0 20px rgba(33,64,143,0.4)",
+                "0 0 8px rgba(99,102,241,0.6), 0 0 20px rgba(40,135,193,0.4)",
             }}
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}

@@ -63,7 +63,7 @@ export default async function Home() {
       <Navbar />
       <main>
         <Hero data={landingPage.hero} />
-        <PromoStrip data={landingPage.promoStrip} />
+        {/* <PromoStrip data={landingPage.promoStrip} /> */}
         <Products
           products={products}
           sectionMeta={landingPage.productsSection}

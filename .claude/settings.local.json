@@ -23,7 +23,11 @@
       "PowerShell(Rename-Item *)",
       "Skill(everything-claude-code:feature-dev)",
       "Bash(npm run *)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\kdhafa\\\\Documents\\\\ngoding\\\\sahabat-insurance\\\\src\" -Recurse -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -match \"\\(collection|block|payload\\)\" } | Format-Table FullName)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\kdhafa\\\\Documents\\\\ngoding\\\\sahabat-insurance\" -Depth 2 -Directory -ErrorAction SilentlyContinue | Select-Object FullName | Where-Object { $_ -match \"\\(collection|block\\)\" })",
+      "Bash(xargs grep -l -i \"hero\")",
+      "Bash(xargs grep -l \"HeroData\\\\|hero:\")"
     ]
   }
 }

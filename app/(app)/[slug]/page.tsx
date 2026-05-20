@@ -166,7 +166,7 @@ export default async function PageDetail({ params }: PageProps) {
           className="relative pt-28 pb-20 overflow-hidden"
           style={{
             background:
-              "linear-gradient(135deg, #0F172A 0%, #21408f 60%, #1E293B 100%)",
+              "linear-gradient(135deg, #0F172A 0%, #2887C1 60%, #1E293B 100%)",
           }}
         >
           <div className="max-w-7xl mx-auto px-6">
@@ -200,7 +200,7 @@ export default async function PageDetail({ params }: PageProps) {
                   src={imageUrl}
                   alt={page.title}
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   priority
                   sizes="(max-width: 1024px) 100vw, 1024px"
                 />
@@ -253,7 +253,7 @@ export default async function PageDetail({ params }: PageProps) {
           className="relative pt-28 pb-20 overflow-hidden"
           style={{
             background:
-              "linear-gradient(135deg, #0F172A 0%, #21408f 60%, #1E293B 100%)",
+              "linear-gradient(135deg, #0F172A 0%, #2887C1 60%, #1E293B 100%)",
           }}
         >
           <div className="max-w-7xl mx-auto px-6">
@@ -323,7 +323,7 @@ export default async function PageDetail({ params }: PageProps) {
           className="relative pt-28 pb-20 overflow-hidden"
           style={{
             background:
-              "linear-gradient(135deg, #0F172A 0%, #21408f 60%, #1E293B 100%)",
+              "linear-gradient(135deg, #0F172A 0%, #2887C1 60%, #1E293B 100%)",
           }}
         >
           <div className="max-w-7xl mx-auto px-6">

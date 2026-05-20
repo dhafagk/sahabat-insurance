@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -17,54 +16,9 @@ const stagger = {
   show: { transition: { staggerChildren: 0.18 } },
 };
 
-function useTypewriter(words: string[], speed = 60, pause = 2000) {
-  const [displayed, setDisplayed] = useState("");
-  const [wordIndex, setWordIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [deleting, setDeleting] = useState(false);
-
-  useEffect(() => {
-    const current = words[wordIndex];
-
-    if (!deleting && charIndex < current?.length) {
-      const t = setTimeout(() => setCharIndex((c) => c + 1), speed);
-      return () => clearTimeout(t);
-    }
-
-    if (!deleting && charIndex === current?.length) {
-      const t = setTimeout(() => setDeleting(true), pause);
-      return () => clearTimeout(t);
-    }
-
-    if (deleting && charIndex > 0) {
-      const t = setTimeout(() => setCharIndex((c) => c - 1), speed / 2);
-      return () => clearTimeout(t);
-    }
-
-    if (deleting && charIndex === 0) {
-      setDeleting(false);
-      setWordIndex((i) => (i + 1) % words.length);
-    }
-  }, [charIndex, deleting, wordIndex, words, speed, pause]);
-
-  useEffect(() => {
-    setDisplayed(words[wordIndex]?.slice(0, charIndex));
-  }, [charIndex, wordIndex, words]);
-
-  return displayed;
-}
-
-interface HeroStat {
-  value: string;
-  label: string;
-}
-
 export interface HeroData {
-  taglines?: Array<{ text: string }> | null;
-  stats?: Array<HeroStat> | null;
   descriptionDesktop?: string | null;
   descriptionMobile?: string | null;
-  phoneNumber?: string | null;
   whatsappUrl?: string | null;
   ctaPrimaryLabel?: string | null;
   ctaPrimaryHref?: string | null;
@@ -76,45 +30,24 @@ interface HeroProps {
 }
 
 const DEFAULTS = {
-  taglines: [
-    "Perlindungan Terpercaya untuk Keluarga",
-    "Klaim Cepat, Proses Mudah",
-    "Solusi Asuransi Lengkap Anda",
-    "Dilindungi Secara Positif",
-  ],
-  stats: [
-    { value: "13+", label: "Tahun Pengalaman" },
-    { value: "20+", label: "Kantor Cabang" },
-    { value: "10+", label: "Produk Asuransi" },
-  ],
   descriptionDesktop:
-    "Sahabat Insurance berkomitmen memberikan perlindungan terbaik dengan layanan klaim yang cepat, produk yang komprehensif, dan tim yang siap membantu kapan pun Anda membutuhkan.",
+    "Solusi asuransi terpercaya untuk keluarga kesehatan dan masa depan finansial bersama Sahabat Insurance",
   descriptionMobile:
-    "Perlindungan terbaik dengan klaim cepat dan tim siap membantu Anda.",
-  phoneNumber: "(021) 5050-8080",
+    "Solusi asuransi terpercaya untuk keluarga dan masa depan finansial Anda.",
   whatsappUrl: "https://wa.me/622150508080",
-  ctaPrimaryLabel: "Dapatkan Penawaran Gratis",
-  ctaPrimaryHref: "#contact",
-  ctaSecondaryLabel: "Hubungi Kami",
+  ctaPrimaryLabel: "Lihat Pilihan Produk",
+  ctaPrimaryHref: "#produk",
+  ctaSecondaryLabel: "Konsultasi via WhatsApp",
 };
 
 export default function Hero({ data }: HeroProps) {
-  const taglineTexts =
-    data?.taglines?.map((t) => t.text).filter(Boolean) ?? DEFAULTS.taglines;
-
-  const stats = data?.stats?.length ? data.stats : DEFAULTS.stats;
-
   const descDesktop = data?.descriptionDesktop ?? DEFAULTS.descriptionDesktop;
   const descMobile = data?.descriptionMobile ?? DEFAULTS.descriptionMobile;
-  const phone = data?.phoneNumber ?? DEFAULTS.phoneNumber;
-  const phoneHref = `tel:${phone.replace(/\D/g, "")}`;
   const whatsappUrl = data?.whatsappUrl ?? DEFAULTS.whatsappUrl;
   const ctaPrimaryLabel = data?.ctaPrimaryLabel ?? DEFAULTS.ctaPrimaryLabel;
   const ctaPrimaryHref = data?.ctaPrimaryHref ?? DEFAULTS.ctaPrimaryHref;
   const ctaSecondaryLabel =
     data?.ctaSecondaryLabel ?? DEFAULTS.ctaSecondaryLabel;
-
-  const tagline = useTypewriter(taglineTexts);
 
   return (
     <section
@@ -126,48 +59,46 @@ export default function Hero({ data }: HeroProps) {
         aria-hidden="true"
       />
 
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-24 pb-16 sm:pt-32 sm:pb-28 lg:pt-36 lg:pb-32 w-full">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-28 pb-16 sm:pt-36 sm:pb-28 lg:pt-40 lg:pb-32 w-full">
         <motion.div
           variants={stagger}
           initial="hidden"
           animate="show"
-          className="flex flex-col gap-4 sm:gap-5 max-w-lg sm:max-w-xl"
+          className="flex flex-col gap-5 sm:gap-6 max-w-lg sm:max-w-xl"
         >
           <motion.h1
             variants={fadeUp}
-            className="text-5xl sm:text-4xl md:text-5xl leading-snug tracking-tight"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight text-white"
           >
-            <span className="hidden sm:block font-normal text-text-primary">
-              Selamat datang di
-            </span>
-            <span className="block font-bold text-white sm:text-navy">
-              Sahabat Insurance
+            {/* <span className="sm:hidden">
+              {tagline}
+              <span
+                className="ml-0.5 inline-block w-0.5 h-8 align-middle bg-white animate-pulse"
+                aria-hidden="true"
+              />
+            </span> */}
+            <span className="">
+              Perlindungan Tepat
+              <br />
+              untuk Setiap Tahap
+              <br />
+              Kehidupan Anda
             </span>
           </motion.h1>
 
-          <motion.div variants={fadeUp} className="min-h-[2.5rem]">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white sm:text-text-primary">
-              {tagline}
-              <span
-                className="ml-0.5 inline-block w-0.5 h-7 align-middle bg-white sm:bg-navy animate-pulse"
-                aria-hidden="true"
-              />
-            </h2>
-          </motion.div>
-
           <motion.p
             variants={fadeUp}
-            className="text-base leading-relaxed text-white/90 sm:text-text-muted"
+            className="text-base sm:text-lg leading-relaxed text-white/90"
           >
             <span className="sm:hidden">{descMobile}</span>
             <span className="hidden sm:inline">{descDesktop}</span>
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-col gap-3">
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3">
               <a
                 href={ctaPrimaryHref}
-                className="hidden sm:inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-navy text-white font-semibold hover:bg-navy/90 transition-all shadow-lg shadow-navy/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white text-navy font-semibold hover:bg-white/90 transition-all shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 {ctaPrimaryLabel}
               </a>
@@ -175,61 +106,20 @@ export default function Hero({ data }: HeroProps) {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-slate-300 text-text-primary bg-white/70 hover:bg-white transition-all backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-semibold border-2 border-white text-white hover:bg-white/10 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-5 h-5 shrink-0"
+                  aria-hidden="true"
+                >
+                  <path d="M12.001 2C6.478 2 2 6.478 2 12c0 1.85.504 3.584 1.384 5.074L2.05 21.95l5.033-1.316A9.95 9.95 0 0 0 12.001 22c5.523 0 10-4.478 10-10S17.524 2 12.001 2Zm0 18a7.95 7.95 0 0 1-4.052-1.104l-.29-.173-3.004.786.806-2.932-.19-.302A7.95 7.95 0 0 1 4 12c0-4.41 3.589-8 8.001-8C16.41 4 20 7.59 20 12s-3.589 8-7.999 8Zm4.388-5.91c-.24-.12-1.42-.7-1.64-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.01-.373-1.922-1.186-.71-.633-1.19-1.414-1.33-1.654-.14-.24-.015-.37.105-.49.108-.107.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.195-.47-.393-.406-.54-.413l-.46-.008c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.618.573.247 1.02.394 1.368.504.575.183 1.099.157 1.513.095.462-.069 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z" />
+                </svg>
                 {ctaSecondaryLabel}
               </a>
             </div>
-
-            <div className="sm:hidden flex flex-col gap-0.5">
-              <span className="text-xs text-white/60 uppercase tracking-widest">
-                Konsultasi Gratis
-              </span>
-              <a
-                href={phoneHref}
-                className="text-lg font-bold text-white hover:text-white/80 transition-colors"
-              >
-                {phone}
-              </a>
-            </div>
-
-            <p className="hidden sm:block text-sm text-text-muted">
-              Atau hubungi kami langsung di{" "}
-              <a
-                href={phoneHref}
-                className="font-medium text-navy hover:underline"
-              >
-                {phone}
-              </a>{" "}
-              untuk konsultasi gratis
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-wrap items-center gap-x-4 gap-y-3 sm:gap-x-6 pt-2"
-          >
-            {stats.map((stat, i) => (
-              <div
-                key={stat.label}
-                className="flex items-center gap-4 sm:gap-6"
-              >
-                <div>
-                  <div className="text-xl sm:text-2xl font-bold text-white sm:text-text-primary">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-white/70 sm:text-text-muted">
-                    {stat.label}
-                  </div>
-                </div>
-                {i < stats.length - 1 && (
-                  <div
-                    className="w-px h-8 bg-white/30 sm:bg-slate-300"
-                    aria-hidden="true"
-                  />
-                )}
-              </div>
-            ))}
           </motion.div>
         </motion.div>
       </div>

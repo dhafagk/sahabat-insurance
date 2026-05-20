@@ -30,24 +30,6 @@ export const LandingPage: GlobalConfig = {
           label: 'Hero',
           fields: [
             {
-              name: 'taglines',
-              type: 'array',
-              label: 'Typewriter Taglines',
-              minRows: 1,
-              fields: [
-                { name: 'text', type: 'text', required: true },
-              ],
-            },
-            {
-              name: 'stats',
-              type: 'array',
-              label: 'Stats',
-              fields: [
-                { name: 'value', type: 'text', required: true },
-                { name: 'label', type: 'text', required: true },
-              ],
-            },
-            {
               name: 'descriptionDesktop',
               type: 'text',
               label: 'Description (Desktop)',
@@ -57,7 +39,6 @@ export const LandingPage: GlobalConfig = {
               type: 'text',
               label: 'Description (Mobile)',
             },
-            { name: 'phoneNumber', type: 'text', label: 'Phone Number' },
             { name: 'whatsappUrl', type: 'text', label: 'WhatsApp URL' },
             { name: 'ctaPrimaryLabel', type: 'text', label: 'Primary CTA Label' },
             { name: 'ctaPrimaryHref', type: 'text', label: 'Primary CTA Href' },
@@ -141,6 +122,9 @@ export const LandingPage: GlobalConfig = {
             { name: 'primaryLabel', type: 'text', label: 'Primary Button Label' },
             { name: 'primaryHref', type: 'text', label: 'Primary Button Href' },
             { name: 'whatsappUrl', type: 'text', label: 'WhatsApp URL' },
+            { name: 'contactAddress', type: 'textarea', label: 'Contact Address' },
+            { name: 'contactPhone', type: 'text', label: 'Contact Phone' },
+            { name: 'contactEmail', type: 'email', label: 'Contact Email' },
             {
               name: 'backgroundImage',
               type: 'upload',
