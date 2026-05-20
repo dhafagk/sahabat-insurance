@@ -154,7 +154,7 @@ const DEFAULT_FOOTER: FooterData = {
         },
         {
           blockType: "imageContent",
-          image: { url: "/logo-white.png", alt: "Sahabat Insurance" },
+          image: { url: "/logo-asuransi.png", alt: "Sahabat Insurance" },
           href: "/",
           width: 160,
           height: 46,
@@ -412,7 +412,7 @@ function RenderLinkList({ block }: { block: LinkListBlock }) {
         <li key={link.id ?? i}>
           <a
             href={link.href}
-            className="flex items-center gap-1.5 text-slate-400 hover:text-white text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded"
+            className="flex items-center gap-1.5 text-slate-500 hover:text-slate-900 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 rounded"
           >
             {link.icon && link.icon !== "none" && (
               <BlockIcon name={link.icon} />
@@ -429,10 +429,10 @@ function RenderContactInfo({ block }: { block: ContactInfoBlock }) {
   return (
     <div className="flex flex-col gap-1">
       {block.subheading && (
-        <p className="text-slate-400 text-sm mb-1">{block.subheading}</p>
+        <p className="text-slate-500 text-sm mb-1">{block.subheading}</p>
       )}
       {block.companyName && (
-        <p className="text-white text-sm font-medium mb-2">
+        <p className="text-slate-800 text-sm font-medium mb-2">
           {block.companyName}
         </p>
       )}
@@ -456,12 +456,12 @@ function RenderContactInfo({ block }: { block: ContactInfoBlock }) {
               {href ? (
                 <a
                   href={href}
-                  className="text-slate-400 hover:text-white text-sm transition-colors break-all"
+                  className="text-slate-500 hover:text-slate-900 text-sm transition-colors break-all"
                 >
                   {display}
                 </a>
               ) : (
-                <span className="text-slate-400 text-sm leading-relaxed whitespace-pre-line">
+                <span className="text-slate-500 text-sm leading-relaxed whitespace-pre-line">
                   {display}
                 </span>
               )}
@@ -476,7 +476,7 @@ function RenderContactInfo({ block }: { block: ContactInfoBlock }) {
 function RenderText({ block }: { block: TextContentBlock }) {
   if (!block.content) return null;
   return (
-    <p className="text-slate-400 text-sm leading-relaxed whitespace-pre-line">
+    <p className="text-slate-500 text-sm leading-relaxed whitespace-pre-line">
       {block.content}
     </p>
   );
@@ -510,12 +510,12 @@ function RenderImage({ block }: { block: ImageContentBlock }) {
 function RenderBadge({ block }: { block: BadgeBlock }) {
   if (!block.line1 && !block.line2) return null;
   return (
-    <div className="mt-1 inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-700 w-fit">
+    <div className="mt-1 inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 w-fit">
       <div className="flex flex-col leading-tight">
         {block.line1 && (
           <span
             className={`text-[10px] font-bold uppercase tracking-wide ${
-              block.accentLine === "line1" ? "text-accent" : "text-white"
+              block.accentLine === "line1" ? "text-accent" : "text-slate-800"
             }`}
           >
             {block.line1}
@@ -524,7 +524,7 @@ function RenderBadge({ block }: { block: BadgeBlock }) {
         {block.line2 && (
           <span
             className={`text-[10px] font-bold uppercase tracking-wide ${
-              block.accentLine === "line2" ? "text-accent" : "text-white"
+              block.accentLine === "line2" ? "text-accent" : "text-slate-800"
             }`}
           >
             {block.line2}
@@ -538,7 +538,7 @@ function RenderBadge({ block }: { block: BadgeBlock }) {
 function RenderSectionHeading({ block }: { block: SectionHeadingBlock }) {
   if (!block.text) return null;
   return (
-    <h4 className="text-white font-semibold text-sm uppercase tracking-wide mt-2">
+    <h4 className="text-slate-800 font-semibold text-sm uppercase tracking-wide mt-2">
       {block.text}
     </h4>
   );
@@ -579,7 +579,11 @@ export default function Footer({ data }: FooterProps) {
     footer.consumerProtection ?? DEFAULT_FOOTER.consumerProtection ?? null;
 
   return (
-    <footer style={{ background: "#0F172A" }} aria-label="Site footer">
+    <footer
+      style={{ background: "#EFF6FF" }}
+      className="border-t border-blue-100"
+      aria-label="Site footer"
+    >
       <div className="max-w-7xl mx-auto px-6 pt-14 pb-0">
         {/* Upper grid — up to 6 columns */}
         <div
@@ -596,7 +600,7 @@ export default function Footer({ data }: FooterProps) {
           {upper.map((col, i) => (
             <div key={col.id ?? i} className="flex flex-col gap-3">
               {col.title && (
-                <h3 className="text-white font-semibold text-sm uppercase tracking-wide border-b border-slate-700 pb-2">
+                <h3 className="text-slate-800 font-semibold text-sm uppercase tracking-wide border-b border-slate-200 pb-2">
                   {col.title}
                 </h3>
               )}
@@ -609,29 +613,29 @@ export default function Footer({ data }: FooterProps) {
 
         {/* Perlindungan Konsumen */}
         {cp && (
-          <div className="border-t border-slate-800 pt-8 pb-8 flex flex-col md:flex-row md:items-start gap-6 md:gap-10">
+          <div className="border-t border-slate-200 pt-8 pb-8 flex flex-col md:flex-row md:items-start gap-6 md:gap-10">
             <div className="flex-1">
-              <h3 className="text-white font-semibold text-sm uppercase tracking-wide mb-2">
+              <h3 className="text-slate-800 font-semibold text-sm uppercase tracking-wide mb-2">
                 {cp.title}
               </h3>
               {cp.description && (
-                <p className="text-slate-400 text-sm leading-relaxed max-w-md">
+                <p className="text-slate-500 text-sm leading-relaxed max-w-md">
                   {cp.description}
                 </p>
               )}
             </div>
             <a
               href={cp.href ?? "#"}
-              style={{ background: "#1E293B" }}
-              className="rounded-xl p-5 flex flex-col gap-3 min-w-[260px] max-w-xs border border-slate-700 hover:border-slate-500 transition-colors"
+              style={{ background: "#DBEAFE" }}
+              className="rounded-xl p-5 flex flex-col gap-3 min-w-[260px] max-w-xs border border-blue-200 hover:border-blue-400 transition-colors"
             >
               {cp.organizationName && (
-                <p className="text-white text-sm font-medium leading-relaxed">
+                <p className="text-slate-800 text-sm font-medium leading-relaxed">
                   {cp.organizationName}
                 </p>
               )}
               {cp.phone && (
-                <div className="flex items-center gap-2 text-slate-300 text-sm">
+                <div className="flex items-center gap-2 text-slate-600 text-sm">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -653,7 +657,7 @@ export default function Footer({ data }: FooterProps) {
         )}
 
         {/* Lower bar */}
-        <div className="border-t border-slate-800 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-slate-200 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Nav links */}
           {lower.links && lower.links.length > 0 && (
             <nav
@@ -662,10 +666,10 @@ export default function Footer({ data }: FooterProps) {
             >
               {lower.links.map(({ label, href, id }, i) => (
                 <span key={id ?? i} className="flex items-center gap-1">
-                  {i > 0 && <span className="text-slate-600">|</span>}
+                  {i > 0 && <span className="text-slate-300">|</span>}
                   <a
                     href={href}
-                    className="text-slate-400 hover:text-white text-sm transition-colors px-1"
+                    className="text-slate-500 hover:text-slate-900 text-sm transition-colors px-1"
                   >
                     {label}
                   </a>
@@ -687,7 +691,7 @@ export default function Footer({ data }: FooterProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={platform}
-                    className="w-7 h-7 rounded-full border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-500 transition-colors"
+                    className="w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:border-slate-500 transition-colors"
                   >
                     <Icon />
                   </a>
@@ -698,8 +702,8 @@ export default function Footer({ data }: FooterProps) {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-slate-800 py-4 text-center">
-          <p className="text-slate-500 text-sm">
+        <div className="border-t border-slate-200 py-4 text-center">
+          <p className="text-slate-400 text-sm">
             {lower.copyrightText ?? DEFAULT_FOOTER.lowerFooter?.copyrightText}
           </p>
         </div>
