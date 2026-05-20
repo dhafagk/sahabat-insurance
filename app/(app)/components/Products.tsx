@@ -1,7 +1,7 @@
 "use client";
 
-import { Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ProductModal from "./ProductModal";
@@ -117,23 +117,26 @@ function FallbackIcon() {
 
 function ProductsInner({ products, sectionMeta }: ProductsProps) {
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   const badge = sectionMeta?.badge ?? DEFAULTS.badge;
   const heading = sectionMeta?.heading ?? DEFAULTS.heading;
   const items = products?.length ? products : DEFAULTS.products;
 
-  const slug = searchParams.get("product");
-  const selected = slug
-    ? (items.find((p) => toProductSlug(p.title) === slug) ?? null)
-    : null;
+  const initialSlug = searchParams.get("product");
+  const [selected, setSelected] = useState<ProductItem | null>(
+    initialSlug
+      ? (items.find((p) => toProductSlug(p.title) === initialSlug) ?? null)
+      : null,
+  );
 
   const openProduct = (product: ProductItem) => {
-    router.push(`/?product=${toProductSlug(product.title)}`, { scroll: false });
+    setSelected(product);
+    window.history.pushState(null, "", `/?product=${toProductSlug(product.title)}`);
   };
 
   const closeProduct = () => {
-    router.replace("/", { scroll: false });
+    setSelected(null);
+    window.history.replaceState(null, "", "/");
   };
 
   return (
