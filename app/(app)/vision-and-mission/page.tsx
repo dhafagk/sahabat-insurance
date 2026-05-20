@@ -144,19 +144,16 @@ export default async function VisiMisiPage() {
 
         <div className="relative max-w-7xl mx-auto px-6">
           <nav
-            className="flex items-center gap-1.5 text-xs text-white/40 mb-8"
+            className="flex items-center gap-1.5 text-xs text-white/50 mb-8"
             aria-label="Breadcrumb"
           >
-            <Link href="/" className="hover:text-white/70 transition-colors">
+            <Link href="/" className="hover:text-white/80 transition-colors">
               Beranda
             </Link>
             <span>›</span>
-            <span className="text-white/70">Vision &amp; Mission</span>
+            <span className="text-white/80">Vision &amp; Mission</span>
           </nav>
 
-          <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold tracking-widest uppercase mb-4">
-            Tentang Kami
-          </span>
           <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight mb-3">
             {pageTitle}
           </h1>

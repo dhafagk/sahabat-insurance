@@ -800,6 +800,20 @@ export interface LandingPage {
     contactPhone?: string | null;
     contactEmail?: string | null;
     backgroundImage?: (number | null) | Media;
+    actionCards?:
+      | {
+          icon: 'whatsapp' | 'envelope' | 'agen' | 'car' | 'phone';
+          label: string;
+          sublabel?: string | null;
+          /**
+           * e.g. #16a34a
+           */
+          bgColor?: string | null;
+          href?: string | null;
+          useWhatsappUrl?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1090,6 +1104,17 @@ export interface LandingPageSelect<T extends boolean = true> {
         contactPhone?: T;
         contactEmail?: T;
         backgroundImage?: T;
+        actionCards?:
+          | T
+          | {
+              icon?: T;
+              label?: T;
+              sublabel?: T;
+              bgColor?: T;
+              href?: T;
+              useWhatsappUrl?: T;
+              id?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
