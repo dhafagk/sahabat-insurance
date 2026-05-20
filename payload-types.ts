@@ -198,10 +198,6 @@ export interface Product {
    */
   icon?: (number | null) | Media;
   /**
-   * Longer description shown inside the product modal
-   */
-  detailDescription?: string | null;
-  /**
    * Link to the Riplay document or page
    */
   riplayUrl?: string | null;
@@ -570,7 +566,6 @@ export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   icon?: T;
-  detailDescription?: T;
   riplayUrl?: T;
   sppaUrl?: T;
   order?: T;

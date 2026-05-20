@@ -15,7 +15,7 @@ export const Products: CollectionConfig = {
     },
     {
       name: "description",
-      type: "text",
+      type: "textarea",
       required: true,
     },
     {
@@ -25,14 +25,6 @@ export const Products: CollectionConfig = {
       relationTo: "media",
       admin: {
         description: "Upload an SVG or PNG icon for this product (recommended: SVG, square format)",
-      },
-    },
-    {
-      name: "detailDescription",
-      type: "textarea",
-      label: "Detail Description (Modal)",
-      admin: {
-        description: "Longer description shown inside the product modal",
       },
     },
     {

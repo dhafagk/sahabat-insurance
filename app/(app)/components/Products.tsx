@@ -14,7 +14,6 @@ export interface ProductItem {
   title: string;
   description: string;
   icon?: ProductIcon | null;
-  detailDescription?: string | null;
   riplayUrl?: string | null;
   sppaUrl?: string | null;
 }
@@ -141,10 +140,10 @@ export default function Products({ products, sectionMeta }: ProductsProps) {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {items.map((product) => (
-            <motion.div key={product.title} variants={cardVariants} whileHover={{ y: -8 }}>
+            <motion.div key={product.title} variants={cardVariants} whileHover={{ y: -8 }} className="h-full">
               <Link
                 href={`/products/${toProductSlug(product.title)}`}
-                className="block bg-card rounded-2xl border border-slate-100 p-6 group transition-all duration-300 hover:border-navy hover:shadow-xl"
+                className="flex flex-col h-full bg-card rounded-2xl border border-slate-100 p-6 group transition-all duration-300 hover:border-navy hover:shadow-xl"
               >
                 <div
                   className="w-24 h-24 rounded-2xl flex items-center justify-center mb-5 bg-gradient-to-br from-slate-50 to-slate-100 group-hover:from-navy/5 group-hover:to-navy/10 transition-all duration-300 overflow-hidden"

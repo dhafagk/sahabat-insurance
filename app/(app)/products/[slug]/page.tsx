@@ -48,7 +48,7 @@ export async function generateMetadata({
   if (!product) return {};
   return {
     title: `${product.title} | Sahabat Insurance`,
-    description: product.detailDescription ?? product.description,
+    description: product.description,
   };
 }
 
@@ -76,10 +76,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
             preserveAspectRatio="none"
             className="w-full h-10"
           >
-            <path
-              d="M0,32 C80,0 320,0 400,32 L400,32 L0,32 Z"
-              fill="#f8f9fc"
-            />
+            <path d="M0,32 C80,0 320,0 400,32 L400,32 L0,32 Z" fill="#f8f9fc" />
           </svg>
         </div>
 
@@ -146,7 +143,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
         <div className="max-w-2xl mx-auto px-6 pt-6 pb-16">
           {/* Description */}
           <p className="text-text-muted leading-relaxed text-center text-base mb-10">
-            {product.detailDescription ?? product.description}
+            {product.description}
           </p>
 
           {/* Action buttons — same style as ProductModal footer */}
@@ -203,16 +200,6 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <Phone size={15} />
               Hubungi Kami
             </a>
-          </div>
-
-          {/* Back link */}
-          <div className="mt-8 text-center">
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-navy transition-colors"
-            >
-              ← Kembali ke semua produk
-            </Link>
           </div>
         </div>
       </main>
