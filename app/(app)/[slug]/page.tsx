@@ -315,6 +315,8 @@ export default async function PageDetail({ params }: PageProps) {
         ? normaliseSections(unduhanDoc.sections)
         : [];
 
+    const requireEmailGate = Boolean(unduhanDoc.requireEmailGate);
+
     return (
       <>
         <Navbar />
@@ -338,9 +340,6 @@ export default async function PageDetail({ params }: PageProps) {
               <span className="text-white/80">{unduhanDoc.title}</span>
             </nav>
 
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-accent/20 text-accent text-sm font-semibold mb-4">
-              Dokumen & Formulir
-            </span>
             <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-3">
               {unduhanDoc.title}
             </h1>
@@ -355,7 +354,11 @@ export default async function PageDetail({ params }: PageProps) {
         <main className="bg-bg min-h-screen">
           <div className="max-w-4xl mx-auto px-6 py-12">
             {sections.length > 0 ? (
-              <UnduhContent sections={sections} />
+              <UnduhContent
+                sections={sections}
+                requireEmailGate={requireEmailGate}
+                unduhanlId={String(unduhanDoc.id)}
+              />
             ) : (
               <p className="text-center text-text-muted py-24">
                 Belum ada dokumen yang tersedia.

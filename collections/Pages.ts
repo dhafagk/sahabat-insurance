@@ -12,6 +12,11 @@ export const Pages: CollectionConfig = {
       const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3969';
       return doc?.slug ? `${base}/${doc.slug}` : null;
     },
+    components: {
+      edit: {
+        beforeDocumentControls: ['./components/admin/PublishButton#PublishButton'],
+      },
+    },
   },
   fields: [
     {

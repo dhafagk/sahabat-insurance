@@ -31,7 +31,9 @@ const fetchDoc = cache(async (slug: string) => {
   return result.docs[0] ?? null;
 });
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const doc = await fetchDoc(slug);
   if (!doc) return {};
@@ -56,7 +58,10 @@ function normaliseSections(raw: any[]): AccordionSection[] {
         size: item.size ?? null,
         file:
           typeof item.file === "object" && item.file !== null
-            ? { url: item.file.url ?? null, filesize: item.file.filesize ?? null }
+            ? {
+                url: item.file.url ?? null,
+                filesize: item.file.filesize ?? null,
+              }
             : null,
         href: item.href ?? null,
       }),
@@ -69,9 +74,12 @@ export default async function UnduhDetailPage({ params }: PageProps) {
   const doc = await fetchDoc(slug);
   if (!doc) notFound();
 
-  const sections: AccordionSection[] = Array.isArray(doc.sections) && doc.sections.length > 0
-    ? normaliseSections(doc.sections)
-    : [];
+  const sections: AccordionSection[] =
+    Array.isArray(doc.sections) && doc.sections.length > 0
+      ? normaliseSections(doc.sections)
+      : [];
+
+  const requireEmailGate = Boolean(doc.requireEmailGate);
 
   return (
     <>
@@ -87,16 +95,16 @@ export default async function UnduhDetailPage({ params }: PageProps) {
               Beranda
             </Link>
             <span>›</span>
-            <Link href="/unduhan" className="hover:text-white/80 transition-colors">
+            <Link
+              href="/unduhan"
+              className="hover:text-white/80 transition-colors"
+            >
               Unduhan
             </Link>
             <span>›</span>
             <span className="text-white/80">{doc.title}</span>
           </nav>
 
-          <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-accent/20 text-accent text-sm font-semibold mb-4">
-            Dokumen & Formulir
-          </span>
           <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-3">
             {doc.title}
           </h1>
@@ -111,7 +119,11 @@ export default async function UnduhDetailPage({ params }: PageProps) {
       <main className="bg-bg min-h-screen">
         <div className="max-w-4xl mx-auto px-6 py-12">
           {sections.length > 0 ? (
-            <UnduhContent sections={sections} />
+            <UnduhContent
+              sections={sections}
+              requireEmailGate={requireEmailGate}
+              unduhanlId={String(doc.id)}
+            />
           ) : (
             <p className="text-center text-text-muted py-24">
               Belum ada dokumen yang tersedia.

@@ -1,0 +1,87 @@
+import type { GlobalConfig } from 'payload'
+
+export const ContactUs: GlobalConfig = {
+  slug: 'contact-us',
+  label: 'Contact Us',
+  admin: {
+    group: 'Halaman',
+    livePreview: {
+      url: ({ req }) => `${req.payload.config.serverURL}/contact-us`,
+    },
+  },
+  fields: [
+    {
+      name: 'pageTitle',
+      type: 'text',
+      label: 'Judul Halaman',
+      defaultValue: 'Hubungi Kami',
+    },
+    {
+      name: 'pageSubtitle',
+      type: 'text',
+      label: 'Subtitle Halaman',
+      defaultValue: 'Kami siap membantu Anda. Pilih cara yang paling nyaman untuk menghubungi tim kami.',
+    },
+    {
+      name: 'sectionTitle',
+      type: 'text',
+      label: 'Judul Bagian Kartu Kontak',
+      defaultValue: 'Kami Siap Melayani Anda',
+    },
+    {
+      name: 'sectionSubtitle',
+      type: 'text',
+      label: 'Subtitle Bagian Kartu Kontak',
+      defaultValue: "We'd love to talk about how we can help you",
+    },
+    {
+      name: 'channels',
+      type: 'array',
+      label: 'Saluran Kontak',
+      admin: {
+        description: 'Kartu kontak yang ditampilkan di halaman (telepon, WA, email, dll)',
+      },
+      fields: [
+        {
+          name: 'iconType',
+          type: 'select',
+          label: 'Ikon',
+          required: true,
+          options: [
+            { label: 'Telepon', value: 'phone' },
+            { label: 'WhatsApp', value: 'whatsapp' },
+            { label: 'Email', value: 'email' },
+            { label: 'Formulir', value: 'form' },
+          ],
+          defaultValue: 'phone',
+        },
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Judul',
+          required: true,
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          label: 'Deskripsi',
+          required: true,
+        },
+        {
+          name: 'href',
+          type: 'text',
+          label: 'Link (URL)',
+          admin: {
+            description: 'Contoh: tel:02150508080, https://wa.me/622150508080, mailto:info@..., atau #form-pengaduan',
+          },
+        },
+        {
+          name: 'hrefLabel',
+          type: 'text',
+          label: 'Label Tombol',
+          defaultValue: 'Selengkapnya',
+        },
+      ],
+    },
+  ],
+}

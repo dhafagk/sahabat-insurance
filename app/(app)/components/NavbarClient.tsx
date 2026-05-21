@@ -35,19 +35,19 @@ export default function NavbarClient({ data }: Props) {
   const solid = !isLanding || scrolled;
 
   return (
-    <header
-      className={cn(
-        "fixed w-full z-50 transition-all duration-500",
-        solid
-          ? "bg-white/95 top-0 backdrop-blur-md shadow-lg border border-slate-200/60"
-          : "bg-transparent top-5 border-transparent",
-      )}
-    >
-      <div className="mx-auto flex h-16 md:h-20 justify-between items-center gap-2 sm:gap-4 px-4 sm:px-6 max-w-7xl">
+    <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4 sm:px-6">
+      <div
+        className={cn(
+          "pointer-events-auto mx-auto flex h-14 md:h-16 w-full max-w-7xl items-center justify-between gap-2 rounded-full px-4 sm:px-6 transition-all duration-500 ease-out",
+          solid
+            ? "border border-slate-200/80 bg-white/95 shadow-xl shadow-navy/10 backdrop-blur-md"
+            : "border border-white/25 bg-white/10 backdrop-blur-sm",
+        )}
+      >
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center"
+          className="flex shrink-0 items-center"
           aria-label="Sahabat Insurance home"
         >
           <Image
@@ -56,7 +56,7 @@ export default function NavbarClient({ data }: Props) {
             width={200}
             height={68}
             className={cn(
-              "h-12 md:h-14 mt-1.5 md:mt-0 w-auto object-contain transition-[filter] duration-300",
+              "h-10 md:h-12 w-auto object-contain transition-[filter] duration-300",
               !solid && "brightness-0 invert",
             )}
             priority
@@ -72,10 +72,10 @@ export default function NavbarClient({ data }: Props) {
                   <NavigationMenuItem key={index} className="relative">
                     <NavigationMenuTrigger
                       className={cn(
-                        "h-9 rounded-none px-3 py-1.5 font-medium border-b-2 border-transparent transition-all bg-transparent hover:bg-transparent",
+                        "h-9 rounded-full px-3 py-1.5 text-sm font-medium transition-all bg-transparent",
                         solid
-                          ? "text-text-primary hover:text-navy hover:border-navy data-[state=open]:border-navy data-[state=open]:bg-transparent data-[state=open]:text-navy"
-                          : "text-white hover:text-white hover:border-white/60 data-[state=open]:border-white data-[state=open]:bg-transparent data-[state=open]:text-white",
+                          ? "text-text-primary hover:bg-slate-100 hover:text-navy data-[state=open]:bg-slate-100 data-[state=open]:text-navy"
+                          : "text-white hover:bg-white/15 hover:text-white data-[state=open]:bg-white/15 data-[state=open]:text-white",
                       )}
                     >
                       {link.label}
@@ -95,10 +95,10 @@ export default function NavbarClient({ data }: Props) {
                     href={link.href}
                     asChild
                     className={cn(
-                      "text-sm h-9 rounded-none px-3 py-1.5 font-medium border-b-2 border-transparent transition-all bg-transparent hover:bg-transparent",
+                      "inline-flex h-9 items-center rounded-full px-3 py-1.5 text-sm font-medium transition-all",
                       solid
-                        ? "text-text-primary hover:text-navy hover:border-navy"
-                        : "text-white hover:text-white hover:border-white/60",
+                        ? "text-text-primary hover:bg-slate-100 hover:text-navy"
+                        : "text-white hover:bg-white/15 hover:text-white",
                     )}
                   >
                     <Link href={link.href}>{link.label}</Link>
@@ -110,20 +110,20 @@ export default function NavbarClient({ data }: Props) {
         </NavigationMenu>
 
         {/* CTA + mobile hamburger */}
-        <div
-          className={cn(
-            "flex md:hidden items-center justify-end gap-2",
-            !solid && "text-white",
-          )}
-        >
+        <div className="flex shrink-0 items-center gap-2">
           <Link
             href="#contact"
-            className="hidden md:inline-flex items-center justify-center font-semibold px-5 text-sm h-9 rounded-full transition-all duration-200 bg-navy hover:bg-navy/90 text-white shadow-sm"
+            className={cn(
+              "hidden md:inline-flex items-center justify-center font-semibold px-5 text-sm h-9 rounded-full transition-all duration-200",
+              solid
+                ? "bg-navy hover:bg-navy/90 text-white shadow-sm shadow-navy/30"
+                : "bg-white text-navy hover:bg-white/90",
+            )}
             aria-label="Hubungi Kami"
           >
             Hubungi Kami
           </Link>
-          <MobileNav nav={data.mobile} />
+          <MobileNav nav={data.mobile} solid={solid} />
         </div>
       </div>
     </header>

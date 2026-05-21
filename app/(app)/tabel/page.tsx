@@ -122,7 +122,7 @@ export default async function TabelIndexPage() {
 
                   <div className="flex items-center justify-between mt-auto pt-2">
                     <span className="text-xs text-text-muted">
-                      {card.rowCount} baris · {card.tableCount} tabel
+                      {card.rowCount} data · {card.tableCount} tabel
                     </span>
                     <span className="inline-flex items-center gap-1 text-sm font-medium text-accent">
                       Lihat

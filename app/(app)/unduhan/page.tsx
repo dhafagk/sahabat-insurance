@@ -36,7 +36,8 @@ export default async function UnduhIndexPage() {
       const sections = Array.isArray(doc.sections) ? doc.sections : [];
       const fileCount = sections.reduce(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (sum: number, s: any) => sum + (Array.isArray(s.items) ? s.items.length : 0),
+        (sum: number, s: any) =>
+          sum + (Array.isArray(s.items) ? s.items.length : 0),
         0,
       );
       return {
@@ -68,9 +69,6 @@ export default async function UnduhIndexPage() {
             <span className="text-white/80">Unduhan</span>
           </nav>
 
-          <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-accent/20 text-accent text-sm font-semibold mb-4">
-            Dokumen & Formulir
-          </span>
           <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-3">
             Pusat Unduhan
           </h1>
@@ -86,7 +84,11 @@ export default async function UnduhIndexPage() {
           {cards.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-32 gap-4">
               <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center">
-                <FileArchive size={28} className="text-text-muted" aria-hidden="true" />
+                <FileArchive
+                  size={28}
+                  className="text-text-muted"
+                  aria-hidden="true"
+                />
               </div>
               <p className="text-text-muted text-sm">
                 Belum ada dokumen yang dipublikasikan.

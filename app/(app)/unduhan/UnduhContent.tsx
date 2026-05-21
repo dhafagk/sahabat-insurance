@@ -9,6 +9,7 @@ import {
   ExternalLink,
   FileCheck,
 } from "lucide-react";
+import EmailGateModal from "./EmailGateModal";
 
 export interface DownloadItem {
   name: string;
@@ -26,11 +27,19 @@ export interface AccordionSection {
   items: DownloadItem[];
 }
 
+interface GateTarget {
+  fileName: string;
+  fileUrl: string;
+}
+
 interface AccordionItemProps {
   section: AccordionSection;
   isOpen: boolean;
   onToggle: () => void;
   index: number;
+  requireEmailGate: boolean;
+  unduhanlId?: string;
+  onGate: (target: GateTarget) => void;
 }
 
 function formatBytes(bytes: number): string {
@@ -52,7 +61,14 @@ function resolveSize(item: DownloadItem): string | null {
   return null;
 }
 
-function AccordionItem({ section, isOpen, onToggle, index }: AccordionItemProps) {
+function AccordionItem({
+  section,
+  isOpen,
+  onToggle,
+  index,
+  requireEmailGate,
+  onGate,
+}: AccordionItemProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -135,21 +151,58 @@ function AccordionItem({ section, isOpen, onToggle, index }: AccordionItemProps)
                 {section.items.map((item, i) => {
                   const href = resolveHref(item);
                   const size = resolveSize(item);
+                  const isPdf = item.type === "pdf";
+                  const gated = isPdf && requireEmailGate;
+
+                  if (gated) {
+                    return (
+                      <li key={i}>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            onGate({ fileName: item.name, fileUrl: href })
+                          }
+                          className="group w-full flex items-center gap-4 px-4 py-3 rounded-xl border border-slate-100 hover:border-navy/30 hover:bg-navy/3 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy text-left"
+                        >
+                          <div className="shrink-0 w-8 h-8 rounded-lg bg-slate-50 group-hover:bg-navy/8 flex items-center justify-center transition-colors duration-200">
+                            <FileText
+                              size={15}
+                              className="text-navy"
+                              aria-hidden="true"
+                            />
+                          </div>
+
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-text-primary group-hover:text-navy truncate transition-colors duration-200">
+                              {item.name}
+                            </p>
+                            {size && (
+                              <p className="text-xs text-text-muted mt-0.5">
+                                PDF · {size}
+                              </p>
+                            )}
+                          </div>
+
+                          <div className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border border-navy/20 text-navy group-hover:bg-navy group-hover:text-white group-hover:border-navy transition-all duration-200">
+                            <Download size={11} aria-hidden="true" />
+                            Unduh
+                          </div>
+                        </button>
+                      </li>
+                    );
+                  }
+
                   return (
                     <li key={i}>
                       <a
                         href={href}
-                        download={item.type === "pdf" ? true : undefined}
-                        target={item.type === "link" ? "_blank" : undefined}
-                        rel={
-                          item.type === "link"
-                            ? "noopener noreferrer"
-                            : undefined
-                        }
+                        download={isPdf ? true : undefined}
+                        target={!isPdf ? "_blank" : undefined}
+                        rel={!isPdf ? "noopener noreferrer" : undefined}
                         className="group flex items-center gap-4 px-4 py-3 rounded-xl border border-slate-100 hover:border-navy/30 hover:bg-navy/3 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy"
                       >
                         <div className="shrink-0 w-8 h-8 rounded-lg bg-slate-50 group-hover:bg-navy/8 flex items-center justify-center transition-colors duration-200">
-                          {item.type === "pdf" ? (
+                          {isPdf ? (
                             <FileText
                               size={15}
                               className="text-navy"
@@ -173,7 +226,7 @@ function AccordionItem({ section, isOpen, onToggle, index }: AccordionItemProps)
                               PDF · {size}
                             </p>
                           )}
-                          {item.type === "link" && !size && (
+                          {!isPdf && !size && (
                             <p className="text-xs text-text-muted mt-0.5">
                               Tautan
                             </p>
@@ -182,12 +235,12 @@ function AccordionItem({ section, isOpen, onToggle, index }: AccordionItemProps)
 
                         <div
                           className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 ${
-                            item.type === "pdf"
+                            isPdf
                               ? "border-navy/20 text-navy group-hover:bg-navy group-hover:text-white group-hover:border-navy"
                               : "border-accent/20 text-accent group-hover:bg-accent group-hover:text-white group-hover:border-accent"
                           }`}
                         >
-                          {item.type === "pdf" ? (
+                          {isPdf ? (
                             <>
                               <Download size={11} aria-hidden="true" />
                               Unduh
@@ -214,25 +267,45 @@ function AccordionItem({ section, isOpen, onToggle, index }: AccordionItemProps)
 
 interface UnduhContentProps {
   sections: AccordionSection[];
+  requireEmailGate?: boolean;
+  unduhanlId?: string;
 }
 
-export default function UnduhContent({ sections }: UnduhContentProps) {
+export default function UnduhContent({
+  sections,
+  requireEmailGate = false,
+  unduhanlId,
+}: UnduhContentProps) {
   const [openId, setOpenId] = useState<string | null>(sections[0]?.id ?? null);
+  const [gateTarget, setGateTarget] = useState<GateTarget | null>(null);
 
-  const toggle = (id: string) =>
-    setOpenId((prev) => (prev === id ? null : id));
+  const toggle = (id: string) => setOpenId((prev) => (prev === id ? null : id));
 
   return (
-    <div className="flex flex-col gap-3">
-      {sections.map((section, index) => (
-        <AccordionItem
-          key={section.id}
-          section={section}
-          isOpen={openId === section.id}
-          onToggle={() => toggle(section.id)}
-          index={index}
+    <>
+      <div className="flex flex-col gap-3">
+        {sections.map((section, index) => (
+          <AccordionItem
+            key={section.id}
+            section={section}
+            isOpen={openId === section.id}
+            onToggle={() => toggle(section.id)}
+            index={index}
+            requireEmailGate={requireEmailGate}
+            unduhanlId={unduhanlId}
+            onGate={setGateTarget}
+          />
+        ))}
+      </div>
+
+      {gateTarget && (
+        <EmailGateModal
+          fileName={gateTarget.fileName}
+          fileUrl={gateTarget.fileUrl}
+          unduhanlId={unduhanlId}
+          onClose={() => setGateTarget(null)}
         />
-      ))}
-    </div>
+      )}
+    </>
   );
 }

@@ -5,13 +5,15 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Button } from "./button";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { cn } from "@/app/(app)/lib/utils";
 import type { MobileSection } from "../navbarTypes";
 
 type MobileNavProps = {
   nav: MobileSection[];
+  solid?: boolean;
 };
 
-export function MobileNav({ nav }: MobileNavProps) {
+export function MobileNav({ nav, solid = true }: MobileNavProps) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -20,7 +22,12 @@ export function MobileNav({ nav }: MobileNavProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="relative size-9 touch-manipulation rounded-md bg-navy hover:bg-navy/90 focus-visible:ring-0 active:bg-navy/90 md:hidden"
+          className={cn(
+            "relative size-9 touch-manipulation rounded-full focus-visible:ring-0 md:hidden",
+            solid
+              ? "bg-navy hover:bg-navy/90 active:bg-navy/90"
+              : "bg-white/20 hover:bg-white/30 active:bg-white/30 border border-white/30",
+          )}
         >
           {open ? (
             <X className="size-5 text-white" />
@@ -31,11 +38,10 @@ export function MobileNav({ nav }: MobileNavProps) {
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="bg-white no-scrollbar h-(--radix-popover-content-available-height) w-(--radix-popover-content-available-width) overflow-y-auto rounded-none border-none p-0 shadow-lg duration-100 mt-2.5"
-        align="start"
+        className="no-scrollbar max-h-[85vh] w-[calc(100vw-2rem)] max-w-sm overflow-y-auto rounded-2xl border border-slate-200/60 bg-white p-0 shadow-2xl shadow-navy/10 duration-200"
+        align="end"
         side="bottom"
-        alignOffset={-16}
-        sideOffset={4}
+        sideOffset={8}
       >
         <div className="flex flex-col gap-8 overflow-auto p-6">
           {nav.map((category, index) => (
@@ -73,7 +79,6 @@ export function MobileNav({ nav }: MobileNavProps) {
             </div>
           ))}
 
-          {/* CTA inside menu */}
           <Link
             href="#contact"
             onClick={() => setOpen(false)}

@@ -10,6 +10,11 @@ export const Unduhan: CollectionConfig = {
       const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3969'
       return doc?.slug ? `${base}/${doc.slug}` : null
     },
+    components: {
+      edit: {
+        beforeDocumentControls: ['./components/admin/PublishButton#PublishButton'],
+      },
+    },
   },
   fields: [
     {
@@ -57,6 +62,16 @@ export const Unduhan: CollectionConfig = {
               .replace(/\s+/g, '-')
           },
         ],
+      },
+    },
+    {
+      name: 'requireEmailGate',
+      type: 'checkbox',
+      label: 'Wajib Email untuk Unduh PDF',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: 'Jika aktif, pengguna harus memasukkan email sebelum mengunduh PDF. Link akan dikirimkan ke email mereka.',
       },
     },
     {

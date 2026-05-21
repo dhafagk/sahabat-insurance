@@ -14,11 +14,14 @@ import { Tags } from "./collections/Tags";
 import { Pages } from "./collections/Pages";
 import { Unduhan } from "./collections/Unduhan";
 import { Tabel } from "./collections/Tabel";
+import { DownloadLeads } from "./collections/DownloadLeads";
 import { LandingPage } from "./globals/LandingPage";
 import { VisiMisi } from "./globals/VisiMisi";
 import { Manajemen } from "./globals/Manajemen";
 import { NavbarConfig } from "./globals/NavbarConfig";
 import { FooterConfig } from "./globals/FooterConfig";
+import { ContactUs } from "./globals/ContactUs";
+import { SiteSettings } from "./globals/SiteSettings";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -29,9 +32,12 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    meta: {
+      icons: { icon: "/api/admin-favicon" },
+    },
   },
-  collections: [Users, Media, Products, News, Tags, Pages, Unduhan, Tabel],
-  globals: [LandingPage, VisiMisi, Manajemen, NavbarConfig, FooterConfig],
+  collections: [Users, Media, Products, News, Tags, Pages, Unduhan, Tabel, DownloadLeads],
+  globals: [LandingPage, VisiMisi, Manajemen, NavbarConfig, FooterConfig, ContactUs, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

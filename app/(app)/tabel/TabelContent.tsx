@@ -65,7 +65,7 @@ export default function TabelContent({ tables }: TabelContentProps) {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Cari data, tarif, kota, fitur..."
+              placeholder="Cari..."
               className="w-full pl-10 pr-10 py-3 rounded-xl border border-slate-200 bg-card text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-navy focus:border-navy transition-all"
               aria-label="Cari data dalam tabel"
             />
@@ -89,7 +89,7 @@ export default function TabelContent({ tables }: TabelContentProps) {
               </>
             ) : (
               <>
-                {totalRows} baris data dalam {tables.length} tabel
+                {totalRows} data dalam {tables.length} tabel
               </>
             )}
           </p>
@@ -167,7 +167,7 @@ export default function TabelContent({ tables }: TabelContentProps) {
                     )}
                   </div>
                   <span className="shrink-0 text-xs text-text-muted bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-lg">
-                    {table.rows.length} baris
+                    {table.rows.length} data
                   </span>
                 </div>
               </div>

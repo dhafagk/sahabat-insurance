@@ -75,6 +75,7 @@ export interface Config {
     pages: Page;
     unduhan: Unduhan;
     tabel: Tabel;
+    'download-leads': DownloadLead;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     unduhan: UnduhanSelect<false> | UnduhanSelect<true>;
     tabel: TabelSelect<false> | TabelSelect<true>;
+    'download-leads': DownloadLeadsSelect<false> | DownloadLeadsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -105,6 +107,8 @@ export interface Config {
     manajemen: Manajeman;
     navbar: Navbar;
     footer: Footer;
+    'contact-us': ContactUs;
+    'site-settings': SiteSetting;
   };
   globalsSelect: {
     'landing-page': LandingPageSelect<false> | LandingPageSelect<true>;
@@ -112,6 +116,8 @@ export interface Config {
     manajemen: ManajemenSelect<false> | ManajemenSelect<true>;
     navbar: NavbarSelect<false> | NavbarSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'contact-us': ContactUsSelect<false> | ContactUsSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -332,6 +338,10 @@ export interface Unduhan {
    */
   slug?: string | null;
   /**
+   * Jika aktif, pengguna harus memasukkan email sebelum mengunduh PDF. Link akan dikirimkan ke email mereka.
+   */
+  requireEmailGate?: boolean | null;
+  /**
    * Setiap seksi tampil sebagai satu item accordion yang dapat dibuka.
    */
   sections?:
@@ -421,6 +431,21 @@ export interface Tabel {
   createdAt: string;
 }
 /**
+ * Email yang dikumpulkan dari form unduh PDF.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "download-leads".
+ */
+export interface DownloadLead {
+  id: number;
+  email: string;
+  fileName?: string | null;
+  fileUrl?: string | null;
+  unduhan?: (number | null) | Unduhan;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -475,6 +500,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tabel';
         value: number | Tabel;
+      } | null)
+    | ({
+        relationTo: 'download-leads';
+        value: number | DownloadLead;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -637,6 +666,7 @@ export interface UnduhanSelect<T extends boolean = true> {
   description?: T;
   status?: T;
   slug?: T;
+  requireEmailGate?: T;
   sections?:
     | T
     | {
@@ -692,6 +722,18 @@ export interface TabelSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "download-leads_select".
+ */
+export interface DownloadLeadsSelect<T extends boolean = true> {
+  email?: T;
+  fileName?: T;
+  fileUrl?: T;
+  unduhan?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1042,6 +1084,48 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us".
+ */
+export interface ContactUs {
+  id: number;
+  pageTitle?: string | null;
+  pageSubtitle?: string | null;
+  sectionTitle?: string | null;
+  sectionSubtitle?: string | null;
+  /**
+   * Kartu kontak yang ditampilkan di halaman (telepon, WA, email, dll)
+   */
+  channels?:
+    | {
+        iconType: 'phone' | 'whatsapp' | 'email' | 'form';
+        title: string;
+        description: string;
+        /**
+         * Contoh: tel:02150508080, https://wa.me/622150508080, mailto:info@..., atau #form-pengaduan
+         */
+        href?: string | null;
+        hrefLabel?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  /**
+   * Upload a .ico, .png, or .svg file. Recommended size: 32×32 px.
+   */
+  favicon?: (number | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "landing-page_select".
  */
 export interface LandingPageSelect<T extends boolean = true> {
@@ -1337,6 +1421,39 @@ export interface FooterSelect<T extends boolean = true> {
             };
         copyrightText?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us_select".
+ */
+export interface ContactUsSelect<T extends boolean = true> {
+  pageTitle?: T;
+  pageSubtitle?: T;
+  sectionTitle?: T;
+  sectionSubtitle?: T;
+  channels?:
+    | T
+    | {
+        iconType?: T;
+        title?: T;
+        description?: T;
+        href?: T;
+        hrefLabel?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  favicon?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

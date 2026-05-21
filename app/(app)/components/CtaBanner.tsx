@@ -153,7 +153,7 @@ const DEFAULT_ACTION_CARDS = [
     label: "Daftar Agen",
     sublabel: "Bergabung bersama kami",
     bgColor: "#d97706",
-    href: "/daftar-agen",
+    href: "/agent",
     useWhatsappUrl: false,
   },
   {
@@ -161,7 +161,7 @@ const DEFAULT_ACTION_CARDS = [
     label: "Bengkel Rekanan",
     sublabel: "Temukan bengkel terdekat",
     bgColor: "#ea580c",
-    href: "/bengkel-rekanan",
+    href: "/garage-list",
     useWhatsappUrl: false,
   },
 ] satisfies ActionCardData[];
