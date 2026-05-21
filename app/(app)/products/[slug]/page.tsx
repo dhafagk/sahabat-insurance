@@ -153,17 +153,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 href={product.riplayUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-navy text-navy font-semibold hover:bg-navy/5 transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-xl border-2 border-navy text-navy text-base font-bold hover:bg-navy/5 transition-colors"
               >
-                <ArrowRight size={16} />
+                <ArrowRight size={18} />
                 Riplay
               </a>
             ) : (
               <button
                 disabled
-                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 text-slate-400 font-semibold cursor-not-allowed"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-xl border-2 border-slate-200 text-slate-400 text-base font-bold cursor-not-allowed"
               >
-                <ArrowRight size={16} />
+                <ArrowRight size={18} />
                 Riplay
               </button>
             )}
@@ -172,17 +172,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 href={product.sppaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-navy text-white font-semibold hover:bg-navy/90 transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-navy text-white text-base font-bold hover:bg-navy/90 transition-colors"
               >
-                <Download size={16} />
+                <Download size={18} />
                 Download SPPA
               </a>
             ) : (
               <button
                 disabled
-                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-100 text-slate-400 font-semibold cursor-not-allowed"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-slate-100 text-slate-400 text-base font-bold cursor-not-allowed"
               >
-                <Download size={16} />
+                <Download size={18} />
                 Download SPPA
               </button>
             )}

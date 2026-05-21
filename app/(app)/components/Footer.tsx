@@ -239,6 +239,25 @@ const DEFAULT_FOOTER: FooterData = {
           blockType: "linkList",
           links: [{ label: "Aktifitas CSR", href: "#csr" }],
         },
+        {
+          blockType: "sectionHeading",
+          text: "PERLINDUNGAN KONSUMEN",
+        },
+        {
+          blockType: "textContent",
+          content:
+            "Direktorat Jenderal Perlindungan Konsumen dan Tertib Niaga Kementerian Perdagangan Republik Indonesia",
+        },
+        {
+          blockType: "contactInfo",
+          items: [
+            {
+              type: "phone",
+              value: "tel:08531111010",
+              displayText: "0853 1111 1010",
+            },
+          ],
+        },
       ],
     },
     {
@@ -251,15 +270,6 @@ const DEFAULT_FOOTER: FooterData = {
       ],
     },
   ],
-  consumerProtection: {
-    title: "PERLINDUNGAN KONSUMEN",
-    description:
-      "Perlindungan konsumen berupa link yang dapat di klik ke halaman berikutnya berisi info dibawah ini:",
-    organizationName:
-      "Direktorat Jenderal Perlindungan Konsumen dan Tertib Niaga Kementerian Perdagangan Republik Indonesia",
-    phone: "0853 1111 1010",
-    href: "tel:08531111010",
-  },
   lowerFooter: {
     links: [
       { label: "Tentang Kami", href: "#about" },
@@ -575,8 +585,6 @@ export default function Footer({ data }: FooterProps) {
   const footer = data ?? DEFAULT_FOOTER;
   const upper = footer.upperColumns ?? DEFAULT_FOOTER.upperColumns ?? [];
   const lower = footer.lowerFooter ?? DEFAULT_FOOTER.lowerFooter ?? {};
-  const cp =
-    footer.consumerProtection ?? DEFAULT_FOOTER.consumerProtection ?? null;
 
   return (
     <footer
@@ -610,51 +618,6 @@ export default function Footer({ data }: FooterProps) {
             </div>
           ))}
         </div>
-
-        {/* Perlindungan Konsumen */}
-        {cp && (
-          <div className="border-t border-slate-200 pt-8 pb-8 flex flex-col md:flex-row md:items-start gap-6 md:gap-10">
-            <div className="flex-1">
-              <h3 className="text-slate-800 font-semibold text-sm uppercase tracking-wide mb-2">
-                {cp.title}
-              </h3>
-              {cp.description && (
-                <p className="text-slate-500 text-sm leading-relaxed max-w-md">
-                  {cp.description}
-                </p>
-              )}
-            </div>
-            <a
-              href={cp.href ?? "#"}
-              style={{ background: "#DBEAFE" }}
-              className="rounded-xl p-5 flex flex-col gap-3 min-w-[260px] max-w-xs border border-blue-200 hover:border-blue-400 transition-colors"
-            >
-              {cp.organizationName && (
-                <p className="text-slate-800 text-sm font-medium leading-relaxed">
-                  {cp.organizationName}
-                </p>
-              )}
-              {cp.phone && (
-                <div className="flex items-center gap-2 text-slate-600 text-sm">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    width={14}
-                    height={14}
-                    aria-hidden="true"
-                  >
-                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012.03 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-                  </svg>
-                  {cp.phone}
-                </div>
-              )}
-            </a>
-          </div>
-        )}
 
         {/* Lower bar */}
         <div className="border-t border-slate-200 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
