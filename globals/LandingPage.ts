@@ -151,7 +151,6 @@ export const LandingPage: GlobalConfig = {
                 },
                 { name: 'label', type: 'text', required: true },
                 { name: 'sublabel', type: 'text' },
-                { name: 'bgColor', type: 'text', label: 'Background Color (hex)', admin: { description: 'e.g. #16a34a' } },
                 { name: 'href', type: 'text', label: 'Link URL' },
                 {
                   name: 'useWhatsappUrl',

@@ -89,7 +89,6 @@ export interface ActionCardData {
   icon: "whatsapp" | "envelope" | "agen" | "car" | "phone";
   label: string;
   sublabel?: string | null;
-  bgColor?: string | null;
   href?: string | null;
   useWhatsappUrl?: boolean | null;
 }
@@ -136,7 +135,6 @@ const DEFAULT_ACTION_CARDS = [
     icon: "whatsapp",
     label: "WhatsApp",
     sublabel: "Chat dengan kami",
-    bgColor: "#16a34a",
     href: null,
     useWhatsappUrl: true,
   },
@@ -144,7 +142,6 @@ const DEFAULT_ACTION_CARDS = [
     icon: "envelope",
     label: "Hubungi Kami",
     sublabel: "Kirim pesan",
-    bgColor: "#0e9fad",
     href: "#contact",
     useWhatsappUrl: false,
   },
@@ -152,7 +149,6 @@ const DEFAULT_ACTION_CARDS = [
     icon: "agen",
     label: "Daftar Agen",
     sublabel: "Bergabung bersama kami",
-    bgColor: "#d97706",
     href: "/agent",
     useWhatsappUrl: false,
   },
@@ -160,7 +156,6 @@ const DEFAULT_ACTION_CARDS = [
     icon: "car",
     label: "Bengkel Rekanan",
     sublabel: "Temukan bengkel terdekat",
-    bgColor: "#ea580c",
     href: "/garage-list",
     useWhatsappUrl: false,
   },
@@ -202,7 +197,7 @@ export default function CtaBanner({ data }: CtaBannerProps) {
     IconComponent: ICON_MAP[card.icon] ?? PhoneIcon,
     label: card.label,
     sublabel: card.sublabel ?? "",
-    bg: card.bgColor ?? "#2887C1",
+    isWhatsapp: card.icon === "whatsapp",
     href: card.useWhatsappUrl ? whatsappUrl : (card.href ?? "#"),
   }));
 
@@ -298,17 +293,28 @@ export default function CtaBanner({ data }: CtaBannerProps) {
                   variants={itemVariants}
                   whileHover={{ scale: 1.04, y: -2 }}
                   whileTap={{ scale: 0.97 }}
-                  className="flex flex-col items-center justify-center gap-2 rounded-2xl p-6 text-white text-center cursor-pointer transition-all shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                  style={{ backgroundColor: card.bg }}
+                  className={`flex flex-col items-center justify-center gap-2 rounded-2xl p-6 text-center cursor-pointer transition-all shadow-lg focus-visible:outline-none focus-visible:ring-2 ${
+                    card.isWhatsapp
+                      ? "bg-[#16a34a] text-white focus-visible:ring-white"
+                      : "bg-white text-[#0a2846] focus-visible:ring-[#0a2846]"
+                  }`}
                   aria-label={card.label}
                 >
-                  <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center mb-1">
+                  <div
+                    className={`w-14 h-14 rounded-xl flex items-center justify-center mb-1 ${
+                      card.isWhatsapp ? "bg-white/20" : "bg-[#2887C1]/15"
+                    }`}
+                  >
                     <card.IconComponent />
                   </div>
                   <span className="font-semibold text-sm leading-tight">
                     {card.label}
                   </span>
-                  <span className="text-white/80 text-xs">{card.sublabel}</span>
+                  <span
+                    className={`text-xs ${card.isWhatsapp ? "text-white/80" : "text-[#0a2846]/60"}`}
+                  >
+                    {card.sublabel}
+                  </span>
                 </motion.a>
               ))}
             </div>
