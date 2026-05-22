@@ -10,10 +10,8 @@ import {
   NavigationMenuContent,
   NavigationMenuTrigger,
 } from "./ui/navigation-menu";
-import { cn } from "@/app/(app)/lib/utils";
 import { MobileNav } from "./ui/navbar";
-import React, { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import React from "react";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import type { NavbarData, NavItem } from "./navbarTypes";
 
@@ -22,27 +20,10 @@ interface Props {
 }
 
 export default function NavbarClient({ data }: Props) {
-  const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
-  const isLanding = pathname === "/";
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const solid = !isLanding || scrolled;
-
   return (
     <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4 sm:px-6">
       <div
-        className={cn(
-          "pointer-events-auto mx-auto flex h-14 md:h-16 w-full max-w-7xl items-center justify-between gap-2 rounded-full px-4 sm:px-6 transition-all duration-500 ease-out",
-          solid
-            ? "border border-slate-200/80 bg-white/95 shadow-xl shadow-navy/10 backdrop-blur-md"
-            : "border border-white/25 bg-white/10 backdrop-blur-sm",
-        )}
+        className="pointer-events-auto mx-auto flex h-14 md:h-16 w-full max-w-7xl items-center justify-between gap-2 rounded-full px-4 sm:px-6 border border-slate-200/80 bg-white/95 shadow-xl shadow-navy/10 backdrop-blur-md"
       >
         {/* Logo */}
         <Link
@@ -55,10 +36,7 @@ export default function NavbarClient({ data }: Props) {
             alt="Sahabat Insurance"
             width={200}
             height={68}
-            className={cn(
-              "h-10 md:h-12 w-auto object-contain transition-[filter] duration-300",
-              !solid && "brightness-0 invert",
-            )}
+            className="h-10 md:h-12 w-auto object-contain"
             priority
           />
         </Link>
@@ -71,12 +49,7 @@ export default function NavbarClient({ data }: Props) {
                 return (
                   <NavigationMenuItem key={index} className="relative">
                     <NavigationMenuTrigger
-                      className={cn(
-                        "h-9 rounded-full px-3 py-1.5 text-sm font-medium transition-all bg-transparent",
-                        solid
-                          ? "text-text-primary hover:bg-slate-100 hover:text-navy data-[state=open]:bg-slate-100 data-[state=open]:text-navy"
-                          : "text-white hover:bg-white/15 hover:text-white data-[state=open]:bg-white/15 data-[state=open]:text-white",
-                      )}
+                      className="h-9 rounded-full px-3 py-1.5 text-sm font-medium transition-all bg-transparent text-text-primary hover:bg-slate-100 hover:text-navy data-[state=open]:bg-slate-100 data-[state=open]:text-navy"
                     >
                       {link.label}
                     </NavigationMenuTrigger>
@@ -94,12 +67,7 @@ export default function NavbarClient({ data }: Props) {
                   <NavigationMenuLink
                     href={link.href}
                     asChild
-                    className={cn(
-                      "inline-flex h-9 items-center rounded-full px-3 py-1.5 text-sm font-medium transition-all",
-                      solid
-                        ? "text-text-primary hover:bg-slate-100 hover:text-navy"
-                        : "text-white hover:bg-white/15 hover:text-white",
-                    )}
+                    className="inline-flex h-9 items-center rounded-full px-3 py-1.5 text-sm font-medium transition-all text-text-primary hover:bg-slate-100 hover:text-navy"
                   >
                     <Link href={link.href}>{link.label}</Link>
                   </NavigationMenuLink>
@@ -113,17 +81,12 @@ export default function NavbarClient({ data }: Props) {
         <div className="flex shrink-0 items-center gap-2">
           <Link
             href="#contact"
-            className={cn(
-              "hidden md:inline-flex items-center justify-center font-semibold px-5 text-sm h-9 rounded-full transition-all duration-200",
-              solid
-                ? "bg-navy hover:bg-navy/90 text-white shadow-sm shadow-navy/30"
-                : "bg-white text-navy hover:bg-white/90",
-            )}
+            className="hidden md:inline-flex items-center justify-center font-semibold px-5 text-sm h-9 rounded-full transition-all duration-200 bg-navy hover:bg-navy/90 text-white shadow-sm shadow-navy/30"
             aria-label="Hubungi Kami"
           >
             Hubungi Kami
           </Link>
-          <MobileNav nav={data.mobile} solid={solid} />
+          <MobileNav nav={data.mobile} solid={true} />
         </div>
       </div>
     </header>
