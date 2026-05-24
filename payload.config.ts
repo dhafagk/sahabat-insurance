@@ -35,6 +35,12 @@ export default buildConfig({
     meta: {
       icons: { icon: "/api/admin-favicon" },
     },
+    components: {
+      graphics: {
+        Logo: './components/admin/AdminLogo#AdminLogo',
+        Icon: './components/admin/AdminIcon#AdminIcon',
+      },
+    },
   },
   collections: [Users, Media, Products, News, Tags, Pages, Unduhan, Tabel, DownloadLeads],
   globals: [LandingPage, VisiMisi, Manajemen, NavbarConfig, FooterConfig, ContactUs, SiteSettings],
