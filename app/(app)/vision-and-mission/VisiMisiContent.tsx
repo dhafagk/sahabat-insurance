@@ -118,20 +118,20 @@ export default function VisiMisiContent({
             variants={fadeUp}
             className="relative rounded-2xl overflow-hidden p-8 flex flex-col gap-4"
             style={{
-              background: "linear-gradient(135deg, #0F3330 0%, #0A2420 100%)",
-              border: "1px solid rgba(20,184,166,0.2)",
+              background: "linear-gradient(135deg, #1E3A5F 0%, #0F2744 100%)",
+              border: "1px solid rgba(99,102,241,0.2)",
             }}
           >
             <div
               className="absolute top-0 right-0 w-40 h-40 rounded-full pointer-events-none opacity-20"
               style={{
                 background:
-                  "radial-gradient(circle, #14B8A6 0%, transparent 70%)",
+                  "radial-gradient(circle, #6366F1 0%, transparent 70%)",
                 transform: "translate(30%, -30%)",
               }}
               aria-hidden="true"
             />
-            <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-teal-500/30 text-teal-300 font-bold text-lg">
+            <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-500/30 text-indigo-300 font-bold text-lg">
               M
             </span>
             <h2 className="text-2xl font-bold text-white">{misiTitle}</h2>
@@ -141,8 +141,9 @@ export default function VisiMisiContent({
                   <span
                     className="mt-1 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold"
                     style={{
-                      background: "rgba(20,184,166,0.25)",
-                      color: "#5EEAD4",
+                      background:
+                        "color-mix(in oklab, rgb(97 95 255) 30%, transparent)",
+                      color: "#a3b3ff",
                     }}
                   >
                     {i + 1}
@@ -193,7 +194,10 @@ export default function VisiMisiContent({
                 <span className="flex-shrink-0 w-10 text-center text-2xl font-extrabold text-indigo-600 leading-none select-none">
                   {val.letter}
                 </span>
-                <div className="w-px h-8 flex-shrink-0 bg-slate-200" aria-hidden="true" />
+                <div
+                  className="w-px h-8 flex-shrink-0 bg-slate-200"
+                  aria-hidden="true"
+                />
                 <div className="flex flex-col gap-0.5">
                   <h3 className="font-semibold text-slate-800 text-base group-hover:text-indigo-600 transition-colors">
                     {val.title}

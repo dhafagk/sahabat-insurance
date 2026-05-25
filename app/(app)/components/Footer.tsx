@@ -277,13 +277,19 @@ const DEFAULT_FOOTER: FooterData = {
       { label: "Kebijakan Privasi", href: "#privacy" },
     ],
     socialLinks: [
-      { platform: "facebook", href: "https://facebook.com" },
-      { platform: "twitter", href: "https://twitter.com" },
-      { platform: "instagram", href: "https://instagram.com" },
-      { platform: "linkedin", href: "https://linkedin.com" },
+      {
+        platform: "facebook",
+        href: "https://www.facebook.com/sahabatinsurance/",
+      },
+      // { platform: "twitter", href: "https://twitter.com" },
+      {
+        platform: "instagram",
+        href: "https://www.instagram.com/sahabatinsurance.id/",
+      },
+      // { platform: "linkedin", href: "https://linkedin.com" },
     ],
     copyrightText:
-      "© Hak Cipta 2011–2026 ® sahabatinsurance.id ® Seluruh Hak Cipta Dilindungi.",
+      "© Hak Cipta 2011-2026 ® sahabatinsurance.id ® Seluruh Hak Cipta Dilindungi.",
   },
 };
 
