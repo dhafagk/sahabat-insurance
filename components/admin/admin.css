@@ -1,0 +1,138 @@
+/* Admin theme — blue/white matching website (#2887c1) */
+
+/* ─── Brand color scale (replaces --color-success-* / accent) ─── */
+:root {
+  --color-success-50:  rgb(236, 246, 253);
+  --color-success-100: rgb(209, 234, 249);
+  --color-success-150: rgb(175, 218, 244);
+  --color-success-200: rgb(139, 200, 238);
+  --color-success-250: rgb(104, 182, 231);
+  --color-success-300: rgb(74,  165, 222);
+  --color-success-350: rgb(52,  149, 210);
+  --color-success-400: rgb(40,  135, 193);  /* #2887c1 — primary brand */
+  --color-success-450: rgb(30,  119, 172);
+  --color-success-500: rgb(24,  104, 152);
+  --color-success-550: rgb(19,   89, 132);
+  --color-success-600: rgb(16,   76, 114);
+  --color-success-650: rgb(14,   64,  97);
+  --color-success-700: rgb(13,   54,  83);
+  --color-success-750: rgb(18,   46,  74);
+  --color-success-800: rgb(17,   40,  66);
+  --color-success-850: rgb(20,   35,  60);
+  --color-success-900: rgb(18,   29,  50);
+  --color-success-950: rgb(15,   24,  43);
+
+  /* Soft blue-gray page background — easier on the eyes than white */
+  --theme-bg:       #daeaf5;
+  --theme-input-bg: #f5fafd;
+  --theme-text:     #0f172a;
+
+  /* Tint the elevation scale blue so cards/panels feel cohesive */
+  --theme-elevation-0:   #ffffff;
+  --theme-elevation-50:  #f0f7fc;
+  --theme-elevation-100: #e2f0f9;
+  --theme-elevation-150: #cce3f2;
+  --theme-elevation-200: #b5d5ea;
+  --theme-elevation-250: #9dc7e1;
+  --theme-elevation-300: #85b8d8;
+  --theme-elevation-350: #6daace;
+  --theme-elevation-400: #559bc3;
+  --theme-elevation-450: #418cb8;
+  --theme-elevation-500: #307ead;
+  --theme-elevation-550: #226f9e;
+  --theme-elevation-600: #1a618f;
+  --theme-elevation-650: #14527e;
+  --theme-elevation-700: #10456e;
+  --theme-elevation-750: #0d3860;
+  --theme-elevation-800: #0b2d51;
+  --theme-elevation-850: #092343;
+  --theme-elevation-900: #071935;
+  --theme-elevation-950: #051028;
+  --theme-elevation-1000: #030820;
+}
+
+/* ─── Sidebar navigation — solid brand blue ─── */
+.nav,
+.nav__scroll,
+.nav__wrap {
+  background-color: #1a3f6f !important;
+}
+
+.nav .nav__header,
+.nav__header {
+  background-color: #2887c1 !important;
+  border-bottom: 1px solid #1a6fa8 !important;
+}
+
+/* Nav links */
+.nav .nav-group__label,
+.nav-group__label {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.nav .nav-group__toggle,
+.nav-group__toggle,
+.nav .nav__link,
+.nav__link {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.nav .nav__link:hover,
+.nav__link:hover,
+.nav .nav-group__toggle:hover,
+.nav-group__toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.nav .nav__link.active,
+.nav__link.active,
+.nav .nav__link[aria-current],
+.nav__link[aria-current] {
+  background-color: #2887c1 !important;
+  color: #ffffff !important;
+}
+
+/* ─── Top header bar ─── */
+.app-header,
+.template-default__header {
+  background-color: #2887c1 !important;
+  border-bottom: 1px solid #1a6fa8 !important;
+  color: #ffffff !important;
+}
+
+/* ─── Dashboard / page background ─── */
+.template-default__wrap,
+.dashboard,
+.collection-list,
+.document-fields {
+  background-color: #daeaf5 !important;
+}
+
+/* ─── Cards and panels ─── */
+.card,
+.render-fields,
+.field-type.group,
+.collection-list__wrap {
+  background-color: #ffffff;
+  border: 1px solid #cce3f2;
+  border-radius: 6px;
+}
+
+/* ─── Buttons — primary ─── */
+.btn.btn--style-primary,
+.btn--style-primary {
+  background-color: #2887c1 !important;
+  border-color: #2887c1 !important;
+}
+
+.btn.btn--style-primary:hover,
+.btn--style-primary:hover {
+  background-color: #1a6fa8 !important;
+  border-color: #1a6fa8 !important;
+}
+
+/* ─── Focus ring ─── */
+*:focus-visible {
+  outline-color: #2887c1 !important;
+}

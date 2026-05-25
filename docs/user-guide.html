@@ -1,0 +1,1892 @@
+﻿<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sahabat Insurance — Panduan Pengguna</title>
+    <style>
+      /* ===== RESET & BASE ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-size: 10pt;
+      }
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        color: #1a1a1a;
+        background: #fff;
+        line-height: 1.6;
+      }
+
+      /* ===== PAGE LAYOUT ===== */
+      .page {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 48px;
+      }
+
+      /* ===== COVER PAGE ===== */
+      .cover {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: linear-gradient(
+          145deg,
+          #003580 0%,
+          #0057b8 60%,
+          #1976d2 100%
+        );
+        color: #1a1a1a;
+        padding: 60px 40px;
+        page-break-after: always;
+      }
+      .cover-logo-placeholder {
+        width: 160px;
+        height: 80px;
+        border: 3px dashed rgba(255, 255, 255, 0.5);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 9pt;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 40px;
+        font-style: italic;
+      }
+      .cover h1 {
+        font-size: 32pt;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        margin-bottom: 12px;
+      }
+      .cover h2 {
+        font-size: 16pt;
+        font-weight: 300;
+        margin-bottom: 40px;
+        opacity: 0.85;
+      }
+      .cover .version-badge {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        padding: 6px 20px;
+        font-size: 9pt;
+        margin-bottom: 60px;
+      }
+      .cover .cover-meta {
+        font-size: 9pt;
+        opacity: 0.6;
+        margin-top: auto;
+      }
+
+      /* ===== TABLE OF CONTENTS ===== */
+      .toc {
+        padding: 60px 0;
+        page-break-after: always;
+      }
+      .toc h2 {
+        font-size: 18pt;
+        font-weight: 700;
+        color: #003580;
+        margin-bottom: 32px;
+        padding-bottom: 12px;
+        border-bottom: 3px solid #003580;
+      }
+      .toc-part {
+        margin-bottom: 24px;
+      }
+      .toc-part-title {
+        font-size: 11pt;
+        font-weight: 700;
+        color: #003580;
+        background: #f0f5ff;
+        padding: 8px 12px;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+      .toc-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 5px 12px;
+        border-bottom: 1px dotted #ddd;
+        font-size: 10pt;
+      }
+      .toc-item:hover {
+        background: #f9f9f9;
+      }
+      .toc-item .toc-num {
+        color: #888;
+        font-size: 9pt;
+      }
+      .toc-sub {
+        padding-left: 28px;
+        font-size: 9.5pt;
+        color: #444;
+      }
+
+      /* ===== SECTION HEADERS ===== */
+      .part-header {
+        background: #003580;
+        color: #fff;
+        padding: 48px;
+        margin: 0 -48px 40px;
+        page-break-before: always;
+      }
+      .part-header .part-label {
+        font-size: 9pt;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        opacity: 0.7;
+        margin-bottom: 8px;
+      }
+      .part-header h1 {
+        font-size: 22pt;
+        font-weight: 700;
+      }
+      .part-header p {
+        margin-top: 12px;
+        opacity: 0.8;
+        font-size: 10.5pt;
+      }
+
+      /* ===== SECTION CONTENT ===== */
+      .section {
+        padding: 40px 0;
+        border-bottom: 1px solid #e8e8e8;
+      }
+      .section:last-child {
+        border-bottom: none;
+      }
+
+      h2.section-title {
+        font-size: 16pt;
+        font-weight: 700;
+        color: #003580;
+        margin-bottom: 8px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #e8e8e8;
+      }
+      h2.section-title .section-num {
+        color: #0057b8;
+        font-size: 13pt;
+        margin-right: 8px;
+      }
+      h3.subsection-title {
+        font-size: 12pt;
+        font-weight: 600;
+        color: #1a3c6e;
+        margin: 24px 0 10px;
+      }
+      h3.subsection-title::before {
+        content: "";
+        display: inline-block;
+        width: 4px;
+        height: 14px;
+        background: #0057b8;
+        border-radius: 2px;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+      h4 {
+        font-size: 10.5pt;
+        font-weight: 600;
+        color: #333;
+        margin: 16px 0 6px;
+      }
+
+      p {
+        margin-bottom: 12px;
+        font-size: 10pt;
+      }
+
+      /* ===== IMAGES ===== */
+      .doc-img {
+        display: block;
+        border-radius: 6px;
+        border: 1px solid #dce3ee;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        margin: 16px 0;
+        object-fit: cover;
+        object-position: top;
+      }
+      .doc-img.img-full {
+        width: 100%;
+      }
+      .doc-img.img-half {
+        width: 48%;
+      }
+      .doc-img.img-third {
+        width: 32%;
+      }
+      .doc-img.img-small {
+        width: 100%;
+        max-height: 160px;
+        object-fit: cover;
+      }
+      .img-row {
+        display: flex;
+        gap: 12px;
+        margin: 16px 0;
+        align-items: flex-start;
+      }
+
+      /* ===== CALLOUTS ===== */
+      .callout {
+        border-radius: 6px;
+        padding: 14px 16px;
+        margin: 16px 0;
+        font-size: 9.5pt;
+      }
+      .callout-info {
+        background: #e3f2fd;
+        border-left: 4px solid #1976d2;
+        color: #1a3c6e;
+      }
+      .callout-warning {
+        background: #fff8e1;
+        border-left: 4px solid #f9a825;
+        color: #5d4037;
+      }
+      .callout-success {
+        background: #e8f5e9;
+        border-left: 4px solid #388e3c;
+        color: #1b5e20;
+      }
+      .callout-title {
+        font-weight: 700;
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      /* ===== STEPS ===== */
+      .steps {
+        margin: 16px 0;
+      }
+      .step {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 16px;
+        align-items: flex-start;
+      }
+      .step-num {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        background: #003580;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 9pt;
+      }
+      .step-content {
+        flex: 1;
+      }
+      .step-content strong {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 10pt;
+      }
+      .step-content p {
+        font-size: 9.5pt;
+        color: #444;
+        margin: 0;
+      }
+
+      /* ===== TABLES ===== */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 9.5pt;
+      }
+      th {
+        background: #003580;
+        color: #fff;
+        padding: 9px 12px;
+        text-align: left;
+        font-weight: 600;
+      }
+      td {
+        padding: 8px 12px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+      tr:nth-child(even) td {
+        background: #f5f7ff;
+      }
+      tr:hover td {
+        background: #eef2ff;
+      }
+
+      /* ===== BADGES / TAGS ===== */
+      .badge {
+        display: inline-block;
+        padding: 2px 10px;
+        border-radius: 12px;
+        font-size: 8pt;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .badge-blue {
+        background: #e3f2fd;
+        color: #1565c0;
+      }
+      .badge-green {
+        background: #e8f5e9;
+        color: #2e7d32;
+      }
+      .badge-orange {
+        background: #fff3e0;
+        color: #e65100;
+      }
+      .badge-gray {
+        background: #f5f5f5;
+        color: #555;
+      }
+
+      /* ===== LISTS ===== */
+      ul,
+      ol {
+        margin: 10px 0 10px 20px;
+        font-size: 10pt;
+      }
+      li {
+        margin-bottom: 5px;
+      }
+      ul li::marker {
+        color: #0057b8;
+      }
+
+      /* ===== FIELD DESCRIPTION ===== */
+      .field-list {
+        margin: 12px 0;
+      }
+      .field-item {
+        display: flex;
+        gap: 10px;
+        padding: 7px 10px;
+        border-bottom: 1px solid #f0f0f0;
+        align-items: flex-start;
+        font-size: 9.5pt;
+      }
+      .field-name {
+        font-family: "Consolas", monospace;
+        background: #f0f5ff;
+        color: #003580;
+        padding: 2px 7px;
+        border-radius: 3px;
+        font-size: 8.5pt;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+      .field-desc {
+        color: #444;
+      }
+      .field-required {
+        color: #c62828;
+        font-size: 8pt;
+        font-weight: 700;
+        margin-left: 4px;
+      }
+
+      /* ===== PRINT STYLES ===== */
+      @media print {
+        .page {
+          max-width: 100%;
+          padding: 0 40px;
+        }
+        .part-header {
+          margin: 0 -40px 40px;
+        }
+        .cover {
+          height: 100vh;
+        }
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+        @page {
+          margin: 20mm 15mm;
+        }
+      }
+
+      /* ===== PAGE BREAK UTILITIES ===== */
+      .break-before {
+        page-break-before: always;
+      }
+      .break-after {
+        page-break-after: always;
+      }
+      .no-break {
+        page-break-inside: avoid;
+      }
+
+      /* ===== FOOTER NOTE ===== */
+      .doc-footer {
+        text-align: center;
+        padding: 40px 0 60px;
+        color: #aaa;
+        font-size: 8.5pt;
+        border-top: 1px solid #e8e8e8;
+        margin-top: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================================
+     COVER PAGE
+     ============================================================ -->
+    <div class="cover">
+      <!-- <div class="cover-logo-placeholder">[ Logo Sahabat Insurance ]</div> -->
+      <img
+        src="images/logo-1.png"
+        alt="Screenshot — Tampilan Penuh Halaman Utama"
+        style="width: 472px; height: 252px; object-fit: contain"
+      />
+      <h1>Panduan Pengguna</h1>
+      <h2>PT Asuransi Sahabat Artha Proteksi</h2>
+      <div class="version-badge">Versi 1.0 &nbsp;·&nbsp; Mei 2026</div>
+      <p style="opacity: 0.7; font-size: 10pt; max-width: 480px">
+        Dokumen ini mencakup panduan lengkap penggunaan website Sahabat
+        Insurance — baik untuk pengunjung umum maupun staf pengelola konten
+        (Admin CMS).
+      </p>
+      <div class="cover-meta">https://www.sahabatinsurance.id/</div>
+    </div>
+
+    <!-- ============================================================
+     TABLE OF CONTENTS
+     ============================================================ -->
+    <div class="page">
+      <div class="toc">
+        <h2>Daftar Isi</h2>
+
+        <div class="toc-part">
+          <div class="toc-part-title">
+            Bagian I — Panduan Website (Pengunjung)
+          </div>
+          <div class="toc-item">
+            <span>1. Gambaran Umum Website</span><span class="toc-num">3</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>1.1 Halaman Utama (Beranda)</span>
+          </div>
+          <div class="toc-item toc-sub"><span>1.2 Navigasi & Menu</span></div>
+          <div class="toc-item">
+            <span>2. Produk Asuransi</span><span class="toc-num">5</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>2.1 Melihat Daftar Produk</span>
+          </div>
+          <div class="toc-item toc-sub"><span>2.2 Detail Produk</span></div>
+          <div class="toc-item">
+            <span>3. Berita & Artikel</span><span class="toc-num">7</span>
+          </div>
+          <div class="toc-item toc-sub"><span>3.1 Daftar Berita</span></div>
+          <div class="toc-item toc-sub"><span>3.2 Membaca Artikel</span></div>
+          <div class="toc-item">
+            <span>4. Kalkulator Premi (Cek Premi)</span
+            ><span class="toc-num">8</span>
+          </div>
+          <div class="toc-item">
+            <span>5. Pusat Unduhan (Download Center)</span
+            ><span class="toc-num">9</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>5.1 Melihat Daftar Dokumen</span>
+          </div>
+          <div class="toc-item toc-sub"><span>5.2 Mengunduh File</span></div>
+          <div class="toc-item toc-sub">
+            <span>5.3 Dokumen dengan Verifikasi Email</span>
+          </div>
+          <div class="toc-item">
+            <span>6. Data & Tabel Referensi</span
+            ><span class="toc-num">11</span>
+          </div>
+          <div class="toc-item">
+            <span>7. Visi & Misi Perusahaan</span
+            ><span class="toc-num">12</span>
+          </div>
+          <div class="toc-item">
+            <span>8. Halaman Manajemen</span><span class="toc-num">13</span>
+          </div>
+          <div class="toc-item">
+            <span>9. Hubungi Kami</span><span class="toc-num">14</span>
+          </div>
+        </div>
+
+        <div class="toc-part">
+          <div class="toc-part-title">Bagian II — Panduan Admin CMS</div>
+          <div class="toc-item">
+            <span>10. Masuk ke Panel Admin</span><span class="toc-num">16</span>
+          </div>
+          <div class="toc-item">
+            <span>11. Dashboard & Navigasi Admin</span
+            ><span class="toc-num">17</span>
+          </div>
+          <div class="toc-item">
+            <span>12. Mengelola Produk</span><span class="toc-num">18</span>
+          </div>
+          <div class="toc-item">
+            <span>13. Mengelola Berita</span><span class="toc-num">19</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>13.1 Membuat Berita Baru</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>13.2 Publikasi & Draft</span>
+          </div>
+          <div class="toc-item">
+            <span>14. Mengelola Pusat Unduhan</span
+            ><span class="toc-num">21</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>14.1 Membuat Paket Unduhan</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>14.2 Mengatur Email Gate</span>
+          </div>
+          <div class="toc-item">
+            <span>15. Mengelola Tabel Data</span><span class="toc-num">23</span>
+          </div>
+          <div class="toc-item">
+            <span>16. Mengelola Halaman Statis</span
+            ><span class="toc-num">24</span>
+          </div>
+          <div class="toc-item">
+            <span>17. Pengaturan Global Website</span
+            ><span class="toc-num">25</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>17.1 Halaman Utama (Landing Page)</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>17.2 Navbar & Menu Navigasi</span>
+          </div>
+          <div class="toc-item toc-sub"><span>17.3 Footer</span></div>
+          <div class="toc-item toc-sub">
+            <span>17.4 Halaman Visi & Misi</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>17.5 Halaman Manajemen</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>17.6 Halaman Hubungi Kami</span>
+          </div>
+          <div class="toc-item toc-sub">
+            <span>17.7 Pengaturan Situs (Favicon)</span>
+          </div>
+          <div class="toc-item">
+            <span>18. Manajemen Media</span><span class="toc-num">30</span>
+          </div>
+          <div class="toc-item">
+            <span>19. Data Lead Unduhan</span><span class="toc-num">31</span>
+          </div>
+          <div class="toc-item">
+            <span>20. Manajemen Pengguna Admin</span
+            ><span class="toc-num">32</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+     PART I — WEBSITE USER GUIDE
+     ============================================================ -->
+    <div class="page">
+      <div class="part-header">
+        <div class="part-label">Bagian I</div>
+        <h1>Panduan Website untuk Pengunjung</h1>
+        <p>
+          Panduan ini menjelaskan cara menggunakan setiap fitur dan halaman
+          website Sahabat Insurance.
+        </p>
+      </div>
+
+      <!-- 1. GAMBARAN UMUM -->
+      <div class="section" id="s1">
+        <h2 class="section-title">
+          <span class="section-num">1.</span> Gambaran Umum Website
+        </h2>
+        <p>
+          Website Sahabat Insurance (<strong>sahabat-insurance.com</strong>)
+          adalah portal resmi PT Asuransi Sahabat Artha Proteksi. Website ini
+          menyediakan informasi produk asuransi, berita perusahaan, dokumen
+          untuk nasabah, dan layanan informasi lainnya.
+        </p>
+
+        <h3 class="subsection-title">1.1 Halaman Utama (Beranda)</h3>
+        <p>
+          Halaman utama adalah pintu masuk utama website. Terdiri dari beberapa
+          bagian yang dapat di-scroll dari atas ke bawah:
+        </p>
+
+        <img
+          src="images/01-homepage-full.png"
+          alt="Screenshot — Tampilan Penuh Halaman Utama"
+          class="doc-img img-full"
+        />
+
+        <table>
+          <tr>
+            <th>Bagian</th>
+            <th>Deskripsi</th>
+          </tr>
+          <tr>
+            <td><strong>Hero / Banner Utama</strong></td>
+            <td>
+              Gambar atau video hero dengan judul, subjudul, dan tombol CTA
+              (mis. "Lihat Produk" atau "Hubungi Kami")
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Promo Strip</strong></td>
+            <td>
+              Banner tipis di bawah hero yang menampilkan informasi promo atau
+              pengumuman singkat
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Produk</strong></td>
+            <td>
+              Grid kartu produk asuransi yang tersedia, bisa diklik untuk
+              melihat detail
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mengapa Memilih Kami</strong></td>
+            <td>Alasan & keunggulan perusahaan dengan ikon dan tombol CTA</td>
+          </tr>
+          <tr>
+            <td><strong>Berita Terbaru</strong></td>
+            <td>Kartu artikel berita terbaru yang dipublikasikan</td>
+          </tr>
+          <tr>
+            <td><strong>CTA Banner</strong></td>
+            <td>
+              Banner besar di bagian bawah dengan informasi kontak dan cara
+              memulai
+            </td>
+          </tr>
+        </table>
+
+        <div class="img-row">
+          <img
+            src="images/01a-hero-section.png"
+            alt="Screenshot — Seksi Hero"
+            class="doc-img img-half"
+          />
+          <img
+            src="images/01b-products-section.png"
+            alt="Screenshot — Seksi Produk di Beranda"
+            class="doc-img img-half"
+          />
+        </div>
+
+        <h3 class="subsection-title">1.2 Navigasi & Menu</h3>
+        <p>
+          Navbar (menu atas) berada di bagian paling atas setiap halaman. Pada
+          perangkat desktop, menu utama ditampilkan secara horizontal. Beberapa
+          menu memiliki dropdown saat di-hover.
+        </p>
+
+        <img
+          src="images/01c-navbar-dropdown.png"
+          alt="Screenshot — Navbar Desktop dengan Dropdown Terbuka"
+          class="doc-img img-full"
+        />
+
+        <table>
+          <tr>
+            <th>Menu</th>
+            <th>Sub-menu / Tujuan</th>
+          </tr>
+          <tr>
+            <td><strong>Produk</strong></td>
+            <td>Daftar produk asuransi (Jiwa, Kesehatan, Kendaraan, dll.)</td>
+          </tr>
+          <tr>
+            <td><strong>Layanan</strong></td>
+            <td>Klaim, Dukungan Nasabah</td>
+          </tr>
+          <tr>
+            <td><strong>Perusahaan</strong></td>
+            <td>Profil, Visi &amp; Misi, Manajemen, Kebijakan Privasi</td>
+          </tr>
+          <tr>
+            <td><strong>Unduhan</strong></td>
+            <td>Pusat Unduhan, Data &amp; Tabel</td>
+          </tr>
+          <tr>
+            <td><strong>Berita</strong></td>
+            <td>Halaman daftar berita</td>
+          </tr>
+          <tr>
+            <td><strong>Hubungi Kami</strong></td>
+            <td>Halaman kontak</td>
+          </tr>
+        </table>
+
+        <div class="callout callout-info">
+          <span class="callout-title">Catatan — Mobile</span>
+          Pada perangkat mobile, menu navigasi ditampilkan dengan ikon hamburger
+          (☰) di pojok kanan atas. Ketuk ikon tersebut untuk membuka panel
+          navigasi.
+        </div>
+      </div>
+
+      <!-- 2. PRODUK -->
+      <div class="section break-before" id="s2">
+        <h2 class="section-title">
+          <span class="section-num">2.</span> Produk Asuransi
+        </h2>
+        <p>
+          Halaman produk menampilkan semua produk asuransi yang ditawarkan oleh
+          Sahabat Insurance. Setiap produk memiliki ikon, judul, dan deskripsi
+          singkat.
+        </p>
+
+        <h3 class="subsection-title">2.1 Melihat Daftar Produk</h3>
+        <p>
+          Produk dapat dilihat langsung dari
+          <strong>Beranda → Seksi Produk</strong>, atau melalui menu navigasi
+          atas. Produk ditampilkan dalam format grid kartu.
+        </p>
+
+        <img
+          src="images/02a-products-grid.png"
+          alt="Screenshot — Daftar Produk (Grid Kartu)"
+          class="doc-img img-full"
+        />
+
+        <p>Setiap kartu produk menampilkan:</p>
+        <ul>
+          <li><strong>Ikon produk</strong> — gambar/SVG representasi produk</li>
+          <li><strong>Nama produk</strong> — judul singkat</li>
+          <li><strong>Deskripsi singkat</strong> — penjelasan produk</li>
+          <li>
+            <strong>Tombol Detail</strong> — untuk melihat informasi lengkap
+          </li>
+        </ul>
+
+        <h3 class="subsection-title">2.2 Detail Produk</h3>
+        <p>
+          Klik kartu atau tombol detail untuk masuk ke halaman detail produk.
+          Halaman ini memuat informasi lengkap produk, termasuk tautan ke
+          dokumen Riplay dan formulir SPPA.
+        </p>
+
+        <img
+          src="images/02b-product-detail.png"
+          alt="Screenshot — Halaman Detail Produk"
+          class="doc-img img-full"
+        />
+
+        <div class="callout callout-info">
+          <span class="callout-title">Dokumen Produk</span>
+          Beberapa produk menyertakan tombol
+          <strong>Unduh Riplay</strong> (Ringkasan Informasi Produk) dan
+          <strong>Unduh SPPA</strong> (Surat Permohonan Penutupan Asuransi).
+          Klik tombol tersebut untuk mengunduh atau membuka dokumen terkait.
+        </div>
+      </div>
+
+      <!-- 3. BERITA -->
+      <div class="section" id="s3">
+        <h2 class="section-title">
+          <span class="section-num">3.</span> Berita &amp; Artikel
+        </h2>
+
+        <h3 class="subsection-title">3.1 Daftar Berita</h3>
+        <p>
+          Halaman <strong>/news</strong> menampilkan semua artikel berita yang
+          telah dipublikasikan, diurutkan berdasarkan tanggal terbaru. Setiap
+          artikel ditampilkan sebagai kartu dengan gambar unggulan, judul,
+          ringkasan, tanggal, dan tag kategori.
+        </p>
+
+        <img
+          src="images/03a-news-listing.png"
+          alt="Screenshot — Halaman Daftar Berita"
+          class="doc-img img-full"
+        />
+
+        <h3 class="subsection-title">3.2 Membaca Artikel</h3>
+        <p>
+          Klik kartu berita untuk membuka halaman detail artikel. Artikel
+          menampilkan gambar utama, judul, tanggal publikasi, tag, dan isi
+          artikel lengkap dengan format teks kaya (rich text).
+        </p>
+
+        <img
+          src="images/03b-news-article.png"
+          alt="Screenshot — Halaman Detail Artikel Berita"
+          class="doc-img img-full"
+        />
+      </div>
+
+      <!-- 4. CEK PREMI -->
+      <div class="section" id="s4">
+        <h2 class="section-title">
+          <span class="section-num">4.</span> Kalkulator Premi (Cek Premi)
+        </h2>
+        <p>
+          Halaman <strong>/cekpremi</strong> menyediakan alat bantu kalkulasi
+          premi asuransi kendaraan secara online. Pengguna dapat mengisi data
+          kendaraan untuk mendapatkan estimasi premi.
+        </p>
+
+        <img
+          src="images/04a-cek-premi.png"
+          alt="Screenshot — Halaman Cek Premi / Kalkulator"
+          class="doc-img img-full"
+        />
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Buka Halaman Cek Premi</strong>
+              <p>
+                Akses <code>/cekpremi</code> dari menu navigasi atau langsung
+                dari browser.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Isi Data Kendaraan</strong>
+              <p>
+                Masukkan informasi seperti jenis kendaraan, tahun, merek, dan
+                nilai kendaraan.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Lihat Hasil Kalkulasi</strong>
+              <p>
+                Sistem akan menampilkan estimasi premi berdasarkan data yang
+                dimasukkan.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Hubungi Agen</strong>
+              <p>
+                Jika tertarik, gunakan tombol atau informasi kontak untuk
+                menghubungi agen Sahabat Insurance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. UNDUHAN -->
+      <div class="section break-before" id="s5">
+        <h2 class="section-title">
+          <span class="section-num">5.</span> Pusat Unduhan (Download Center)
+        </h2>
+        <p>
+          Halaman <strong>/unduhan</strong> adalah repositori dokumen resmi
+          Sahabat Insurance. Di sini nasabah dan calon nasabah dapat mengunduh
+          formulir, ketentuan produk, dan dokumen penting lainnya.
+        </p>
+
+        <h3 class="subsection-title">5.1 Melihat Daftar Dokumen</h3>
+        <p>
+          Halaman index unduhan menampilkan semua paket dokumen yang tersedia
+          dalam bentuk kartu. Setiap paket memiliki judul dan deskripsi singkat.
+        </p>
+
+        <img
+          src="images/05a-downloads-index.png"
+          alt="Screenshot — Halaman Index Pusat Unduhan"
+          class="doc-img img-full"
+        />
+
+        <p>
+          Klik kartu untuk masuk ke halaman detail paket unduhan, yang berisi
+          daftar lengkap file yang dapat diunduh, dikelompokkan berdasarkan
+          seksi/kategori.
+        </p>
+
+        <img
+          src="images/05b-downloads-accordion.png"
+          alt="Screenshot — Halaman Detail Paket Unduhan (Accordion)"
+          class="doc-img img-full"
+        />
+
+        <h3 class="subsection-title">5.2 Mengunduh File</h3>
+        <p>
+          Setiap item dalam daftar unduhan ditampilkan dengan nama file, ukuran,
+          dan tombol unduh. Klik nama file atau ikon unduh untuk memulai
+          pengunduhan langsung.
+        </p>
+
+        <div class="callout callout-success">
+          <span class="callout-title">Tipe File</span>
+          Sistem mendukung dua jenis item unduhan: <strong>PDF</strong> (dokumen
+          yang diupload ke server) dan <strong>Link</strong> (tautan eksternal
+          ke dokumen lain).
+        </div>
+
+        <h3 class="subsection-title">5.3 Dokumen dengan Verifikasi Email</h3>
+        <p>
+          Beberapa paket unduhan memerlukan
+          <strong>verifikasi email</strong> sebelum file dapat diakses. Ini
+          adalah sistem email gate untuk keperluan registrasi data nasabah.
+        </p>
+
+        <img
+          src="images/05c-email-gate-form.png"
+          alt="Screenshot — Form Verifikasi Email sebelum Unduhan"
+          class="doc-img img-full"
+        />
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Buka Halaman Paket Unduhan</strong>
+              <p>Klik kartu paket unduhan yang memerlukan verifikasi email.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Masukkan Alamat Email</strong>
+              <p>Ketikkan alamat email aktif Anda pada kolom yang tersedia.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Kirim &amp; Terima Email</strong>
+              <p>
+                Klik tombol Kirim. Sistem akan mengirimkan link unduhan ke email
+                Anda secara otomatis.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Buka Email &amp; Unduh</strong>
+              <p>
+                Buka kotak masuk email Anda, klik link yang dikirimkan untuk
+                mengunduh dokumen.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warning">
+          <span class="callout-title">Perhatian</span>
+          Pastikan alamat email yang dimasukkan aktif dan dapat menerima email.
+          Cek juga folder
+          <strong>Spam/Junk</strong> jika email tidak ditemukan di kotak masuk
+          utama.
+        </div>
+
+        <img
+          src="images/05d-email-download-received.png"
+          alt="Screenshot — Contoh Email yang Dikirimkan ke Pengguna"
+          class="doc-img img-full"
+        />
+      </div>
+
+      <!-- 6. TABEL DATA -->
+      <div class="section" id="s6">
+        <h2 class="section-title">
+          <span class="section-num">6.</span> Data &amp; Tabel Referensi
+        </h2>
+        <p>
+          Halaman <strong>/tabel</strong> menyediakan data referensi dalam
+          format tabel yang terstruktur. Ini berguna untuk nasabah yang
+          membutuhkan informasi seperti tarif, ketentuan, atau data teknis
+          lainnya.
+        </p>
+
+        <img
+          src="images/06a-tables-index.png"
+          alt="Screenshot — Halaman Index Tabel Data"
+          class="doc-img img-full"
+        />
+      </div>
+
+      <!-- 7. VISI MISI -->
+      <div class="section break-before" id="s7">
+        <h2 class="section-title">
+          <span class="section-num">7.</span> Visi &amp; Misi Perusahaan
+        </h2>
+        <p>
+          Halaman <strong>/vision-and-mission</strong> menampilkan visi, misi,
+          dan nilai-nilai perusahaan PT Asuransi Sahabat Artha Proteksi.
+        </p>
+
+        <img
+          src="images/07a-visi-misi.png"
+          alt="Screenshot — Halaman Visi & Misi"
+          class="doc-img img-full"
+        />
+      </div>
+
+      <!-- 8. MANAJEMEN -->
+      <div class="section" id="s8">
+        <h2 class="section-title">
+          <span class="section-num">8.</span> Halaman Manajemen
+        </h2>
+        <p>
+          Halaman <strong>/management</strong> menampilkan profil kepemimpinan
+          perusahaan, termasuk Dewan Komisaris dan Direksi.
+        </p>
+
+        <img
+          src="images/08a-management.png"
+          alt="Screenshot — Halaman Manajemen"
+          class="doc-img img-full"
+        />
+      </div>
+
+      <!-- 9. HUBUNGI KAMI -->
+      <div class="section" id="s9">
+        <h2 class="section-title">
+          <span class="section-num">9.</span> Hubungi Kami
+        </h2>
+        <p>
+          Halaman <strong>/contact-us</strong> menyediakan berbagai saluran
+          untuk menghubungi Sahabat Insurance, termasuk telepon, WhatsApp,
+          email, dan formulir pengaduan.
+        </p>
+
+        <img
+          src="images/09a-contact-us.png"
+          alt="Screenshot — Halaman Hubungi Kami"
+          class="doc-img img-full"
+        />
+
+        <table>
+          <tr>
+            <th>Saluran</th>
+            <th>Cara Menggunakan</th>
+          </tr>
+          <tr>
+            <td><strong>Telepon</strong></td>
+            <td>
+              Klik nomor telepon untuk memulai panggilan (di perangkat mobile)
+            </td>
+          </tr>
+          <tr>
+            <td><strong>WhatsApp</strong></td>
+            <td>
+              Klik tombol WhatsApp untuk membuka percakapan langsung di WhatsApp
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Email</strong></td>
+            <td>Klik alamat email untuk membuka aplikasi email Anda</td>
+          </tr>
+          <tr>
+            <td><strong>Formulir Pengaduan</strong></td>
+            <td>
+              Klik tautan formulir untuk mengisi pengaduan atau pertanyaan
+              secara tertulis
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- PART II HEADER -->
+      <div class="part-header break-before">
+        <div class="part-label">Bagian II</div>
+        <h1>Panduan Admin CMS</h1>
+        <p>
+          Panduan ini ditujukan untuk staf yang mengelola konten website melalui
+          panel admin PayloadCMS.
+        </p>
+      </div>
+
+      <!-- 10. LOGIN ADMIN -->
+      <div class="section" id="s10">
+        <h2 class="section-title">
+          <span class="section-num">10.</span> Masuk ke Panel Admin
+        </h2>
+        <p>
+          Panel admin dapat diakses melalui URL:
+          <code><strong>https://sahabat-insurance.com/admin</strong></code>
+        </p>
+
+        <img
+          src="images/10a-admin-login.png"
+          alt="Screenshot — Halaman Login Admin"
+          class="doc-img img-full"
+        />
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Buka Halaman Login</strong>
+              <p>
+                Akses <code>/admin</code> dari browser. Anda akan diarahkan ke
+                halaman login.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Masukkan Kredensial</strong>
+              <p>Masukkan alamat email dan kata sandi akun admin Anda.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Klik Login</strong>
+              <p>Setelah berhasil, Anda akan diarahkan ke dashboard admin.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warning">
+          <span class="callout-title">Keamanan Akun</span>
+          Jangan bagikan kredensial admin kepada pihak yang tidak berwenang.
+          Gunakan kata sandi yang kuat dan unik. Hubungi administrator sistem
+          jika Anda lupa kata sandi.
+        </div>
+      </div>
+
+      <!-- 11. DASHBOARD ADMIN -->
+      <div class="section" id="s11">
+        <h2 class="section-title">
+          <span class="section-num">11.</span> Dashboard &amp; Navigasi Admin
+        </h2>
+        <p>
+          Setelah login, Anda akan melihat dashboard admin PayloadCMS. Panel ini
+          adalah pusat pengelolaan seluruh konten website.
+        </p>
+
+        <img
+          src="images/11a-admin-dashboard.png"
+          alt="Screenshot — Dashboard Admin (Halaman Utama)"
+          class="doc-img img-full"
+        />
+
+        <h3 class="subsection-title">Navigasi Sidebar</h3>
+        <p>
+          Panel admin memiliki sidebar kiri yang berisi semua koleksi dan
+          globals yang dapat dikelola.
+        </p>
+      </div>
+
+      <!-- 12. PRODUK ADMIN -->
+      <div class="section break-before" id="s12">
+        <h2 class="section-title">
+          <span class="section-num">12.</span> Mengelola Produk
+        </h2>
+        <p>
+          Klik <strong>Products</strong> di sidebar untuk membuka daftar produk
+          asuransi. Produk yang ada di sini akan ditampilkan di bagian produk
+          pada halaman utama website.
+        </p>
+
+        <img
+          src="images/12a-admin-products-list.png"
+          alt="Screenshot — Daftar Produk di Admin"
+          class="doc-img img-full"
+        />
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Klik "Create New"</strong>
+              <p>Tombol di pojok kanan atas daftar produk.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Isi Form Produk</strong>
+              <p>Lengkapi semua field yang tersedia (lihat tabel di bawah).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Simpan</strong>
+              <p>
+                Klik tombol Save/Simpan. Produk akan langsung tampil di website.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <img
+          src="images/12b-admin-product-form.png"
+          alt="Screenshot — Form Edit/Buat Produk"
+          class="doc-img img-full"
+        />
+      </div>
+
+      <!-- 13. BERITA ADMIN -->
+      <div class="section" id="s13">
+        <h2 class="section-title">
+          <span class="section-num">13.</span> Mengelola Berita
+        </h2>
+        <p>
+          Bagian News memungkinkan Anda membuat, mengedit, dan mempublikasikan
+          artikel berita. Berita yang berstatus
+          <span class="badge badge-green">Published</span> akan tampil di
+          halaman berita website.
+        </p>
+
+        <img
+          src="images/13a-admin-news-list.png"
+          alt="Screenshot — Daftar Berita di Admin"
+          class="doc-img img-full"
+        />
+
+        <h3 class="subsection-title">13.1 Membuat Berita Baru</h3>
+
+        <img
+          src="images/13b-admin-news-form.png"
+          alt="Screenshot — Form Editor Berita Baru"
+          class="doc-img img-full"
+        />
+
+        <div class="field-list">
+          <div class="field-item">
+            <span class="field-name">title</span>
+            <span class="field-desc"
+              >Judul berita<span class="field-required">*Wajib</span></span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">slug</span>
+            <span class="field-desc"
+              >URL-friendly ID artikel (otomatis dibuat dari judul, bisa diubah
+              manual)</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">date</span>
+            <span class="field-desc"
+              >Tanggal publikasi artikel<span class="field-required"
+                >*Wajib</span
+              ></span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">image</span>
+            <span class="field-desc"
+              >Gambar unggulan artikel (akan tampil sebagai thumbnail dan
+              header)<span class="field-required">*Wajib</span></span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">excerpt</span>
+            <span class="field-desc"
+              >Ringkasan singkat (muncul di kartu berita pada halaman
+              listing)</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">tags</span>
+            <span class="field-desc"
+              >Pilih atau buat tag/kategori untuk artikel ini (bisa lebih dari
+              satu)</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">content</span>
+            <span class="field-desc"
+              >Isi artikel lengkap menggunakan editor rich text Lexical</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">status</span>
+            <span class="field-desc"
+              >Draft (belum tampil di website) atau Published (tampil di
+              website)</span
+            >
+          </div>
+        </div>
+
+        <h3 class="subsection-title">13.2 Publikasi &amp; Draft</h3>
+        <p>
+          Artikel dapat disimpan dalam status
+          <span class="badge badge-gray">Draft</span> saat masih dalam proses
+          penulisan, dan dipublikasikan dengan mengubah status menjadi
+          <span class="badge badge-green">Published</span>.
+        </p>
+
+        <div class="callout callout-info">
+          <span class="callout-title">Tombol Publish</span>
+          Tersedia tombol <strong>Publish</strong> khusus di pojok kanan atas
+          form editor untuk mempublikasikan artikel dengan satu klik. Klik
+          tombol ini untuk langsung mengubah status dari Draft ke Published dan
+          menyimpan.
+        </div>
+
+        <div class="img-row">
+          <img
+            src="images/13c-news-publish-button.png"
+            alt="Screenshot — Tombol Publish di Editor"
+            class="doc-img img-half"
+          />
+          <img
+            src="images/13d-news-rich-text-editor.png"
+            alt="Screenshot — Editor Rich Text Lexical"
+            class="doc-img img-half"
+          />
+        </div>
+      </div>
+
+      <!-- 14. UNDUHAN ADMIN -->
+      <div class="section break-before" id="s14">
+        <h2 class="section-title">
+          <span class="section-num">14.</span> Mengelola Pusat Unduhan
+        </h2>
+        <p>
+          Bagian <strong>Unduhan</strong> mengelola paket dokumen yang tersedia
+          di halaman <code>/unduhan</code>. Setiap entri adalah satu "paket"
+          yang bisa berisi banyak file/link, dikelompokkan dalam seksi.
+        </p>
+
+        <img
+          src="images/14a-admin-unduhan-list.png"
+          alt="Screenshot — Daftar Unduhan di Admin"
+          class="doc-img img-full"
+        />
+
+        <h3 class="subsection-title">14.1 Membuat Paket Unduhan Baru</h3>
+
+        <img
+          src="images/14b-admin-unduhan-form.png"
+          alt="Screenshot — Form Buat Paket Unduhan"
+          class="doc-img img-full"
+        />
+
+        <div class="field-list">
+          <div class="field-item">
+            <span class="field-name">title</span>
+            <span class="field-desc"
+              >Judul paket unduhan (mis: "Formulir Asuransi Kendaraan")<span
+                class="field-required"
+                >*Wajib</span
+              ></span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">description</span>
+            <span class="field-desc">Deskripsi singkat isi paket ini</span>
+          </div>
+          <div class="field-item">
+            <span class="field-name">slug</span>
+            <span class="field-desc"
+              >URL-friendly ID (otomatis, bisa diubah)</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">status</span>
+            <span class="field-desc">Draft atau Published</span>
+          </div>
+          <div class="field-item">
+            <span class="field-name">requireEmailGate</span>
+            <span class="field-desc"
+              >Centang jika file dalam paket ini harus diverifikasi email
+              sebelum diunduh</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">sections</span>
+            <span class="field-desc"
+              >Daftar seksi/kategori dalam paket ini (lihat penjelasan di
+              bawah)</span
+            >
+          </div>
+        </div>
+
+        <h4>Struktur Seksi &amp; Item</h4>
+        <p>
+          Setiap paket unduhan terdiri dari satu atau lebih
+          <strong>Seksi</strong>. Setiap Seksi berisi:
+        </p>
+
+        <div class="field-list">
+          <div class="field-item">
+            <span class="field-name">category</span>
+            <span class="field-desc"
+              >Label kategori seksi (mis: "Formulir Pendaftaran")</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">title</span>
+            <span class="field-desc"
+              >Judul seksi yang tampil sebagai header accordion</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">description</span>
+            <span class="field-desc">Deskripsi opsional untuk seksi ini</span>
+          </div>
+          <div class="field-item">
+            <span class="field-name">items</span>
+            <span class="field-desc"
+              >Daftar file/link yang bisa diunduh dalam seksi ini</span
+            >
+          </div>
+        </div>
+
+        <p>Setiap <strong>Item</strong> dalam seksi berisi:</p>
+        <div class="field-list">
+          <div class="field-item">
+            <span class="field-name">name</span>
+            <span class="field-desc"
+              >Nama tampil file/dokumen<span class="field-required"
+                >*Wajib</span
+              ></span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">type</span>
+            <span class="field-desc"
+              >"pdf" untuk file upload, atau "link" untuk URL eksternal</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">file</span>
+            <span class="field-desc"
+              >Upload file PDF (aktif jika type = "pdf")</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">href</span>
+            <span class="field-desc"
+              >URL link eksternal (aktif jika type = "link")</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">size</span>
+            <span class="field-desc"
+              >Teks ukuran file (mis: "1.2 MB") untuk ditampilkan ke
+              pengguna</span
+            >
+          </div>
+        </div>
+
+        <h3 class="subsection-title">14.2 Mengatur Email Gate</h3>
+        <p>
+          Aktifkan <strong>Require Email Gate</strong> jika Anda ingin pengguna
+          harus memasukkan email sebelum mengunduh file dalam paket ini. Data
+          email akan tersimpan di koleksi <strong>Download Leads</strong>.
+        </p>
+
+        <img
+          src="images/14c-email-gate-toggle.png"
+          alt="Screenshot — Toggle Email Gate di Form Unduhan"
+          class="doc-img img-small"
+        />
+      </div>
+
+      <!-- 15. TABEL ADMIN -->
+      <div class="section" id="s15">
+        <h2 class="section-title">
+          <span class="section-num">15.</span> Mengelola Tabel Data
+        </h2>
+        <p>
+          Bagian <strong>Tabel</strong> mengelola konten halaman
+          <code>/tabel</code>. Setiap entri adalah halaman tabel yang bisa
+          memuat beberapa tabel data.
+        </p>
+
+        <img
+          src="images/15a-admin-tabel-form.png"
+          alt="Screenshot — Form Buat Tabel Data"
+          class="doc-img img-full"
+        />
+
+        <div class="callout callout-info">
+          <span class="callout-title">Tips Mengisi Tabel</span>
+          Pastikan jumlah kolom pada setiap baris (<code>cells</code>) sama
+          dengan jumlah kolom yang didefinisikan. Ketidakcocokan jumlah akan
+          menyebabkan tampilan tabel tidak rapi.
+        </div>
+      </div>
+
+      <!-- 16. PAGES ADMIN -->
+      <div class="section" id="s16">
+        <h2 class="section-title">
+          <span class="section-num">16.</span> Mengelola Halaman Statis
+        </h2>
+        <p>
+          Koleksi <strong>Pages</strong> memungkinkan Anda membuat halaman
+          statis kustom dengan konten fleksibel. Halaman ini dapat diakses via
+          URL <code>/[slug]</code>.
+        </p>
+
+        <img
+          src="images/16a-admin-pages-form.png"
+          alt="Screenshot — Form Editor Halaman Statis"
+          class="doc-img img-full"
+        />
+      </div>
+
+      <!-- 17. GLOBALS ADMIN -->
+      <div class="section break-before" id="s17">
+        <h2 class="section-title">
+          <span class="section-num">17.</span> Pengaturan Global Website
+        </h2>
+        <p>
+          <strong>Globals</strong> adalah pengaturan satu-instance yang
+          mengontrol konten berbagai bagian website. Perubahan pada globals
+          langsung berdampak pada tampilan website.
+        </p>
+
+        <h3 class="subsection-title">17.1 Landing Page (Halaman Utama)</h3>
+        <p>
+          Global ini mengontrol semua konten di halaman utama website, dibagi ke
+          dalam beberapa tab:
+        </p>
+
+        <img
+          src="images/17a-global-landing-page.png"
+          alt="Screenshot — Editor Global Landing Page (Tab Hero)"
+          class="doc-img img-full"
+        />
+
+        <h3 class="subsection-title">17.2 Navbar Config (Menu Navigasi)</h3>
+        <p>Global ini mengontrol isi menu navigasi di bagian atas website.</p>
+
+        <img
+          src="images/17b-global-navbar.png"
+          alt="Screenshot — Editor Global Navbar Config"
+          class="doc-img img-full"
+        />
+
+        <p>Struktur menu navigasi:</p>
+        <ul>
+          <li><strong>items[]</strong> — daftar item menu utama (top-level)</li>
+          <li>
+            Setiap item: <code>label</code> (teks), <code>href</code> (URL)
+          </li>
+          <li>
+            Item dengan dropdown: tambahkan <code>dropdownItems[]</code> yang
+            berisi <code>title</code>, <code>description</code>,
+            <code>href</code>
+          </li>
+          <li>
+            Dropdown bisa memiliki sub-item lagi melalui <code>subItems[]</code>
+          </li>
+        </ul>
+
+        <div class="callout callout-warning">
+          <span class="callout-title">Perhatian Navigasi</span>
+          Perubahan pada Navbar Config langsung mempengaruhi menu di seluruh
+          halaman website. Pastikan semua URL yang dimasukkan sudah benar
+          sebelum menyimpan.
+        </div>
+
+        <h3 class="subsection-title">17.3 Footer Config</h3>
+        <p>
+          Mengontrol konten footer website, terbagi menjadi Upper Footer dan
+          Lower Footer.
+        </p>
+
+        <img
+          src="images/17c-global-footer.png"
+          alt="Screenshot — Editor Global Footer Config"
+          class="doc-img img-full"
+        />
+
+        <h3 class="subsection-title">17.4 Visi &amp; Misi</h3>
+        <p>
+          Mengontrol seluruh konten halaman <code>/vision-and-mission</code>.
+        </p>
+
+        <img
+          src="images/17d-global-visi-misi.png"
+          alt="Screenshot — Editor Global Visi & Misi"
+          class="doc-img img-full"
+        />
+
+        <div class="field-list">
+          <div class="field-item">
+            <span class="field-name">pageTitle / pageSubtitle</span>
+            <span class="field-desc">Judul dan subjudul halaman</span>
+          </div>
+          <div class="field-item">
+            <span class="field-name">featuredImage</span>
+            <span class="field-desc"
+              >Gambar unggulan di bagian atas halaman</span
+            >
+          </div>
+          <div class="field-item">
+            <span class="field-name">visi.title / visi.content</span>
+            <span class="field-desc">Judul dan pernyataan visi perusahaan</span>
+          </div>
+          <div class="field-item">
+            <span class="field-name">misi.title / misi.points[]</span>
+            <span class="field-desc">Judul dan daftar poin misi</span>
+          </div>
+          <div class="field-item">
+            <span class="field-name">nilaiNilai[]</span>
+            <span class="field-desc"
+              >Nilai-nilai SAHABAT: setiap item punya <code>letter</code>,
+              <code>title</code>, <code>description</code></span
+            >
+          </div>
+        </div>
+
+        <h3 class="subsection-title">17.5 Manajemen</h3>
+        <p>Mengontrol seluruh konten halaman <code>/management</code>.</p>
+
+        <img
+          src="images/17e-global-manajemen.png"
+          alt="Screenshot — Editor Global Manajemen"
+          class="doc-img img-full"
+        />
+
+        <h3 class="subsection-title">17.6 Hubungi Kami</h3>
+        <p>Mengontrol konten halaman <code>/contact-us</code>.</p>
+
+        <img
+          src="images/17f-global-contact.png"
+          alt="Screenshot — Editor Global Hubungi Kami"
+          class="doc-img img-full"
+        />
+
+        <h3 class="subsection-title">17.7 Site Settings (Pengaturan Situs)</h3>
+        <p>
+          Pengaturan dasar situs, saat ini digunakan untuk mengelola
+          <strong>Favicon</strong>
+          (ikon tab browser).
+        </p>
+
+        <img
+          src="images/17g-site-settings.png"
+          alt="Screenshot — Editor Site Settings (Favicon Upload)"
+          class="doc-img img-small"
+        />
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Buka Site Settings</strong>
+              <p>
+                Klik <strong>Site Settings</strong> di bagian Globals pada
+                sidebar admin.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Upload Favicon</strong>
+              <p>
+                Klik area upload favicon dan pilih file. Gunakan format ICO,
+                PNG, atau SVG berukuran 32x32 atau 64x64 px.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Simpan</strong>
+              <p>
+                Klik Save. Favicon baru akan aktif setelah website di-deploy
+                ulang atau cache browser dikosongkan.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 18. MEDIA -->
+      <div class="section break-before" id="s18">
+        <h2 class="section-title">
+          <span class="section-num">18.</span> Manajemen Media
+        </h2>
+        <p>
+          Koleksi <strong>Media</strong> adalah pustaka aset terpusat. Semua
+          file gambar dan dokumen yang digunakan di website dikelola di sini.
+          File disimpan di Vercel Blob Storage.
+        </p>
+
+        <img
+          src="images/18a-admin-media-list.png"
+          alt="Screenshot — Halaman Daftar Media (Grid View)"
+          class="doc-img img-full"
+        />
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Buka Koleksi Media</strong>
+              <p>
+                Klik <strong>Media</strong> di sidebar admin untuk membuka
+                pustaka aset.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Klik "Create New"</strong>
+              <p>Tombol di pojok kanan atas.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Upload File</strong>
+              <p>
+                Drag &amp; drop file ke area upload, atau klik untuk memilih
+                file dari komputer.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Isi Alt Text</strong>
+              <p>
+                Wajib mengisi field <code>alt</code> (teks alternatif) untuk
+                aksesibilitas.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <strong>Simpan</strong>
+              <p>
+                File tersimpan di cloud storage dan dapat digunakan di field
+                media mana pun.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <span class="callout-title">Tips Ukuran File</span>
+          Untuk gambar web, gunakan format WebP atau JPEG dengan ukuran di bawah
+          500 KB untuk performa optimal. Untuk dokumen PDF, tidak ada batasan
+          ukuran khusus.
+        </div>
+
+        <img
+          src="images/18b-admin-media-upload.png"
+          alt="Screenshot — Form Upload Media Baru"
+          class="doc-img img-full"
+        />
+      </div>
+
+      <!-- 19. DOWNLOAD LEADS -->
+      <div class="section" id="s19">
+        <h2 class="section-title">
+          <span class="section-num">19.</span> Data Lead Unduhan
+        </h2>
+        <p>
+          Koleksi <strong>Download Leads</strong> secara otomatis merekam data
+          email pengguna yang mengunduh dokumen melalui email gate. Data ini
+          berguna untuk keperluan marketing.
+        </p>
+
+        <img
+          src="images/19a-admin-download-leads.png"
+          alt="Screenshot — Daftar Download Leads di Admin"
+          class="doc-img img-full"
+        />
+      </div>
+
+      <!-- 20. USERS ADMIN -->
+      <div class="section" id="s20">
+        <h2 class="section-title">
+          <span class="section-num">20.</span> Manajemen Pengguna Admin
+        </h2>
+        <p>
+          Koleksi <strong>Users</strong> mengelola akun-akun yang memiliki akses
+          ke panel admin.
+        </p>
+
+        <img
+          src="images/20a-admin-users.png"
+          alt="Screenshot — Daftar Pengguna Admin"
+          class="doc-img img-full"
+        />
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Buka Koleksi Users</strong>
+              <p>Klik <strong>Users</strong> di sidebar admin.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Klik "Create New"</strong>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Isi Email &amp; Password</strong>
+              <p>
+                Gunakan email aktif dan password yang kuat (minimal 8 karakter,
+                kombinasi huruf &amp; angka).
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Simpan &amp; Bagikan Kredensial</strong>
+              <p>
+                Simpan akun, lalu informasikan kredensial kepada pengguna baru
+                melalui saluran yang aman.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warning">
+          <span class="callout-title">Keamanan</span>
+          Setiap pengguna admin memiliki akses penuh ke semua konten. Hanya
+          berikan akses admin kepada staf yang benar-benar membutuhkan. Minta
+          pengguna baru untuk mengubah password setelah login pertama.
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="doc-footer">
+        <p>
+          <strong>PT Asuransi Sahabat Artha Proteksi</strong> — Panduan Pengguna
+          Website
+        </p>
+        <p>
+          Versi 1.0 · Mei 2026 · Dokumen ini bersifat rahasia dan hanya untuk
+          penggunaan internal.
+        </p>
+        <p>Pertanyaan teknis: hubungi tim pengembang website.</p>
+      </div>
+    </div>
+    <!-- .page -->
+  </body>
+</html>

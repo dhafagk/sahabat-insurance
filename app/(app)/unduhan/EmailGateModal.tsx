@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Mail, Send, CheckCircle } from "lucide-react";
+import { X, Mail, Download, CheckCircle } from "lucide-react";
 
 interface EmailGateModalProps {
   fileName: string;
@@ -11,7 +11,7 @@ interface EmailGateModalProps {
   onClose: () => void;
 }
 
-type ModalState = "form" | "loading" | "success" | "error";
+type ModalState = "form" | "loading" | "ready" | "error";
 
 export default function EmailGateModal({
   fileName,
@@ -42,7 +42,7 @@ export default function EmailGateModal({
         return;
       }
 
-      setState("success");
+      setState("ready");
     } catch {
       setErrorMsg("Tidak dapat menghubungi server. Coba lagi.");
       setState("error");
@@ -77,24 +77,27 @@ export default function EmailGateModal({
             <X size={16} />
           </button>
 
-          {state === "success" ? (
+          {state === "ready" ? (
             <div className="flex flex-col items-center text-center gap-4 py-4">
               <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center">
                 <CheckCircle size={32} className="text-green-500" />
               </div>
               <h2 className="text-xl font-bold text-text-primary">
-                Email Terkirim!
+                Siap Diunduh!
               </h2>
               <p className="text-sm text-text-muted leading-relaxed">
-                Tautan unduhan <strong>{fileName}</strong> telah dikirimkan ke{" "}
-                <strong>{email}</strong>. Silakan cek kotak masuk Anda.
+                Klik tombol di bawah untuk mengunduh{" "}
+                <strong>{fileName}</strong>.
               </p>
-              <button
+              <a
+                href={fileUrl}
+                download
                 onClick={onClose}
-                className="mt-2 px-6 py-2.5 bg-navy text-white rounded-xl text-sm font-semibold hover:bg-navy/90 transition-colors"
+                className="mt-2 flex items-center gap-2 px-6 py-3 bg-navy text-white rounded-xl text-sm font-semibold hover:bg-navy/90 transition-colors"
               >
-                Tutup
-              </button>
+                <Download size={15} />
+                Unduh Sekarang
+              </a>
             </div>
           ) : (
             <>
@@ -106,8 +109,8 @@ export default function EmailGateModal({
                 Masukkan Email Anda
               </h2>
               <p className="text-sm text-text-muted mb-6 leading-relaxed">
-                Tautan unduhan <strong>{fileName}</strong> akan dikirimkan ke
-                email Anda.
+                Isi email Anda untuk mengunduh{" "}
+                <strong>{fileName}</strong>.
               </p>
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -141,12 +144,12 @@ export default function EmailGateModal({
                   {state === "loading" ? (
                     <>
                       <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Mengirim...
+                      Memproses...
                     </>
                   ) : (
                     <>
-                      <Send size={15} />
-                      Kirim & Unduh
+                      <Download size={15} />
+                      Lanjutkan
                     </>
                   )}
                 </button>

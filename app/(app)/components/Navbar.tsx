@@ -108,8 +108,7 @@ const DEFAULT_NAV: NavbarData = {
     {
       name: "Menu",
       items: [
-        { href: "#contact", label: "Contact" },
-        { href: "tel:02150508080", label: "Call Us" },
+        { href: "https://wa.me/622150508080", label: "Claim Via Whatsapp" },
       ],
     },
     {

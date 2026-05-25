@@ -35,6 +35,7 @@ export default buildConfig({
     meta: {
       icons: { icon: "/api/admin-favicon" },
     },
+    css: path.resolve(dirname, 'components/admin/admin.css'),
     components: {
       graphics: {
         Logo: './components/admin/AdminLogo#AdminLogo',

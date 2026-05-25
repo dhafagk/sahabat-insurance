@@ -9,13 +9,22 @@ interface ProductIcon {
   alt?: string | null;
 }
 
+interface ProductFile {
+  url?: string | null;
+}
+
+interface ProductLinkGroup {
+  url?: string | null;
+  file?: ProductFile | null;
+}
+
 export interface ProductItem {
   id?: string;
   title: string;
   description: string;
   icon?: ProductIcon | null;
-  riplayUrl?: string | null;
-  sppaUrl?: string | null;
+  riplay?: ProductLinkGroup | null;
+  sppa?: ProductLinkGroup | null;
 }
 
 export interface SectionMeta {
@@ -146,7 +155,7 @@ export default function Products({ products, sectionMeta }: ProductsProps) {
                 className="flex flex-col h-full bg-card rounded-2xl border border-slate-100 p-6 group transition-all duration-300 hover:border-navy hover:shadow-xl"
               >
                 <div
-                  className="w-24 h-24 rounded-2xl flex items-center justify-center mb-5 bg-gradient-to-br from-slate-50 to-slate-100 group-hover:from-navy/5 group-hover:to-navy/10 transition-all duration-300 overflow-hidden"
+                  className="w-24 h-24 rounded-2xl flex items-center justify-center mb-5 mx-auto bg-gradient-to-br from-slate-50 to-slate-100 group-hover:from-navy/5 group-hover:to-navy/10 transition-all duration-300 overflow-hidden"
                   aria-hidden="true"
                 >
                   {product.icon?.url ? (
@@ -166,7 +175,7 @@ export default function Products({ products, sectionMeta }: ProductsProps) {
                   )}
                 </div>
 
-                <h3 className="font-semibold text-text-primary text-base">
+                <h3 className="font-semibold text-text-primary text-base text-center">
                   {product.title}
                 </h3>
               </Link>

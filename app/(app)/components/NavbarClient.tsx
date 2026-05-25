@@ -22,9 +22,7 @@ interface Props {
 export default function NavbarClient({ data }: Props) {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4 sm:px-6">
-      <div
-        className="pointer-events-auto mx-auto flex h-14 md:h-16 w-full max-w-7xl items-center justify-between gap-2 rounded-full px-4 sm:px-6 border border-slate-200/80 bg-white/95 shadow-xl shadow-navy/10 backdrop-blur-md"
-      >
+      <div className="pointer-events-auto mx-auto flex h-14 md:h-20 w-full max-w-7xl items-center justify-between gap-2 rounded-full px-4 sm:px-6 border border-slate-200/80 bg-white/95 shadow-xl shadow-[#1e3a8a]/10 backdrop-blur-md">
         {/* Logo */}
         <Link
           href="/"
@@ -36,7 +34,7 @@ export default function NavbarClient({ data }: Props) {
             alt="Sahabat Insurance"
             width={200}
             height={68}
-            className="h-10 md:h-12 w-auto object-contain"
+            className="h-12 md:h-18 w-auto object-contain"
             priority
           />
         </Link>
@@ -48,9 +46,7 @@ export default function NavbarClient({ data }: Props) {
               if (link.dropdownItems && link.dropdownItems.length > 0) {
                 return (
                   <NavigationMenuItem key={index} className="relative">
-                    <NavigationMenuTrigger
-                      className="h-9 rounded-full px-3 py-1.5 text-sm font-medium transition-all bg-transparent text-text-primary hover:bg-slate-100 hover:text-navy data-[state=open]:bg-slate-100 data-[state=open]:text-navy"
-                    >
+                    <NavigationMenuTrigger className="h-9 rounded-full px-3 py-1.5 text-base font-bold transition-all bg-transparent text-[#1e3a8a] hover:bg-slate-100 data-[state=open]:bg-slate-100">
                       {link.label}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent className="z-50">
@@ -67,7 +63,7 @@ export default function NavbarClient({ data }: Props) {
                   <NavigationMenuLink
                     href={link.href}
                     asChild
-                    className="inline-flex h-9 items-center rounded-full px-3 py-1.5 text-sm font-medium transition-all text-text-primary hover:bg-slate-100 hover:text-navy"
+                    className="inline-flex h-9 items-center rounded-full px-3 py-1.5 text-base font-bold transition-all text-[#1e3a8a] hover:bg-slate-100"
                   >
                     <Link href={link.href}>{link.label}</Link>
                   </NavigationMenuLink>
@@ -81,7 +77,7 @@ export default function NavbarClient({ data }: Props) {
         <div className="flex shrink-0 items-center gap-2">
           <Link
             href="#contact"
-            className="hidden md:inline-flex items-center justify-center font-semibold px-5 text-sm h-9 rounded-full transition-all duration-200 bg-navy hover:bg-navy/90 text-white shadow-sm shadow-navy/30"
+            className="hidden md:inline-flex items-center justify-center font-semibold px-5 text-sm h-9 rounded-full transition-all duration-200 bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 text-white shadow-sm shadow-[#1e3a8a]/30"
             aria-label="Hubungi Kami"
           >
             Hubungi Kami
@@ -122,7 +118,7 @@ function CategoryItems({ items }: { items: NavItem[] }) {
             <NavigationMenuLink asChild>
               <Link
                 href={item.href}
-                className="group/item flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all text-text-primary hover:bg-slate-50 hover:text-navy"
+                className="group/item flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all text-text-primary hover:bg-slate-50 hover:text-[#1e3a8a]"
                 onMouseEnter={() => {
                   setActiveItem(
                     item.subItems && item.subItems.length > 0 ? item : null,
@@ -157,7 +153,7 @@ function CategoryItems({ items }: { items: NavItem[] }) {
                   <NavigationMenuLink asChild>
                     <Link
                       href={subItem.href}
-                      className="group/sub flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-medium text-text-primary hover:bg-slate-50 hover:text-navy transition-all"
+                      className="group/sub flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-medium text-text-primary hover:bg-slate-50 hover:text-[#1e3a8a] transition-all"
                     >
                       <span className="flex-1">{subItem.title}</span>
                       <ArrowRight className="size-3 shrink-0 text-text-muted opacity-0 group-hover/sub:opacity-100 transition-all" />
@@ -186,7 +182,7 @@ function SimpleListItem({
           className="group/row flex items-start gap-3 rounded-lg px-3 py-2.5 hover:bg-slate-50 transition-all"
         >
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-text-primary group-hover/row:text-navy transition-colors leading-snug">
+            <p className="text-sm font-semibold text-text-primary group-hover/row:text-[#1e3a8a] transition-colors leading-snug">
               {title}
             </p>
           </div>

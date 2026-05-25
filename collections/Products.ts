@@ -28,20 +28,52 @@ export const Products: CollectionConfig = {
       },
     },
     {
-      name: "riplayUrl",
-      type: "text",
-      label: "Riplay URL",
-      admin: {
-        description: "Link to the Riplay document or page",
-      },
+      name: "riplay",
+      type: "group",
+      label: "Riplay",
+      fields: [
+        {
+          name: "url",
+          type: "text",
+          label: "Riplay URL",
+          admin: {
+            description: "External link to the Riplay document or page",
+          },
+        },
+        {
+          name: "file",
+          type: "upload",
+          label: "Riplay PDF",
+          relationTo: "media",
+          admin: {
+            description: "Upload a PDF file for Riplay (used if no URL is set)",
+          },
+        },
+      ],
     },
     {
-      name: "sppaUrl",
-      type: "text",
-      label: "Download SPPA URL",
-      admin: {
-        description: "Link to the SPPA document for download",
-      },
+      name: "sppa",
+      type: "group",
+      label: "Download SPPA",
+      fields: [
+        {
+          name: "url",
+          type: "text",
+          label: "SPPA URL",
+          admin: {
+            description: "External link to the SPPA document for download",
+          },
+        },
+        {
+          name: "file",
+          type: "upload",
+          label: "SPPA PDF",
+          relationTo: "media",
+          admin: {
+            description: "Upload a PDF file for SPPA (used if no URL is set)",
+          },
+        },
+      ],
     },
     {
       name: "order",

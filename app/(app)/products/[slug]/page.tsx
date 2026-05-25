@@ -59,6 +59,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   if (!product) notFound();
 
+  const riplayHref = product.riplay?.url ?? (product.riplay?.file as { url?: string | null } | null)?.url ?? null;
+  const sppaHref = product.sppa?.url ?? (product.sppa?.file as { url?: string | null } | null)?.url ?? null;
+
   return (
     <>
       <Navbar />
@@ -148,9 +151,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
           {/* Action buttons — same style as ProductModal footer */}
           <div className="flex gap-3">
-            {product.riplayUrl ? (
+            {riplayHref ? (
               <a
-                href={product.riplayUrl}
+                href={riplayHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-xl border-2 border-navy text-navy text-base font-bold hover:bg-navy/5 transition-colors"
@@ -167,9 +170,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 Riplay
               </button>
             )}
-            {product.sppaUrl ? (
+            {sppaHref ? (
               <a
-                href={product.sppaUrl}
+                href={sppaHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-navy text-white text-base font-bold hover:bg-navy/90 transition-colors"

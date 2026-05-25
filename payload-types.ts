@@ -203,14 +203,26 @@ export interface Product {
    * Upload an SVG or PNG icon for this product (recommended: SVG, square format)
    */
   icon?: (number | null) | Media;
-  /**
-   * Link to the Riplay document or page
-   */
-  riplayUrl?: string | null;
-  /**
-   * Link to the SPPA document for download
-   */
-  sppaUrl?: string | null;
+  riplay?: {
+    /**
+     * External link to the Riplay document or page
+     */
+    url?: string | null;
+    /**
+     * Upload a PDF file for Riplay (used if no URL is set)
+     */
+    file?: (number | null) | Media;
+  };
+  sppa?: {
+    /**
+     * External link to the SPPA document for download
+     */
+    url?: string | null;
+    /**
+     * Upload a PDF file for SPPA (used if no URL is set)
+     */
+    file?: (number | null) | Media;
+  };
   /**
    * Lower numbers appear first
    */
@@ -595,8 +607,18 @@ export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   icon?: T;
-  riplayUrl?: T;
-  sppaUrl?: T;
+  riplay?:
+    | T
+    | {
+        url?: T;
+        file?: T;
+      };
+  sppa?:
+    | T
+    | {
+        url?: T;
+        file?: T;
+      };
   order?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -787,9 +809,30 @@ export interface LandingPage {
     descriptionDesktop?: string | null;
     descriptionMobile?: string | null;
     whatsappUrl?: string | null;
+    /**
+     * Default: Klaim Via Whatsapp
+     */
     ctaPrimaryLabel?: string | null;
+    /**
+     * Default: WhatsApp URL
+     */
     ctaPrimaryHref?: string | null;
+    /**
+     * Default: Cek Polis Anda
+     */
     ctaSecondaryLabel?: string | null;
+    /**
+     * Default: #polis
+     */
+    ctaSecondaryHref?: string | null;
+    /**
+     * Default: Cek Harga Premi
+     */
+    ctaTertiaryLabel?: string | null;
+    /**
+     * Default: #premi
+     */
+    ctaTertiaryHref?: string | null;
   };
   promoStrip?: {
     heading?: string | null;
@@ -1134,6 +1177,9 @@ export interface LandingPageSelect<T extends boolean = true> {
         ctaPrimaryLabel?: T;
         ctaPrimaryHref?: T;
         ctaSecondaryLabel?: T;
+        ctaSecondaryHref?: T;
+        ctaTertiaryLabel?: T;
+        ctaTertiaryHref?: T;
       };
   promoStrip?:
     | T

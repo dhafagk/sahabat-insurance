@@ -25,7 +25,7 @@ export function MobileNav({ nav, solid = true }: MobileNavProps) {
           className={cn(
             "relative size-9 touch-manipulation rounded-full focus-visible:ring-0 md:hidden",
             solid
-              ? "bg-navy hover:bg-navy/90 active:bg-navy/90"
+              ? "bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 active:bg-[#1e3a8a]/90"
               : "bg-white/20 hover:bg-white/30 active:bg-white/30 border border-white/30",
           )}
         >
@@ -38,7 +38,7 @@ export function MobileNav({ nav, solid = true }: MobileNavProps) {
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="no-scrollbar max-h-[85vh] w-[calc(100vw-2rem)] max-w-sm overflow-y-auto rounded-2xl border border-slate-200/60 bg-white p-0 shadow-2xl shadow-navy/10 duration-200"
+        className="no-scrollbar max-h-[85vh] w-[calc(100vw-2rem)] max-w-sm overflow-y-auto rounded-2xl border border-slate-200/60 bg-white p-0 shadow-2xl shadow-[#1e3a8a]/10 duration-200"
         align="end"
         side="bottom"
         sideOffset={8}
@@ -54,7 +54,7 @@ export function MobileNav({ nav, solid = true }: MobileNavProps) {
                   <React.Fragment key={i}>
                     <Link
                       href={item.href}
-                      className="text-base font-medium text-text-primary hover:text-navy py-1 transition-colors"
+                      className="text-base font-medium text-text-primary hover:text-[#1e3a8a] py-1 transition-colors"
                       onClick={() => setOpen(false)}
                     >
                       {item.label}
@@ -65,7 +65,7 @@ export function MobileNav({ nav, solid = true }: MobileNavProps) {
                           <Link
                             key={j}
                             href={sub.href}
-                            className="text-sm font-medium text-text-muted hover:text-navy py-0.5 transition-colors"
+                            className="text-sm font-medium text-text-muted hover:text-[#1e3a8a] py-0.5 transition-colors"
                             onClick={() => setOpen(false)}
                           >
                             {sub.label}
@@ -82,7 +82,7 @@ export function MobileNav({ nav, solid = true }: MobileNavProps) {
           <Link
             href="#contact"
             onClick={() => setOpen(false)}
-            className="inline-flex items-center justify-center rounded-full bg-navy px-8 py-3.5 text-base font-semibold text-white hover:bg-navy/90 transition-colors"
+            className="inline-flex items-center justify-center rounded-full bg-[#1e3a8a] px-8 py-3.5 text-base font-semibold text-white hover:bg-[#1e3a8a]/90 transition-colors"
           >
             Hubungi Kami
           </Link>
