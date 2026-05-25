@@ -147,7 +147,7 @@ export default function Hero({ data }: HeroProps) {
             </span>
             <div className="bg-white rounded-md px-4 py-2 shadow-md">
               <Image
-                src="/fitch-ratings.jpg"
+                src="/p.jpg"
                 alt="Fitch Ratings"
                 width={120}
                 height={40}
