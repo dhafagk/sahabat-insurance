@@ -2,34 +2,34 @@
 
 /* ─── Brand color scale (replaces --color-success-* / accent) ─── */
 :root {
-  --color-success-50:  rgb(236, 246, 253);
+  --color-success-50: rgb(236, 246, 253);
   --color-success-100: rgb(209, 234, 249);
   --color-success-150: rgb(175, 218, 244);
   --color-success-200: rgb(139, 200, 238);
   --color-success-250: rgb(104, 182, 231);
-  --color-success-300: rgb(74,  165, 222);
-  --color-success-350: rgb(52,  149, 210);
-  --color-success-400: rgb(40,  135, 193);  /* #2887c1 — primary brand */
-  --color-success-450: rgb(30,  119, 172);
-  --color-success-500: rgb(24,  104, 152);
-  --color-success-550: rgb(19,   89, 132);
-  --color-success-600: rgb(16,   76, 114);
-  --color-success-650: rgb(14,   64,  97);
-  --color-success-700: rgb(13,   54,  83);
-  --color-success-750: rgb(18,   46,  74);
-  --color-success-800: rgb(17,   40,  66);
-  --color-success-850: rgb(20,   35,  60);
-  --color-success-900: rgb(18,   29,  50);
-  --color-success-950: rgb(15,   24,  43);
+  --color-success-300: rgb(74, 165, 222);
+  --color-success-350: rgb(52, 149, 210);
+  --color-success-400: rgb(40, 135, 193); /* #2887c1 — primary brand */
+  --color-success-450: rgb(30, 119, 172);
+  --color-success-500: rgb(24, 104, 152);
+  --color-success-550: rgb(19, 89, 132);
+  --color-success-600: rgb(16, 76, 114);
+  --color-success-650: rgb(14, 64, 97);
+  --color-success-700: rgb(13, 54, 83);
+  --color-success-750: rgb(18, 46, 74);
+  --color-success-800: rgb(17, 40, 66);
+  --color-success-850: rgb(20, 35, 60);
+  --color-success-900: rgb(18, 29, 50);
+  --color-success-950: rgb(15, 24, 43);
 
   /* Soft blue-gray page background — easier on the eyes than white */
-  --theme-bg:       #daeaf5;
+  --theme-bg: #daeaf5;
   --theme-input-bg: #f5fafd;
-  --theme-text:     #0f172a;
+  --theme-text: #0f172a;
 
   /* Tint the elevation scale blue so cards/panels feel cohesive */
-  --theme-elevation-0:   #ffffff;
-  --theme-elevation-50:  #f0f7fc;
+  --theme-elevation-0: #ffffff;
+  --theme-elevation-50: #f0f7fc;
   --theme-elevation-100: #e2f0f9;
   --theme-elevation-150: #cce3f2;
   --theme-elevation-200: #b5d5ea;
