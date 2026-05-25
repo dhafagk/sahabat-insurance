@@ -818,14 +818,6 @@ export interface LandingPage {
      */
     ctaPrimaryHref?: string | null;
     /**
-     * Default: Cek Polis Anda
-     */
-    ctaSecondaryLabel?: string | null;
-    /**
-     * Default: #polis
-     */
-    ctaSecondaryHref?: string | null;
-    /**
      * Default: Cek Harga Premi
      */
     ctaTertiaryLabel?: string | null;
@@ -1176,8 +1168,6 @@ export interface LandingPageSelect<T extends boolean = true> {
         whatsappUrl?: T;
         ctaPrimaryLabel?: T;
         ctaPrimaryHref?: T;
-        ctaSecondaryLabel?: T;
-        ctaSecondaryHref?: T;
         ctaTertiaryLabel?: T;
         ctaTertiaryHref?: T;
       };

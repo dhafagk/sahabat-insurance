@@ -123,12 +123,12 @@ export default function Hero({ data }: HeroProps) {
                 </svg>
                 {ctaPrimaryLabel}
               </a>
-              <a
+              {/* <a
                 href={ctaSecondaryHref}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold text-base border-2 border-white text-white hover:bg-white/10 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white whitespace-nowrap"
               >
                 {ctaSecondaryLabel}
-              </a>
+              </a> */}
               <a
                 href={ctaTertiaryHref}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold text-base border-2 border-white text-white hover:bg-white/10 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white whitespace-nowrap"
@@ -138,7 +138,7 @@ export default function Hero({ data }: HeroProps) {
             </div>
           </motion.div>
 
-          <motion.div
+          {/* <motion.div
             variants={fadeUp}
             className="flex items-center gap-3 pt-2"
           >
@@ -154,7 +154,7 @@ export default function Hero({ data }: HeroProps) {
                 className="h-8 w-auto object-contain"
               />
             </div>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </div>
     </section>
