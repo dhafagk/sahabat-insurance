@@ -80,7 +80,7 @@ export function MobileNav({ nav, solid = true }: MobileNavProps) {
           ))}
 
           <Link
-            href="#contact"
+            href="/contact-us"
             onClick={() => setOpen(false)}
             className="inline-flex items-center justify-center rounded-full bg-[#1e3a8a] px-8 py-3.5 text-base font-semibold text-white hover:bg-[#1e3a8a]/90 transition-colors"
           >

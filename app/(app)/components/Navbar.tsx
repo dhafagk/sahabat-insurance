@@ -171,8 +171,7 @@ function mapPayloadToNavbarData(raw: any): NavbarData | null {
     {
       name: "Menu",
       items: [
-        { href: "#contact", label: "Contact" },
-        { href: "tel:02150508080", label: "Call Us" },
+        { href: "https://wa.me/622150508080", label: "Claim Via Whatsapp" },
       ],
     },
     ...desktop
@@ -197,7 +196,9 @@ function mapPayloadToNavbarData(raw: any): NavbarData | null {
 
 export default async function Navbar() {
   const raw = await fetchNavbar();
+  console.log(raw);
   const mapped = mapPayloadToNavbarData(raw);
+  console.log(mapped);
   const navData = mapped ?? DEFAULT_NAV;
 
   return <NavbarClient data={navData} />;

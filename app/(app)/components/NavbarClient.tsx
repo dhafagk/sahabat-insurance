@@ -76,7 +76,7 @@ export default function NavbarClient({ data }: Props) {
         {/* CTA + mobile hamburger */}
         <div className="flex shrink-0 items-center gap-2">
           <Link
-            href="#contact"
+            href="/contact-us"
             className="hidden md:inline-flex items-center justify-center font-semibold px-5 text-sm h-9 rounded-full transition-all duration-200 bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 text-white shadow-sm shadow-[#1e3a8a]/30"
             aria-label="Hubungi Kami"
           >
