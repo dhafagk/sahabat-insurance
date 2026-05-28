@@ -49,6 +49,34 @@ body {
   animation: float 3s ease-in-out 1.5s infinite;
 }
 
+@keyframes overlay-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlay-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-overlay-backdrop {
+  animation: overlay-backdrop-in 0.15s ease-out;
+}
+
+.animate-overlay-panel {
+  animation: overlay-panel-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 /* Hero responsive background */
 .hero-section {
   background-image: url(/bg.png);

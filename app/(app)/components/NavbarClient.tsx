@@ -11,15 +11,19 @@ import {
   NavigationMenuTrigger,
 } from "./ui/navigation-menu";
 import { MobileNav } from "./ui/navbar";
-import React from "react";
+import React, { useState } from "react";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import type { NavbarData, NavItem } from "./navbarTypes";
+import SearchButton from "./SearchButton";
+import SearchOverlay from "./SearchOverlay";
 
 interface Props {
   data: NavbarData;
 }
 
 export default function NavbarClient({ data }: Props) {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
   return (
     <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4 sm:px-6">
       <div className="pointer-events-auto mx-auto flex h-14 md:h-20 w-full max-w-7xl items-center justify-between gap-2 rounded-full px-4 sm:px-6 border border-slate-200/80 bg-white/95 shadow-xl shadow-[#1e3a8a]/10 backdrop-blur-md">
@@ -73,8 +77,9 @@ export default function NavbarClient({ data }: Props) {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* CTA + mobile hamburger */}
+        {/* CTA + search + mobile hamburger */}
         <div className="flex shrink-0 items-center gap-2">
+          <SearchButton onClick={() => setIsSearchOpen(true)} />
           <Link
             href="/contact-us"
             className="hidden md:inline-flex items-center justify-center font-semibold px-5 text-sm h-9 rounded-full transition-all duration-200 bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 text-white shadow-sm shadow-[#1e3a8a]/30"
@@ -85,6 +90,10 @@ export default function NavbarClient({ data }: Props) {
           <MobileNav nav={data.mobile} solid={true} />
         </div>
       </div>
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
     </header>
   );
 }
