@@ -19,6 +19,7 @@ export const Timeline: Block = {
           type: 'text',
           required: true,
           label: 'Date',
+          localized: true,
           admin: {
             description: 'e.g. "March 25, 2011"',
           },
@@ -28,6 +29,7 @@ export const Timeline: Block = {
           type: 'textarea',
           required: true,
           label: 'Description',
+          localized: true,
         },
       ],
     },

@@ -33,17 +33,20 @@ export const LandingPage: GlobalConfig = {
               name: "descriptionDesktop",
               type: "text",
               label: "Description (Desktop)",
+              localized: true,
             },
             {
               name: "descriptionMobile",
               type: "text",
               label: "Description (Mobile)",
+              localized: true,
             },
             { name: "whatsappUrl", type: "text", label: "WhatsApp URL" },
             {
               name: "ctaPrimaryLabel",
               type: "text",
               label: "Button 1 Label",
+              localized: true,
               admin: { description: "Default: Klaim Via Whatsapp" },
             },
             {
@@ -68,6 +71,7 @@ export const LandingPage: GlobalConfig = {
               name: "ctaTertiaryLabel",
               type: "text",
               label: "Button 2 Label",
+              localized: true,
               admin: { description: "Default: Cek Harga Premi" },
             },
             {
@@ -84,8 +88,8 @@ export const LandingPage: GlobalConfig = {
           name: "promoStrip",
           label: "Promo Strip",
           fields: [
-            { name: "heading", type: "text", label: "Heading" },
-            { name: "buttonLabel", type: "text", label: "Button Label" },
+            { name: "heading", type: "text", label: "Heading", localized: true },
+            { name: "buttonLabel", type: "text", label: "Button Label", localized: true },
             { name: "buttonHref", type: "text", label: "Button Href" },
           ],
         },
@@ -95,8 +99,8 @@ export const LandingPage: GlobalConfig = {
           name: "productsSection",
           label: "Products",
           fields: [
-            { name: "badge", type: "text", label: "Badge Label" },
-            { name: "heading", type: "text", label: "Section Heading" },
+            { name: "badge", type: "text", label: "Badge Label", localized: true },
+            { name: "heading", type: "text", label: "Section Heading", localized: true },
           ],
         },
 
@@ -105,9 +109,9 @@ export const LandingPage: GlobalConfig = {
           name: "whyChooseUs",
           label: "Why Choose Us",
           fields: [
-            { name: "badge", type: "text", label: "Badge Label" },
-            { name: "heading", type: "text", label: "Section Heading" },
-            { name: "description", type: "text", label: "Body Text" },
+            { name: "badge", type: "text", label: "Badge Label", localized: true },
+            { name: "heading", type: "text", label: "Section Heading", localized: true },
+            { name: "description", type: "text", label: "Body Text", localized: true },
             {
               name: "reasons",
               type: "array",
@@ -120,8 +124,8 @@ export const LandingPage: GlobalConfig = {
                   options: ICON_OPTIONS,
                   required: true,
                 },
-                { name: "title", type: "text", required: true },
-                { name: "body", type: "text", required: true },
+                { name: "title", type: "text", required: true, localized: true },
+                { name: "body", type: "text", required: true, localized: true },
               ],
             },
             {
@@ -130,7 +134,7 @@ export const LandingPage: GlobalConfig = {
               label: "Section Image",
               relationTo: "media",
             },
-            { name: "ctaLabel", type: "text", label: "CTA Button Label" },
+            { name: "ctaLabel", type: "text", label: "CTA Button Label", localized: true },
             { name: "ctaHref", type: "text", label: "CTA Button Href" },
           ],
         },
@@ -140,8 +144,8 @@ export const LandingPage: GlobalConfig = {
           name: "newsSection",
           label: "News",
           fields: [
-            { name: "badge", type: "text", label: "Badge Label" },
-            { name: "heading", type: "text", label: "Section Heading" },
+            { name: "badge", type: "text", label: "Badge Label", localized: true },
+            { name: "heading", type: "text", label: "Section Heading", localized: true },
           ],
         },
 
@@ -150,12 +154,13 @@ export const LandingPage: GlobalConfig = {
           name: "ctaBanner",
           label: "CTA Banner",
           fields: [
-            { name: "heading", type: "text", label: "Heading" },
-            { name: "subtext", type: "text", label: "Subtext" },
+            { name: "heading", type: "text", label: "Heading", localized: true },
+            { name: "subtext", type: "text", label: "Subtext", localized: true },
             {
               name: "primaryLabel",
               type: "text",
               label: "Primary Button Label",
+              localized: true,
             },
             { name: "primaryHref", type: "text", label: "Primary Button Href" },
             { name: "whatsappUrl", type: "text", label: "WhatsApp URL" },
@@ -163,6 +168,7 @@ export const LandingPage: GlobalConfig = {
               name: "contactAddress",
               type: "textarea",
               label: "Contact Address",
+              localized: true,
             },
             { name: "contactPhone", type: "text", label: "Contact Phone" },
             { name: "contactEmail", type: "email", label: "Contact Email" },
@@ -190,8 +196,8 @@ export const LandingPage: GlobalConfig = {
                     { label: "Phone", value: "phone" },
                   ],
                 },
-                { name: "label", type: "text", required: true },
-                { name: "sublabel", type: "text" },
+                { name: "label", type: "text", required: true, localized: true },
+                { name: "sublabel", type: "text", localized: true },
                 { name: "href", type: "text", label: "Link URL" },
                 {
                   name: "useWhatsappUrl",

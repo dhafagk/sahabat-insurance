@@ -149,7 +149,12 @@ export default function Products({ products, sectionMeta }: ProductsProps) {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {items.map((product) => (
-            <motion.div key={product.title} variants={cardVariants} whileHover={{ y: -8 }} className="h-full">
+            <motion.div
+              key={product.title}
+              variants={cardVariants}
+              whileHover={{ y: -8 }}
+              className="h-full"
+            >
               <Link
                 href={`/products/${toProductSlug(product.title)}`}
                 className="flex flex-col h-full bg-card rounded-2xl border border-slate-100 p-6 group transition-all duration-300 hover:border-navy hover:shadow-xl"

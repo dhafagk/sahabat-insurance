@@ -21,11 +21,13 @@ export const Unduhan: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'description',
       type: 'textarea',
       label: 'Deskripsi Halaman',
+      localized: true,
       admin: {
         description: 'Teks penjelasan singkat di bawah judul halaman.',
       },
@@ -87,6 +89,7 @@ export const Unduhan: CollectionConfig = {
           type: 'text',
           required: true,
           label: 'Kategori',
+          localized: true,
           admin: {
             description: 'Label kecil di atas judul, mis. "Klaim", "Polis".',
           },
@@ -96,11 +99,13 @@ export const Unduhan: CollectionConfig = {
           type: 'text',
           required: true,
           label: 'Judul Seksi',
+          localized: true,
         },
         {
           name: 'description',
           type: 'textarea',
           label: 'Deskripsi Seksi',
+          localized: true,
         },
         {
           name: 'items',
@@ -112,6 +117,7 @@ export const Unduhan: CollectionConfig = {
               type: 'text',
               required: true,
               label: 'Nama',
+              localized: true,
             },
             {
               name: 'type',
@@ -146,6 +152,7 @@ export const Unduhan: CollectionConfig = {
               name: 'size',
               type: 'text',
               label: 'Ukuran File',
+              localized: true,
               admin: {
                 description: 'Tampilan ukuran, mis. "245 KB". Kosongkan untuk auto-hitung dari file.',
                 condition: (_data, siblingData) => siblingData?.type === 'pdf',

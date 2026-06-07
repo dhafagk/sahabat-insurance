@@ -13,6 +13,7 @@ export const Tags: CollectionConfig = {
       type: 'text',
       required: true,
       unique: true,
+      localized: true,
     },
   ],
 }

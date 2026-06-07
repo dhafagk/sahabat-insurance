@@ -9,7 +9,7 @@ const LinkListBlock: Block = {
       type: "array",
       label: "Links",
       fields: [
-        { name: "label", type: "text", required: true },
+        { name: "label", type: "text", required: true, localized: true },
         { name: "href", type: "text", required: true },
         {
           name: "icon",
@@ -40,8 +40,8 @@ const ContactBlock: Block = {
   slug: "contactInfo",
   labels: { singular: "Contact Info", plural: "Contact Info" },
   fields: [
-    { name: "companyName", type: "text", label: "Company Name" },
-    { name: "subheading", type: "text", label: "Sub-heading (e.g. Pengaduan Konsumen)" },
+    { name: "companyName", type: "text", label: "Company Name", localized: true },
+    { name: "subheading", type: "text", label: "Sub-heading (e.g. Pengaduan Konsumen)", localized: true },
     {
       name: "items",
       type: "array",
@@ -60,7 +60,7 @@ const ContactBlock: Block = {
           ],
         },
         { name: "value", type: "text", required: true, label: "Value (href or raw text)" },
-        { name: "displayText", type: "text", label: "Display Text (optional, overrides value)" },
+        { name: "displayText", type: "text", label: "Display Text (optional, overrides value)", localized: true },
       ],
     },
   ],
@@ -70,7 +70,7 @@ const TextBlock: Block = {
   slug: "textContent",
   labels: { singular: "Text Block", plural: "Text Blocks" },
   fields: [
-    { name: "content", type: "textarea", label: "Text Content" },
+    { name: "content", type: "textarea", label: "Text Content", localized: true },
   ],
 };
 
@@ -89,8 +89,8 @@ const BadgeBlock: Block = {
   slug: "badge",
   labels: { singular: "Badge", plural: "Badges" },
   fields: [
-    { name: "line1", type: "text", label: "Line 1" },
-    { name: "line2", type: "text", label: "Line 2" },
+    { name: "line1", type: "text", label: "Line 1", localized: true },
+    { name: "line2", type: "text", label: "Line 2", localized: true },
     {
       name: "accentLine",
       type: "select",
@@ -119,6 +119,7 @@ export const FooterConfig: GlobalConfig = {
           name: "title",
           type: "text",
           label: "Column Title (leave empty to hide heading)",
+          localized: true,
         },
         {
           name: "content",
@@ -138,7 +139,7 @@ export const FooterConfig: GlobalConfig = {
           type: "array",
           label: "Navigation Links",
           fields: [
-            { name: "label", type: "text", required: true },
+            { name: "label", type: "text", required: true, localized: true },
             { name: "href", type: "text", required: true },
           ],
         },
@@ -168,6 +169,7 @@ export const FooterConfig: GlobalConfig = {
           name: "copyrightText",
           type: "text",
           label: "Copyright Text",
+          localized: true,
           defaultValue:
             "© Hak Cipta 2011–2026 ® sahabatinsurance.id ® Seluruh Hak Cipta Dilindungi.",
         },

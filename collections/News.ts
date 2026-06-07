@@ -23,16 +23,19 @@ export const News: CollectionConfig = {
       name: "title",
       type: "text",
       required: true,
+      localized: true,
     },
     {
       name: "content",
       type: "richText",
       required: true,
       editor: lexicalEditor(),
+      localized: true,
     },
     {
       name: "excerpt",
       type: "textarea",
+      localized: true,
       admin: {
         description: "Short summary shown in news cards and previews.",
       },

@@ -13,6 +13,7 @@ export const NavbarConfig: GlobalConfig = {
           name: "label",
           type: "text",
           required: true,
+          localized: true,
         },
         {
           name: "href",
@@ -28,10 +29,12 @@ export const NavbarConfig: GlobalConfig = {
               name: "title",
               type: "text",
               required: true,
+              localized: true,
             },
             {
               name: "description",
               type: "text",
+              localized: true,
             },
             {
               name: "href",
@@ -47,6 +50,7 @@ export const NavbarConfig: GlobalConfig = {
                   name: "title",
                   type: "text",
                   required: true,
+                  localized: true,
                 },
                 {
                   name: "href",
