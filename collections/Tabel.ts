@@ -21,11 +21,13 @@ export const Tabel: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'description',
       type: 'textarea',
       label: 'Deskripsi Halaman',
+      localized: true,
       admin: {
         description: 'Teks penjelasan singkat di bawah judul halaman.',
       },
@@ -74,6 +76,7 @@ export const Tabel: CollectionConfig = {
           type: 'text',
           required: true,
           label: 'Kategori',
+          localized: true,
           admin: {
             description: 'Label kecil di atas judul, mis. "Produk", "Layanan".',
           },
@@ -83,11 +86,13 @@ export const Tabel: CollectionConfig = {
           type: 'text',
           required: true,
           label: 'Judul Tabel',
+          localized: true,
         },
         {
           name: 'description',
           type: 'textarea',
           label: 'Deskripsi Tabel',
+          localized: true,
         },
         {
           name: 'columns',
@@ -102,6 +107,7 @@ export const Tabel: CollectionConfig = {
               type: 'text',
               required: true,
               label: 'Nama Kolom',
+              localized: true,
             },
           ],
         },
@@ -122,6 +128,7 @@ export const Tabel: CollectionConfig = {
                   name: 'value',
                   type: 'text',
                   label: 'Nilai',
+                  localized: true,
                 },
               ],
             },

@@ -100,7 +100,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('id' | 'en') | ('id' | 'en')[];
   globals: {
     'landing-page': LandingPage;
     'visi-misi': VisiMisi;
@@ -119,7 +119,7 @@ export interface Config {
     'contact-us': ContactUsSelect<false> | ContactUsSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
-  locale: null;
+  locale: 'id' | 'en';
   widgets: {
     collections: CollectionsWidget;
   };

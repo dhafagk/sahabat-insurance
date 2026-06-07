@@ -27,6 +27,14 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
+  localization: {
+    locales: [
+      { label: 'Indonesia', code: 'id' },
+      { label: 'English', code: 'en' },
+    ],
+    defaultLocale: 'id',
+    fallback: true,
+  },
   admin: {
     user: Users.slug,
     importMap: {
