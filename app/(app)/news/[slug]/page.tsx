@@ -10,6 +10,7 @@ import Footer from "../../components/Footer";
 import ArticleHeader from "../../components/ArticleHeader";
 import ArticleBody from "../../components/ArticleBody";
 import LatestNews from "../../components/LatestNews";
+import { getLocale } from "../../lib/locale";
 import type { NewsItem } from "../../components/LatestNews";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +22,7 @@ interface PageProps {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getPayloadInstance = cache(async () => getPayload({ config }) as any);
 
-const fetchArticle = cache(async (slug: string) => {
+const fetchArticle = cache(async (slug: string, locale: string) => {
   const payload = await getPayloadInstance();
   const result = await payload.find({
     collection: "news",
@@ -30,11 +31,12 @@ const fetchArticle = cache(async (slug: string) => {
     },
     limit: 1,
     depth: 2,
+    locale,
   });
   return result.docs[0] ?? null;
 });
 
-const fetchRelated = cache(async (excludeId: number) => {
+const fetchRelated = cache(async (excludeId: number, locale: string) => {
   const payload = await getPayloadInstance();
   const result = await payload.find({
     collection: "news",
@@ -42,6 +44,7 @@ const fetchRelated = cache(async (excludeId: number) => {
     sort: "-date",
     limit: 4,
     depth: 1,
+    locale,
   });
   return result.docs;
 });
@@ -50,7 +53,8 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = await fetchArticle(slug);
+  const locale = await getLocale();
+  const article = await fetchArticle(slug, locale);
   if (!article) return {};
   return {
     title: `${article.title} | Sahabat Insurance`,
@@ -60,10 +64,11 @@ export async function generateMetadata({
 
 export default async function NewsDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const article = await fetchArticle(slug);
+  const locale = await getLocale();
+  const article = await fetchArticle(slug, locale);
   if (!article) notFound();
 
-  const relatedDocs = await fetchRelated(article.id);
+  const relatedDocs = await fetchRelated(article.id, locale);
 
   // Resolve image URL (depth:2 resolves image to Media object)
   const imageUrl: string =

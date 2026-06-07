@@ -8,6 +8,7 @@ import Link from "next/link";
 import { ArrowRight, Download, Phone } from "lucide-react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { getLocale } from "../../lib/locale";
 import type { ProductItem } from "../../components/Products";
 
 export const dynamic = "force-dynamic";
@@ -19,7 +20,7 @@ function toProductSlug(title: string) {
     .replace(/^-|-$/g, "");
 }
 
-const fetchProducts = cache(async (): Promise<ProductItem[]> => {
+const fetchProducts = cache(async (locale: string): Promise<ProductItem[]> => {
   try {
     const payload = await getPayload({ config });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,6 +29,7 @@ const fetchProducts = cache(async (): Promise<ProductItem[]> => {
       collection: "products",
       sort: "order",
       limit: 100,
+      locale,
     });
     return result.docs as ProductItem[];
   } catch {
@@ -43,7 +45,8 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const products = await fetchProducts();
+  const locale = await getLocale();
+  const products = await fetchProducts(locale);
   const product = products.find((p) => toProductSlug(p.title) === slug);
   if (!product) return {};
   return {
@@ -54,7 +57,8 @@ export async function generateMetadata({
 
 export default async function ProductDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const products = await fetchProducts();
+  const locale = await getLocale();
+  const products = await fetchProducts(locale);
   const product = products.find((p) => toProductSlug(p.title) === slug);
 
   if (!product) notFound();

@@ -6,6 +6,7 @@ import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import VisiMisiContent from "./VisiMisiContent";
+import { getLocale } from "../lib/locale";
 import type { ValueItem, MisiItem } from "./VisiMisiContent";
 
 export const dynamic = "force-dynamic";
@@ -14,13 +15,14 @@ export const dynamic = "force-dynamic";
 const getPayloadInstance = cache(async () => getPayload({ config }) as any);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const fetchData = cache(async (): Promise<any> => {
+const fetchData = cache(async (locale: string): Promise<any> => {
   const payload = await getPayloadInstance();
-  return payload.findGlobal({ slug: "visi-misi", depth: 1 });
+  return payload.findGlobal({ slug: "visi-misi", depth: 1, locale });
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await fetchData();
+  const locale = await getLocale();
+  const data = await fetchData(locale);
   return {
     title: `${data?.pageTitle ?? "Visi Dan Misi"} | Sahabat Insurance`,
     description: data?.pageSubtitle ?? undefined,
@@ -80,8 +82,9 @@ const DEFAULT_VALUES: ValueItem[] = [
 ];
 
 export default async function VisiMisiPage() {
+  const locale = await getLocale();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const raw: any = await fetchData();
+  const raw: any = await fetchData(locale);
 
   const pageTitle: string = raw?.pageTitle ?? "Visi Dan Misi";
   const pageSubtitle: string =

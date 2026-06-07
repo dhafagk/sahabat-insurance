@@ -5,6 +5,7 @@ import config from "@payload-config";
 import { ArrowRight, TableProperties } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { getLocale } from "../lib/locale";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,7 @@ interface TabelCard {
 
 export default async function TabelIndexPage() {
   let cards: TabelCard[] = [];
+  const locale = await getLocale();
 
   try {
     const payload = await getPayloadInstance();
@@ -29,6 +31,7 @@ export default async function TabelIndexPage() {
       where: { status: { equals: "published" } },
       sort: "title",
       depth: 0,
+      locale,
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

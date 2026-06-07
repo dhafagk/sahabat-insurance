@@ -1,5 +1,6 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { getLocale } from "./lib/locale";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Products from "./components/Products";
@@ -8,7 +9,7 @@ import LatestNews from "./components/LatestNews";
 import CtaBanner from "./components/CtaBanner";
 import PromoStrip from "./components/PromoStrip";
 import Footer from "./components/Footer";
-// import type { FooterData } from "./components/Footer";
+import type { FooterData } from "./components/Footer";
 import type { HeroData } from "./components/Hero";
 import type {
   SectionMeta as ProductsSectionMeta,
@@ -34,29 +35,38 @@ interface LandingPageData {
 }
 
 export default async function Home() {
-  const payload = await getPayload({ config });
+  const [payload, locale] = await Promise.all([
+    getPayload({ config }),
+    getLocale(),
+  ]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const p = payload as any;
 
-  const [rawLanding, productsResult, newsResult] = await Promise.all([
-    p.findGlobal({ slug: "landing-page" }) as Promise<unknown>,
-    p.find({ collection: "products", sort: "order", limit: 100 }) as Promise<{
-      docs: unknown[];
-    }>,
-    p.find({
-      collection: "news",
-      where: { status: { equals: "published" } },
-      sort: "-date",
-      limit: 3,
-    }) as Promise<{ docs: unknown[] }>,
-    p.findGlobal({ slug: "footer", depth: 1 }) as Promise<unknown>,
-  ]);
+  const [rawLanding, productsResult, newsResult, rawFooter] = await Promise.all(
+    [
+      p.findGlobal({ slug: "landing-page", locale }) as Promise<unknown>,
+      p.find({
+        collection: "products",
+        sort: "order",
+        limit: 100,
+        locale,
+      }) as Promise<{ docs: unknown[] }>,
+      p.find({
+        collection: "news",
+        where: { status: { equals: "published" } },
+        sort: "-date",
+        limit: 3,
+        locale,
+      }) as Promise<{ docs: unknown[] }>,
+      p.findGlobal({ slug: "footer", depth: 1, locale }) as Promise<unknown>,
+    ],
+  );
 
   const landingPage = rawLanding as unknown as LandingPageData;
   const products = productsResult.docs as unknown as ProductItem[];
   const news = newsResult.docs as unknown as NewsItem[];
-  // const footer = rawFooter as unknown as FooterData;
+  const footer = rawFooter as unknown as FooterData;
 
   return (
     <>
@@ -72,7 +82,7 @@ export default async function Home() {
         <LatestNews news={news} sectionMeta={landingPage.newsSection} />
         <CtaBanner data={landingPage.ctaBanner} />
       </main>
-      <Footer />
+      <Footer data={footer} />
     </>
   );
 }

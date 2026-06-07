@@ -6,6 +6,7 @@ import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ContactPageContent from "./ContactPageContent";
+import { getLocale } from "../lib/locale";
 import type { ContactChannel } from "./ContactPageContent";
 
 export const dynamic = "force-dynamic";
@@ -14,17 +15,18 @@ export const dynamic = "force-dynamic";
 const getPayloadInstance = cache(async () => getPayload({ config }) as any);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const fetchData = cache(async (): Promise<any> => {
+const fetchData = cache(async (locale: string): Promise<any> => {
   try {
     const payload = await getPayloadInstance();
-    return payload.findGlobal({ slug: "contact-us", depth: 0 });
+    return payload.findGlobal({ slug: "contact-us", depth: 0, locale });
   } catch {
     return null;
   }
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await fetchData();
+  const locale = await getLocale();
+  const data = await fetchData(locale);
   return {
     title: `${data?.pageTitle ?? "Hubungi Kami"} | Sahabat Insurance`,
     description:
@@ -69,8 +71,9 @@ const DEFAULT_CHANNELS: ContactChannel[] = [
 
 
 export default async function ContactUsPage() {
+  const locale = await getLocale();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const raw: any = await fetchData();
+  const raw: any = await fetchData(locale);
 
   const pageTitle: string = raw?.pageTitle ?? "Hubungi Kami";
   const pageSubtitle: string =

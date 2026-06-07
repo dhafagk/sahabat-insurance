@@ -7,6 +7,7 @@ import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import UnduhContent from "../UnduhContent";
+import { getLocale } from "../../lib/locale";
 import type { AccordionSection, DownloadItem } from "../UnduhContent";
 
 export const dynamic = "force-dynamic";
@@ -18,7 +19,7 @@ interface PageProps {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getPayloadInstance = cache(async () => getPayload({ config }) as any);
 
-const fetchDoc = cache(async (slug: string) => {
+const fetchDoc = cache(async (slug: string, locale: string) => {
   const payload = await getPayloadInstance();
   const result = await payload.find({
     collection: "unduhan",
@@ -27,6 +28,7 @@ const fetchDoc = cache(async (slug: string) => {
     },
     limit: 1,
     depth: 1,
+    locale,
   });
   return result.docs[0] ?? null;
 });
@@ -35,7 +37,8 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const doc = await fetchDoc(slug);
+  const locale = await getLocale();
+  const doc = await fetchDoc(slug, locale);
   if (!doc) return {};
   return {
     title: `${doc.title} | Sahabat Insurance`,
@@ -71,7 +74,8 @@ function normaliseSections(raw: any[]): AccordionSection[] {
 
 export default async function UnduhDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const doc = await fetchDoc(slug);
+  const locale = await getLocale();
+  const doc = await fetchDoc(slug, locale);
   if (!doc) notFound();
 
   const sections: AccordionSection[] =

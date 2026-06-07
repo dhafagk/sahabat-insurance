@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { getLocale } from "../lib/locale";
 import ArticleBody from "../components/ArticleBody";
 import TimelineBlock from "../components/blocks/TimelineBlock";
 import TabelContent from "../tabel/TabelContent";
@@ -24,7 +25,7 @@ interface PageProps {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getPayloadInstance = cache(async () => getPayload({ config }) as any);
 
-const fetchPage = cache(async (slug: string) => {
+const fetchPage = cache(async (slug: string, locale: string) => {
   const payload = await getPayloadInstance();
   const result = await payload.find({
     collection: "pages",
@@ -33,11 +34,12 @@ const fetchPage = cache(async (slug: string) => {
     },
     limit: 1,
     depth: 1,
+    locale,
   });
   return result.docs[0] ?? null;
 });
 
-const fetchTabel = cache(async (slug: string) => {
+const fetchTabel = cache(async (slug: string, locale: string) => {
   const payload = await getPayloadInstance();
   const result = await payload.find({
     collection: "tabel",
@@ -46,11 +48,12 @@ const fetchTabel = cache(async (slug: string) => {
     },
     limit: 1,
     depth: 1,
+    locale,
   });
   return result.docs[0] ?? null;
 });
 
-const fetchUnduhan = cache(async (slug: string) => {
+const fetchUnduhan = cache(async (slug: string, locale: string) => {
   const payload = await getPayloadInstance();
   const result = await payload.find({
     collection: "unduhan",
@@ -59,6 +62,7 @@ const fetchUnduhan = cache(async (slug: string) => {
     },
     limit: 1,
     depth: 1,
+    locale,
   });
   return result.docs[0] ?? null;
 });
@@ -121,8 +125,9 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const locale = await getLocale();
 
-  const page = await fetchPage(slug);
+  const page = await fetchPage(slug, locale);
   if (page) {
     return {
       title: `${page.title} | Sahabat Insurance`,
@@ -130,7 +135,7 @@ export async function generateMetadata({
     };
   }
 
-  const tabel = await fetchTabel(slug);
+  const tabel = await fetchTabel(slug, locale);
   if (tabel) {
     return {
       title: `${tabel.title} | Sahabat Insurance`,
@@ -138,7 +143,7 @@ export async function generateMetadata({
     };
   }
 
-  const unduhan = await fetchUnduhan(slug);
+  const unduhan = await fetchUnduhan(slug, locale);
   if (unduhan) {
     return {
       title: `${unduhan.title} | Sahabat Insurance`,
@@ -151,9 +156,10 @@ export async function generateMetadata({
 
 export default async function PageDetail({ params }: PageProps) {
   const { slug } = await params;
+  const locale = await getLocale();
 
   // 1. Try pages collection
-  const page = await fetchPage(slug);
+  const page = await fetchPage(slug, locale);
   if (page) {
     const imageUrl: string =
       typeof page.image === "object" && page.image?.url ? page.image.url : null;
@@ -238,7 +244,7 @@ export default async function PageDetail({ params }: PageProps) {
   }
 
   // 2. Try tabel collection
-  const tabelDoc = await fetchTabel(slug);
+  const tabelDoc = await fetchTabel(slug, locale);
   if (tabelDoc) {
     const tables: DataTable[] =
       Array.isArray(tabelDoc.tables) && tabelDoc.tables.length > 0
@@ -308,7 +314,7 @@ export default async function PageDetail({ params }: PageProps) {
   }
 
   // 3. Try unduhan collection
-  const unduhanDoc = await fetchUnduhan(slug);
+  const unduhanDoc = await fetchUnduhan(slug, locale);
   if (unduhanDoc) {
     const sections: AccordionSection[] =
       Array.isArray(unduhanDoc.sections) && unduhanDoc.sections.length > 0

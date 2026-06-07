@@ -2,6 +2,7 @@ import { cache } from "react";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import NavbarClient from "./NavbarClient";
+import { getLocale } from "../lib/locale";
 import type {
   NavbarData,
   NavItem,
@@ -195,11 +196,9 @@ function mapPayloadToNavbarData(raw: any): NavbarData | null {
 // ─── Server component ─────────────────────────────────────────────────────────
 
 export default async function Navbar() {
-  const raw = await fetchNavbar();
-  console.log(raw);
+  const [raw, locale] = await Promise.all([fetchNavbar(), getLocale()]);
   const mapped = mapPayloadToNavbarData(raw);
-  console.log(mapped);
   const navData = mapped ?? DEFAULT_NAV;
 
-  return <NavbarClient data={navData} />;
+  return <NavbarClient data={navData} locale={locale} />;
 }

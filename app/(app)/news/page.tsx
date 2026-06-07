@@ -5,6 +5,7 @@ import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { TAG_COLORS, formatDate } from "../components/newsUtils";
+import { getLocale } from "../lib/locale";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -26,14 +27,16 @@ interface NewsDoc {
 
 export default async function NewsPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const payload = (await getPayload({ config })) as any;
+  const [payload, locale] = await Promise.all([getPayload({ config }), getLocale()]);
+  const p = payload as any;
 
-  const result = (await payload.find({
+  const result = (await p.find({
     collection: "news",
     where: { status: { equals: "published" } },
     sort: "-date",
     limit: 100,
     depth: 1,
+    locale,
   })) as { docs: NewsDoc[] };
 
   const news = result.docs;

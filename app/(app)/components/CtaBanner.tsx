@@ -279,7 +279,7 @@ export default function CtaBanner({ data }: CtaBannerProps) {
             </motion.div>
 
             {/* Right: Action cards */}
-            <div className="flex-1 grid grid-cols-2 gap-4 content-center">
+            <div className="flex-1 grid grid-cols-1 min-[500px]:grid-cols-2 gap-4 content-center">
               {cards.map((card) => (
                 <motion.a
                   key={card.label}
