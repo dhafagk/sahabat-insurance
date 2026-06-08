@@ -1,19 +1,4 @@
 services:
-  postgres-dev:
-    image: postgres:17-alpine
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DATABASE:-sahabat_insurance_dev}
-    volumes:
-      - postgres_dev_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
   payload-dev:
     build:
       context: .
@@ -25,12 +10,3 @@ services:
       - ./public/media:/app/public/media
     env_file:
       - .env.docker.dev
-    environment:
-      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres-dev:5432/${POSTGRES_DATABASE:-sahabat_insurance_dev}
-      DATABASE_SSL: "false"
-    depends_on:
-      postgres-dev:
-        condition: service_healthy
-
-volumes:
-  postgres_dev_data:

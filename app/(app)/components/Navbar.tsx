@@ -14,7 +14,7 @@ import type {
 const getPayloadInstance = cache(async () => getPayload({ config }));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const fetchNavbar = cache(async (locale: string): Promise<any> => {
+const fetchNavbar = cache(async (locale: any): Promise<any> => {
   try {
     const payload = await getPayloadInstance();
     return payload.findGlobal({ slug: "navbar", depth: 2, locale });
@@ -194,9 +194,10 @@ function mapPayloadToNavbarData(raw: any): NavbarData | null {
       })),
   ];
 
-  const ctaButton: CtaButton = raw?.ctaButton?.label && raw?.ctaButton?.href
-    ? { label: raw.ctaButton.label, href: raw.ctaButton.href }
-    : DEFAULT_CTA;
+  const ctaButton: CtaButton =
+    raw?.ctaButton?.label && raw?.ctaButton?.href
+      ? { label: raw.ctaButton.label, href: raw.ctaButton.href }
+      : DEFAULT_CTA;
 
   return { desktop, mobile, ctaButton };
 }
