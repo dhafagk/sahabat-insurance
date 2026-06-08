@@ -6,20 +6,15 @@
  * least once so the `media` table exists):
  *   node scripts/migrate-blob-to-local.mjs
  *
- * For a FRESH database: start the app once so Payload creates the schema,
- * then stop it and re-run this script to fix any URLs if you imported data.
- * If the database is truly empty, the UPDATE will report 0 rows — that is fine.
- *
  * Environment variables used:
  *   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY  — read file list from old DB
  *   DATABASE_URL                             — write updated URLs to new DB
- *   DATABASE_SSL                             — set to "true" for Supabase/SSL hosts
+ *   DATABASE_SSL                             — set to "true" for SSL hosts
  *
  * Safe to re-run — already-downloaded files are skipped.
  */
 
-import { createWriteStream, mkdirSync, existsSync, readFileSync } from "fs";
-import { pipeline } from "stream/promises";
+import { mkdirSync, existsSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -46,9 +41,7 @@ function loadEnv() {
       if (!process.env[key]) process.env[key] = val;
     }
   } catch {
-    console.warn(
-      "Warning: could not read .env file — falling back to process.env",
-    );
+    console.warn("Warning: could not read .env file — falling back to process.env");
   }
 }
 
@@ -59,9 +52,7 @@ const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const DATABASE_URL = process.env.DATABASE_URL;
 
 if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-  console.error(
-    "Error: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env",
-  );
+  console.error("Error: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env");
   process.exit(1);
 }
 
@@ -74,7 +65,7 @@ if (!DATABASE_URL) {
 // Prepare output directory
 // ---------------------------------------------------------------------------
 const mediaDir = path.resolve(
-  fileURLToPath(new URL("../public/media", import.meta.url)),
+  fileURLToPath(new URL("../public/media", import.meta.url))
 );
 mkdirSync(mediaDir, { recursive: true });
 console.log(`Output directory: ${mediaDir}\n`);
@@ -89,7 +80,7 @@ const res = await fetch(
       apikey: SUPABASE_SERVICE_ROLE_KEY,
       Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
     },
-  },
+  }
 );
 
 if (!res.ok) {
@@ -133,34 +124,37 @@ for (const record of records) {
     continue;
   }
 
-  const destPath = path.join(mediaDir, filename);
+  // Decode URL-encoded filename (e.g. %20 → space) for the local file path
+  const localFilename = decodeURIComponent(filename);
+  const destPath = path.join(mediaDir, localFilename);
 
   if (existsSync(destPath)) {
-    console.log(`  [${id}] Already exists: ${filename}`);
+    console.log(`  [${id}] Already exists: ${localFilename}`);
     skipped++;
     continue;
   }
 
-  process.stdout.write(`  [${id}] Downloading ${filename} ... `);
+  process.stdout.write(`  [${id}] Downloading ${localFilename} ... `);
 
   try {
     const fileRes = await fetch(url);
     if (!fileRes.ok)
       throw new Error(`HTTP ${fileRes.status} ${fileRes.statusText}`);
 
-    await pipeline(fileRes.body, createWriteStream(destPath));
+    const buffer = Buffer.from(await fileRes.arrayBuffer());
+    writeFileSync(destPath, buffer);
 
     console.log("ok");
     downloaded++;
   } catch (err) {
     console.log(`FAILED  (${err.message})`);
-    failures.push({ id, filename, url, error: err.message });
+    failures.push({ id, filename: localFilename, url, error: err.message });
     failed++;
   }
 }
 
 // ---------------------------------------------------------------------------
-// File download summary
+// Summary
 // ---------------------------------------------------------------------------
 console.log(`\n${"─".repeat(50)}`);
 console.log(`Downloaded : ${downloaded}`);
@@ -178,9 +172,6 @@ if (failures.length > 0) {
 
 // ---------------------------------------------------------------------------
 // Update media URLs in the target Postgres database
-//
-// DATABASE_URL should point to your NEW (local Docker) Postgres, not Supabase.
-// For a fresh database the table may not exist yet — that is handled below.
 // ---------------------------------------------------------------------------
 console.log(`\nConnecting to target database to update media URLs...`);
 console.log(`  DATABASE_URL: ${DATABASE_URL.replace(/:([^:@]+)@/, ":***@")}\n`);
@@ -207,18 +198,17 @@ try {
       "Database update: 0 rows updated.\n" +
         "  This is expected for a fresh database — no Blob URLs to replace.\n" +
         "  If you imported data and expected updates, check that DATABASE_URL\n" +
-        "  points to the correct database.",
+        "  points to the correct database."
     );
   } else {
     console.log(`Database update: ${result.count} media URL(s) updated to /media/<filename>.`);
   }
 } catch (err) {
   if (err.code === "42P01") {
-    // Relation (table) does not exist
     console.log(
       "Note: media table not found in the target database.\n" +
         "  Start the app once so Payload runs its migrations, then re-run\n" +
-        "  this script to update the URLs.",
+        "  this script to update the URLs."
     );
   } else {
     console.error("Database update failed:", err.message);
@@ -228,8 +218,4 @@ try {
   if (sql) await sql.end({ timeout: 5 }).catch(() => {});
 }
 
-console.log(
-  "\nDone. Next steps:\n" +
-    "  1. Remove vercelBlobStorage from payload.config.ts\n" +
-    "  2. docker compose up --build",
-);
+console.log("\nDone.");
