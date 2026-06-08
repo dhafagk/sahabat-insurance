@@ -5,6 +5,22 @@ export const NavbarConfig: GlobalConfig = {
   label: "Navbar",
   fields: [
     {
+      name: "ctaButton",
+      type: "group",
+      label: "CTA Button",
+      fields: [
+        {
+          name: "label",
+          type: "text",
+          localized: true,
+        },
+        {
+          name: "href",
+          type: "text",
+        },
+      ],
+    },
+    {
       name: "items",
       type: "array",
       label: "Top-level Nav Items",

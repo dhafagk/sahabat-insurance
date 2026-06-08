@@ -1,10 +1,9 @@
-import { cache } from "react";
+﻿import { cache } from "react";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import ContactPageContent from "./ContactPageContent";
 import { getLocale } from "../lib/locale";
 import type { ContactChannel } from "./ContactPageContent";
@@ -154,8 +153,6 @@ export default async function ContactUsPage() {
         sectionSubtitle={sectionSubtitle}
         channels={channels}
       />
-
-      <Footer />
     </>
   );
 }

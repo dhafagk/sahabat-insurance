@@ -986,6 +986,10 @@ export interface Manajeman {
  */
 export interface Navbar {
   id: number;
+  ctaButton?: {
+    label?: string | null;
+    href?: string | null;
+  };
   items?:
     | {
         label: string;
@@ -1148,6 +1152,10 @@ export interface ContactUs {
  */
 export interface SiteSetting {
   id: number;
+  /**
+   * When enabled, the public website will show the "Website Under Construction" page. The admin panel will remain accessible.
+   */
+  maintenanceMode?: boolean | null;
   /**
    * Upload a .ico, .png, or .svg file. Recommended size: 32×32 px.
    */
@@ -1336,6 +1344,12 @@ export interface ManajemenSelect<T extends boolean = true> {
  * via the `definition` "navbar_select".
  */
 export interface NavbarSelect<T extends boolean = true> {
+  ctaButton?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
   items?:
     | T
     | {
@@ -1484,6 +1498,7 @@ export interface ContactUsSelect<T extends boolean = true> {
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
+  maintenanceMode?: T;
   favicon?: T;
   updatedAt?: T;
   createdAt?: T;

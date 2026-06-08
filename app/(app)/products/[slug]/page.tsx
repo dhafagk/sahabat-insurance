@@ -7,7 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Download, Phone } from "lucide-react";
 import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
 import { getLocale } from "../../lib/locale";
 import type { ProductItem } from "../../components/Products";
 
@@ -211,7 +210,6 @@ export default async function ProductDetailPage({ params }: PageProps) {
         </div>
       </main>
 
-      <Footer />
     </>
   );
 }

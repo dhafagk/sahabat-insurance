@@ -8,15 +8,16 @@ import type {
   NavItem,
   DesktopNavLink,
   MobileSection,
+  CtaButton,
 } from "./navbarTypes";
 
 const getPayloadInstance = cache(async () => getPayload({ config }));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const fetchNavbar = cache(async (): Promise<any> => {
+const fetchNavbar = cache(async (locale: string): Promise<any> => {
   try {
     const payload = await getPayloadInstance();
-    return payload.findGlobal({ slug: "navbar", depth: 2 });
+    return payload.findGlobal({ slug: "navbar", depth: 2, locale });
   } catch {
     return null;
   }
@@ -98,7 +99,10 @@ const DEFAULT_COMPANY: NavItem[] = [
   },
 ];
 
+const DEFAULT_CTA: CtaButton = { label: "Hubungi Kami", href: "/contact-us" };
+
 const DEFAULT_NAV: NavbarData = {
+  ctaButton: DEFAULT_CTA,
   desktop: [
     { href: "#products", label: "Products", dropdownItems: DEFAULT_PRODUCTS },
     { href: "#services", label: "Services", dropdownItems: DEFAULT_SERVICES },
@@ -190,13 +194,18 @@ function mapPayloadToNavbarData(raw: any): NavbarData | null {
       })),
   ];
 
-  return { desktop, mobile };
+  const ctaButton: CtaButton = raw?.ctaButton?.label && raw?.ctaButton?.href
+    ? { label: raw.ctaButton.label, href: raw.ctaButton.href }
+    : DEFAULT_CTA;
+
+  return { desktop, mobile, ctaButton };
 }
 
 // ─── Server component ─────────────────────────────────────────────────────────
 
 export default async function Navbar() {
-  const [raw, locale] = await Promise.all([fetchNavbar(), getLocale()]);
+  const locale = await getLocale();
+  const raw = await fetchNavbar(locale);
   const mapped = mapPayloadToNavbarData(raw);
   const navData = mapped ?? DEFAULT_NAV;
 

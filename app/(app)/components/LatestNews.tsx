@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { TAG_COLORS, formatDate } from "./newsUtils";
+import type { Locale } from "../lib/locale";
+import { useTranslations } from "../lib/i18n";
 
 interface MediaValue {
   url?: string | null;
@@ -32,6 +34,7 @@ export interface SectionMeta {
 interface LatestNewsProps {
   news?: NewsItem[];
   sectionMeta?: SectionMeta | null;
+  locale?: Locale;
 }
 
 const DEFAULTS: { badge: string; heading: string; news: NewsItem[] } = {
@@ -84,7 +87,8 @@ function resolveImageUrl(
   return image.url ?? "/assets/3.png";
 }
 
-export default function LatestNews({ news, sectionMeta }: LatestNewsProps) {
+export default function LatestNews({ news, sectionMeta, locale = "id" }: LatestNewsProps) {
+  const { latestNews: tr } = useTranslations(locale);
   const badge = sectionMeta?.badge ?? DEFAULTS.badge;
   const heading = sectionMeta?.heading ?? DEFAULTS.heading;
   const items = news?.length ? news : DEFAULTS.news;
@@ -164,7 +168,7 @@ export default function LatestNews({ news, sectionMeta }: LatestNewsProps) {
                     </p>
 
                     <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent group-hover:underline mt-auto pt-1">
-                      Read more →
+                      {tr.readMore}
                     </span>
                   </div>
                 </Link>
@@ -178,7 +182,7 @@ export default function LatestNews({ news, sectionMeta }: LatestNewsProps) {
             href="/news"
             className="inline-flex items-center gap-2 px-8 py-3 rounded-full border-2 border-accent text-accent font-semibold hover:bg-accent hover:text-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
-            View All News →
+            {tr.viewAll}
           </Link>
         </div>
       </div>

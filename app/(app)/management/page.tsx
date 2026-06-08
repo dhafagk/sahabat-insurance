@@ -1,10 +1,9 @@
-import { cache } from "react";
+﻿import { cache } from "react";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import ManajemenContent from "./ManajemenContent";
 import { getLocale } from "../lib/locale";
 import type {
@@ -182,8 +181,6 @@ export default async function ManajemenPage() {
         </div>
         <div className="py-8" />
       </main>
-
-      <Footer />
     </>
   );
 }

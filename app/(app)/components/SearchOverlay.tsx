@@ -5,10 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Search, X } from "lucide-react";
 import type { SearchResult } from "@/app/api/search/route";
+import type { Locale } from "../lib/locale";
+import { useTranslations } from "../lib/i18n";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  locale?: Locale;
 }
 
 type SearchState = {
@@ -27,8 +30,9 @@ const INITIAL_STATE: SearchState = {
   focusedIndex: -1,
 };
 
-export default function SearchOverlay({ isOpen, onClose }: Props) {
+export default function SearchOverlay({ isOpen, onClose, locale = "id" }: Props) {
   const router = useRouter();
+  const { search: tr } = useTranslations(locale);
   const [state, setState] = useState<SearchState>(INITIAL_STATE);
   const { query, results, loading, error, focusedIndex } = state;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -132,7 +136,7 @@ export default function SearchOverlay({ isOpen, onClose }: Props) {
               value={query}
               onChange={handleQueryChange}
               onKeyDown={handleKeyDown}
-              placeholder="Cari artikel, produk..."
+              placeholder={tr.placeholder}
               className="flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
             />
             {query.length > 0 && (
@@ -141,7 +145,7 @@ export default function SearchOverlay({ isOpen, onClose }: Props) {
                   setState(INITIAL_STATE);
                   inputRef.current?.focus();
                 }}
-                aria-label="Clear search"
+                aria-label={tr.clearSearch}
                 className="shrink-0 rounded-full p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
               >
                 <X className="size-4" />
@@ -159,12 +163,12 @@ export default function SearchOverlay({ isOpen, onClose }: Props) {
                     <span className="size-1.5 animate-bounce rounded-full bg-[#1e3a8a]/40 [animation-delay:150ms]" />
                     <span className="size-1.5 animate-bounce rounded-full bg-[#1e3a8a]/40 [animation-delay:300ms]" />
                   </div>
-                  <span className="text-sm text-slate-400">Mencari...</span>
+                  <span className="text-sm text-slate-400">{tr.searching}</span>
                 </div>
               )}
               {!loading && error && (
                 <p className="px-5 py-4 text-sm text-slate-500">
-                  Search unavailable. Please try again.
+                  {tr.searchUnavailable}
                 </p>
               )}
               {!loading &&
@@ -172,7 +176,7 @@ export default function SearchOverlay({ isOpen, onClose }: Props) {
                 query.length >= 2 &&
                 results.length === 0 && (
                   <p className="px-5 py-4 text-sm text-slate-500">
-                    No results for &ldquo;{query}&rdquo;
+                    {tr.noResults(query)}
                   </p>
                 )}
               {!loading &&
@@ -197,10 +201,10 @@ export default function SearchOverlay({ isOpen, onClose }: Props) {
                       }`}
                     >
                       {result.type === "news"
-                        ? "News"
+                        ? tr.typeNews
                         : result.type === "product"
-                          ? "Product"
-                          : "Page"}
+                          ? tr.typeProduct
+                          : tr.typePage}
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-semibold text-slate-800">
@@ -220,7 +224,7 @@ export default function SearchOverlay({ isOpen, onClose }: Props) {
 
         {/* Keyboard hint */}
         <p className="mt-3 text-center text-xs text-white/70">
-          ↑↓ navigate &nbsp;·&nbsp; Enter to open &nbsp;·&nbsp; ESC to close
+          {tr.navigate} &nbsp;·&nbsp; {tr.open} &nbsp;·&nbsp; {tr.close}
         </p>
       </div>
     </div>

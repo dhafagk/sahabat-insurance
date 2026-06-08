@@ -1,10 +1,9 @@
-import { cache } from "react";
+﻿import { cache } from "react";
 import Link from "next/link";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { ArrowRight, TableProperties } from "lucide-react";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { getLocale } from "../lib/locale";
 
 export const dynamic = "force-dynamic";
@@ -142,8 +141,6 @@ export default async function TabelIndexPage() {
           )}
         </div>
       </main>
-
-      <Footer />
     </>
   );
 }

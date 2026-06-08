@@ -27,7 +27,13 @@ export interface MobileSection {
   items: MobileNavItem[];
 }
 
+export interface CtaButton {
+  label: string;
+  href: string;
+}
+
 export interface NavbarData {
   desktop: DesktopNavLink[];
   mobile: MobileSection[];
+  ctaButton: CtaButton;
 }

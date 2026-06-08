@@ -8,6 +8,15 @@ export const SiteSettings: GlobalConfig = {
   },
   fields: [
     {
+      name: 'maintenanceMode',
+      type: 'checkbox',
+      label: 'Maintenance Mode',
+      defaultValue: false,
+      admin: {
+        description: 'When enabled, the public website will show the "Website Under Construction" page. The admin panel will remain accessible.',
+      },
+    },
+    {
       name: 'favicon',
       type: 'upload',
       relationTo: 'media',

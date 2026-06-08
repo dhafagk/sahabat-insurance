@@ -1,5 +1,4 @@
 import { postgresAdapter } from "@payloadcms/db-postgres";
-import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
@@ -29,21 +28,22 @@ const dirname = path.dirname(filename);
 export default buildConfig({
   localization: {
     locales: [
-      { label: 'Indonesia', code: 'id' },
-      { label: 'English', code: 'en' },
+      { label: "Indonesia", code: "id" },
+      { label: "English", code: "en" },
     ],
-    defaultLocale: 'id',
+    defaultLocale: "id",
     fallback: true,
   },
   admin: {
     user: Users.slug,
+    suppressHydrationWarning: true,
     importMap: {
       baseDir: path.resolve(dirname),
     },
     meta: {
       icons: { icon: "/api/admin-favicon" },
     },
-components: {
+    components: {
       graphics: {
         Logo: "./components/admin/AdminLogo#AdminLogo",
         Icon: "./components/admin/AdminIcon#AdminIcon",
@@ -78,17 +78,13 @@ components: {
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URL || "",
-      ssl: { rejectUnauthorized: false },
+      ssl:
+        process.env.DATABASE_SSL === "true"
+          ? { rejectUnauthorized: false }
+          : undefined,
     },
+    push: process.env.PAYLOAD_DB_PUSH === "true",
   }),
   sharp,
-  plugins: [
-    vercelBlobStorage({
-      enabled: true,
-      collections: {
-        media: true,
-      },
-      token: process.env.BLOB_READ_WRITE_TOKEN || "",
-    }),
-  ],
+  plugins: [],
 });

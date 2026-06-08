@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import type { Locale } from "../lib/locale";
+import { useTranslations } from "../lib/i18n";
 
 interface ProductIcon {
   url?: string | null;
@@ -35,6 +37,7 @@ export interface SectionMeta {
 interface ProductsProps {
   products?: ProductItem[];
   sectionMeta?: SectionMeta | null;
+  locale?: Locale;
 }
 
 const DEFAULTS: {
@@ -90,7 +93,7 @@ const DEFAULTS: {
 
 export function toProductSlug(title: string) {
   return title
-    .toLowerCase()
+    ?.toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 }
@@ -124,7 +127,8 @@ function FallbackIcon() {
   );
 }
 
-export default function Products({ products, sectionMeta }: ProductsProps) {
+export default function Products({ products, sectionMeta, locale = "id" }: ProductsProps) {
+  const { products: tr } = useTranslations(locale);
   const badge = sectionMeta?.badge ?? DEFAULTS.badge;
   const heading = sectionMeta?.heading ?? DEFAULTS.heading;
   const items = products?.length ? products : DEFAULTS.products;
@@ -189,7 +193,7 @@ export default function Products({ products, sectionMeta }: ProductsProps) {
         </motion.div>
 
         <p className="text-center text-xs text-text-muted mt-6">
-          * S&amp;K berlaku
+          {tr.termsBadge}
         </p>
       </div>
     </section>

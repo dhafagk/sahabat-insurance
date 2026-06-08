@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import CekPremiContent from "./CekPremiContent";
 
 export const metadata: Metadata = {
@@ -71,8 +70,6 @@ export default function CekPremiPage() {
           <CekPremiContent />
         </div>
       </main>
-
-      <Footer />
     </>
   );
 }

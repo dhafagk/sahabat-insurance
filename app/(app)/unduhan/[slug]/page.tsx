@@ -5,7 +5,6 @@ import config from "@payload-config";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
 import UnduhContent from "../UnduhContent";
 import { getLocale } from "../../lib/locale";
 import type { AccordionSection, DownloadItem } from "../UnduhContent";
@@ -147,7 +146,6 @@ export default async function UnduhDetailPage({ params }: PageProps) {
         </div>
       </main>
 
-      <Footer />
     </>
   );
 }

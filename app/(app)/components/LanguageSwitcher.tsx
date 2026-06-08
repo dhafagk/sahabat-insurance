@@ -1,6 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { setLocale } from "../actions/locale";
 import type { Locale } from "../lib/locale";
 
@@ -10,11 +11,13 @@ interface Props {
 
 export default function LanguageSwitcher({ currentLocale }: Props) {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   function handleSwitch(locale: Locale) {
     if (locale === currentLocale) return;
     startTransition(async () => {
       await setLocale(locale);
+      router.refresh();
     });
   }
 

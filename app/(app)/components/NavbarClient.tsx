@@ -12,7 +12,7 @@ import {
 } from "./ui/navigation-menu";
 import React, { useState } from "react";
 import { ArrowRight, ChevronRight, Menu, X } from "lucide-react";
-import type { NavbarData, NavItem, MobileSection } from "./navbarTypes";
+import type { NavbarData, NavItem, MobileSection, CtaButton } from "./navbarTypes";
 import SearchButton from "./SearchButton";
 import SearchOverlay from "./SearchOverlay";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -24,6 +24,7 @@ interface Props {
 }
 
 export default function NavbarClient({ data, locale }: Props) {
+  const { ctaButton } = data;
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
@@ -94,13 +95,13 @@ export default function NavbarClient({ data, locale }: Props) {
               <div className="hidden md:block">
                 <LanguageSwitcher currentLocale={locale} />
               </div>
-              <SearchButton onClick={() => setIsSearchOpen(true)} />
+              <SearchButton onClick={() => setIsSearchOpen(true)} locale={locale} />
               <Link
-                href="/contact-us"
+                href={ctaButton.href}
                 className="hidden md:inline-flex items-center justify-center font-semibold px-5 text-sm h-9 rounded-full transition-all duration-200 bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 text-white shadow-sm shadow-[#1e3a8a]/30"
-                aria-label="Hubungi Kami"
+                aria-label={ctaButton.label}
               >
-                Hubungi Kami
+                {ctaButton.label}
               </Link>
               <button
                 type="button"
@@ -125,6 +126,7 @@ export default function NavbarClient({ data, locale }: Props) {
               <MobileMenuContent
                 nav={data.mobile}
                 locale={locale}
+                ctaButton={ctaButton}
                 onClose={() => setIsMobileOpen(false)}
               />
             </div>
@@ -134,6 +136,7 @@ export default function NavbarClient({ data, locale }: Props) {
         <SearchOverlay
           isOpen={isSearchOpen}
           onClose={() => setIsSearchOpen(false)}
+          locale={locale}
         />
       </header>
     </>
@@ -143,10 +146,12 @@ export default function NavbarClient({ data, locale }: Props) {
 function MobileMenuContent({
   nav,
   locale,
+  ctaButton,
   onClose,
 }: {
   nav: MobileSection[];
   locale: Locale;
+  ctaButton: CtaButton;
   onClose: () => void;
 }) {
   return (
@@ -194,11 +199,11 @@ function MobileMenuContent({
       </div>
 
       <Link
-        href="/contact-us"
+        href={ctaButton.href}
         onClick={onClose}
         className="inline-flex items-center justify-center rounded-full bg-[#1e3a8a] px-8 py-3.5 text-base font-semibold text-white transition-colors hover:bg-[#1e3a8a]/90"
       >
-        Hubungi Kami
+        {ctaButton.label}
       </Link>
     </div>
   );

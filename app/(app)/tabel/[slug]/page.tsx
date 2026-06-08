@@ -5,7 +5,6 @@ import config from "@payload-config";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
 import TabelContent from "../TabelContent";
 import { getLocale } from "../../lib/locale";
 import type { DataTable } from "../TabelContent";
@@ -138,7 +137,6 @@ export default async function TabelDetailPage({ params }: PageProps) {
         </div>
       </main>
 
-      <Footer />
     </>
   );
 }

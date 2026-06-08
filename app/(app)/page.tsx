@@ -8,8 +8,6 @@ import WhyChooseUs from "./components/WhyChooseUs";
 import LatestNews from "./components/LatestNews";
 import CtaBanner from "./components/CtaBanner";
 import PromoStrip from "./components/PromoStrip";
-import Footer from "./components/Footer";
-import type { FooterData } from "./components/Footer";
 import type { HeroData } from "./components/Hero";
 import type {
   SectionMeta as ProductsSectionMeta,
@@ -43,30 +41,26 @@ export default async function Home() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const p = payload as any;
 
-  const [rawLanding, productsResult, newsResult, rawFooter] = await Promise.all(
-    [
-      p.findGlobal({ slug: "landing-page", locale }) as Promise<unknown>,
-      p.find({
-        collection: "products",
-        sort: "order",
-        limit: 100,
-        locale,
-      }) as Promise<{ docs: unknown[] }>,
-      p.find({
-        collection: "news",
-        where: { status: { equals: "published" } },
-        sort: "-date",
-        limit: 3,
-        locale,
-      }) as Promise<{ docs: unknown[] }>,
-      p.findGlobal({ slug: "footer", depth: 1, locale }) as Promise<unknown>,
-    ],
-  );
+  const [rawLanding, productsResult, newsResult] = await Promise.all([
+    p.findGlobal({ slug: "landing-page", locale }) as Promise<unknown>,
+    p.find({
+      collection: "products",
+      sort: "order",
+      limit: 100,
+      locale,
+    }) as Promise<{ docs: unknown[] }>,
+    p.find({
+      collection: "news",
+      where: { status: { equals: "published" } },
+      sort: "-date",
+      limit: 3,
+      locale,
+    }) as Promise<{ docs: unknown[] }>,
+  ]);
 
   const landingPage = rawLanding as unknown as LandingPageData;
   const products = productsResult.docs as unknown as ProductItem[];
   const news = newsResult.docs as unknown as NewsItem[];
-  const footer = rawFooter as unknown as FooterData;
 
   return (
     <>
@@ -77,12 +71,12 @@ export default async function Home() {
         <Products
           products={products}
           sectionMeta={landingPage.productsSection}
+          locale={locale}
         />
         <WhyChooseUs data={landingPage.whyChooseUs} />
-        <LatestNews news={news} sectionMeta={landingPage.newsSection} />
+        <LatestNews news={news} sectionMeta={landingPage.newsSection} locale={locale} />
         <CtaBanner data={landingPage.ctaBanner} />
       </main>
-      <Footer data={footer} />
     </>
   );
 }

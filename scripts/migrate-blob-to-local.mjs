@@ -1,8 +1,19 @@
 /**
- * Migrate all media files from Vercel Blob to local disk (public/media/).
+ * Migrate all media files from Vercel Blob to local disk (public/media/),
+ * then update the `url` column in Postgres to point to the local path.
  *
- * Run on the server BEFORE switching the Payload config to local storage:
+ * Run AFTER your target Postgres is up (Payload migrations must have run at
+ * least once so the `media` table exists):
  *   node scripts/migrate-blob-to-local.mjs
+ *
+ * For a FRESH database: start the app once so Payload creates the schema,
+ * then stop it and re-run this script to fix any URLs if you imported data.
+ * If the database is truly empty, the UPDATE will report 0 rows — that is fine.
+ *
+ * Environment variables used:
+ *   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY  — read file list from old DB
+ *   DATABASE_URL                             — write updated URLs to new DB
+ *   DATABASE_SSL                             — set to "true" for Supabase/SSL hosts
  *
  * Safe to re-run — already-downloaded files are skipped.
  */
@@ -45,11 +56,17 @@ loadEnv();
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const DATABASE_URL = process.env.DATABASE_URL;
 
 if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
   console.error(
     "Error: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env",
   );
+  process.exit(1);
+}
+
+if (!DATABASE_URL) {
+  console.error("Error: DATABASE_URL must be set in .env");
   process.exit(1);
 }
 
@@ -133,17 +150,17 @@ for (const record of records) {
 
     await pipeline(fileRes.body, createWriteStream(destPath));
 
-    console.log("✓");
+    console.log("ok");
     downloaded++;
   } catch (err) {
-    console.log(`✗  (${err.message})`);
+    console.log(`FAILED  (${err.message})`);
     failures.push({ id, filename, url, error: err.message });
     failed++;
   }
 }
 
 // ---------------------------------------------------------------------------
-// Summary
+// File download summary
 // ---------------------------------------------------------------------------
 console.log(`\n${"─".repeat(50)}`);
 console.log(`Downloaded : ${downloaded}`);
@@ -159,6 +176,60 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
+// ---------------------------------------------------------------------------
+// Update media URLs in the target Postgres database
+//
+// DATABASE_URL should point to your NEW (local Docker) Postgres, not Supabase.
+// For a fresh database the table may not exist yet — that is handled below.
+// ---------------------------------------------------------------------------
+console.log(`\nConnecting to target database to update media URLs...`);
+console.log(`  DATABASE_URL: ${DATABASE_URL.replace(/:([^:@]+)@/, ":***@")}\n`);
+
+let sql;
+try {
+  const { default: postgres } = await import("postgres");
+
+  sql = postgres(DATABASE_URL, {
+    ssl: process.env.DATABASE_SSL === "true" ? "require" : false,
+    max: 1,
+    idle_timeout: 10,
+  });
+
+  const result = await sql`
+    UPDATE media
+    SET url = '/media/' || filename
+    WHERE url LIKE '%blob.vercel-storage.com%'
+       OR url LIKE '%public.blob%'
+  `;
+
+  if (result.count === 0) {
+    console.log(
+      "Database update: 0 rows updated.\n" +
+        "  This is expected for a fresh database — no Blob URLs to replace.\n" +
+        "  If you imported data and expected updates, check that DATABASE_URL\n" +
+        "  points to the correct database.",
+    );
+  } else {
+    console.log(`Database update: ${result.count} media URL(s) updated to /media/<filename>.`);
+  }
+} catch (err) {
+  if (err.code === "42P01") {
+    // Relation (table) does not exist
+    console.log(
+      "Note: media table not found in the target database.\n" +
+        "  Start the app once so Payload runs its migrations, then re-run\n" +
+        "  this script to update the URLs.",
+    );
+  } else {
+    console.error("Database update failed:", err.message);
+    process.exit(1);
+  }
+} finally {
+  if (sql) await sql.end({ timeout: 5 }).catch(() => {});
+}
+
 console.log(
-  "\nAll files migrated. You can now switch to local storage and rebuild.",
+  "\nDone. Next steps:\n" +
+    "  1. Remove vercelBlobStorage from payload.config.ts\n" +
+    "  2. docker compose up --build",
 );

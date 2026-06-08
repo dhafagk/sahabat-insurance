@@ -205,11 +205,6 @@ export default function WhyChooseUs({ data }: WhyChooseUsProps) {
             className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute bottom-0 left-0 right-0 px-4 py-3 bg-black/50 rounded-b-xl">
-            <p className="text-white text-sm font-medium">
-              Tim profesional kami siap membantu Anda
-            </p>
-          </div>
         </motion.div>
       </div>
     </section>

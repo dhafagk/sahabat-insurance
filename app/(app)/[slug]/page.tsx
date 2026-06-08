@@ -7,7 +7,6 @@ import type { SerializedEditorState } from "lexical";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { getLocale } from "../lib/locale";
 import ArticleBody from "../components/ArticleBody";
 import TimelineBlock from "../components/blocks/TimelineBlock";
@@ -238,7 +237,6 @@ export default async function PageDetail({ params }: PageProps) {
           </div>
         </main>
 
-        <Footer />
       </>
     );
   }
@@ -308,7 +306,6 @@ export default async function PageDetail({ params }: PageProps) {
           </div>
         </main>
 
-        <Footer />
       </>
     );
   }
@@ -384,7 +381,6 @@ export default async function PageDetail({ params }: PageProps) {
           </div>
         </main>
 
-        <Footer />
       </>
     );
   }

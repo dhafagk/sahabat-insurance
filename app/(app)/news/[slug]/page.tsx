@@ -6,7 +6,6 @@ import config from "@payload-config";
 import type { Metadata } from "next";
 import type { SerializedEditorState } from "lexical";
 import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
 import ArticleHeader from "../../components/ArticleHeader";
 import ArticleBody from "../../components/ArticleBody";
 import LatestNews from "../../components/LatestNews";
@@ -139,7 +138,6 @@ export default async function NewsDetailPage({ params }: PageProps) {
           </div>
         )}
       </main>
-      <Footer />
     </>
   );
 }

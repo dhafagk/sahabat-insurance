@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 import type { Locale } from "../lib/locale";
 
 export async function setLocale(locale: Locale) {
@@ -10,4 +11,5 @@ export async function setLocale(locale: Locale) {
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
   });
+  revalidatePath("/", "layout");
 }

@@ -28,7 +28,8 @@
       "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\kdhafa\\\\Documents\\\\ngoding\\\\sahabat-insurance\" -Depth 2 -Directory -ErrorAction SilentlyContinue | Select-Object FullName | Where-Object { $_ -match \"\\(collection|block\\)\" })",
       "Bash(xargs grep -l -i \"hero\")",
       "Bash(xargs grep -l \"HeroData\\\\|hero:\")",
-      "Bash(dir C:\\\\Users\\\\kdhafa\\\\Documents\\\\ngoding\\\\sahabat-insurance *)"
+      "Bash(dir C:\\\\Users\\\\kdhafa\\\\Documents\\\\ngoding\\\\sahabat-insurance *)",
+      "Bash(Select-Object Name)"
     ]
   }
 }

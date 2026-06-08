@@ -1,9 +1,8 @@
-import { getPayload } from "payload";
+﻿import { getPayload } from "payload";
 import config from "@payload-config";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { TAG_COLORS, formatDate } from "../components/newsUtils";
 import { getLocale } from "../lib/locale";
 import type { Metadata } from "next";
@@ -154,7 +153,6 @@ export default async function NewsPage() {
           )}
         </div>
       </main>
-      <Footer />
     </>
   );
 }
