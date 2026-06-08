@@ -39,7 +39,7 @@ if (!BLOB_TOKEN) {
   process.exit(1);
 }
 
-const mediaDir = path.resolve(fileURLToPath(new URL("../public/media", import.meta.url)));
+const mediaDir = path.resolve(fileURLToPath(new URL("../media", import.meta.url)));
 mkdirSync(mediaDir, { recursive: true });
 console.log(`Output directory: ${mediaDir}\n`);
 
