@@ -6,7 +6,7 @@ export const ContactUs: GlobalConfig = {
   admin: {
     group: "Halaman",
     livePreview: {
-      url: ({ req }) => `${req.payload.config.serverURL}/contact-us`,
+      url: ({ req }) => `${req?.payload?.config?.serverURL ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3969'}/contact-us`,
     },
   },
   fields: [

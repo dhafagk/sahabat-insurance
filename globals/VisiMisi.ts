@@ -6,7 +6,7 @@ export const VisiMisi: GlobalConfig = {
   admin: {
     group: 'Halaman',
     livePreview: {
-      url: ({ req }) => `${req.payload.config.serverURL}/vision-and-mission`,
+      url: ({ req }) => `${req?.payload?.config?.serverURL ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3969'}/vision-and-mission`,
     },
   },
   fields: [
