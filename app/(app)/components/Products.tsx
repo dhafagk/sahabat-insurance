@@ -22,6 +22,7 @@ interface ProductLinkGroup {
 
 export interface ProductItem {
   id?: string;
+  slug?: string | null;
   title: string;
   description: string;
   icon?: ProductIcon | null;
@@ -149,18 +150,18 @@ export default function Products({ products, sectionMeta, locale = "id" }: Produ
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {items.map((product) => (
+          {items.map((product, index) => (
             <motion.div
-              key={product.title}
+              key={product.id ?? index}
               variants={cardVariants}
               whileHover={{ y: -8 }}
               className="h-full"
             >
               <Link
-                href={`/products/${toProductSlug(product.title)}`}
+                href={`/products/${product.slug ?? toProductSlug(product.title)}`}
                 className="flex flex-col h-full bg-card rounded-2xl border border-slate-100 p-6 group transition-all duration-300 hover:border-navy hover:shadow-xl"
               >
                 <div

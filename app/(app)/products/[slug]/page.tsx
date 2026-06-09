@@ -10,6 +10,8 @@ import Navbar from "../../components/Navbar";
 import { getLocale } from "../../lib/locale";
 import type { ProductItem } from "../../components/Products";
 
+type ProductWithSlug = ProductItem & { slug?: string | null };
+
 export const dynamic = "force-dynamic";
 
 function toProductSlug(title: string) {
@@ -19,7 +21,7 @@ function toProductSlug(title: string) {
     .replace(/^-|-$/g, "");
 }
 
-const fetchProducts = cache(async (locale: string): Promise<ProductItem[]> => {
+const fetchProducts = cache(async (locale: string): Promise<ProductWithSlug[]> => {
   try {
     const payload = await getPayload({ config });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,7 +32,7 @@ const fetchProducts = cache(async (locale: string): Promise<ProductItem[]> => {
       limit: 100,
       locale,
     });
-    return result.docs as ProductItem[];
+    return result.docs as ProductWithSlug[];
   } catch {
     return [];
   }
@@ -46,7 +48,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const locale = await getLocale();
   const products = await fetchProducts(locale);
-  const product = products.find((p) => toProductSlug(p.title) === slug);
+  const product = products.find((p) => (p.slug ?? toProductSlug(p.title)) === slug);
   if (!product) return {};
   return {
     title: `${product.title} | Sahabat Insurance`,
@@ -58,7 +60,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const locale = await getLocale();
   const products = await fetchProducts(locale);
-  const product = products.find((p) => toProductSlug(p.title) === slug);
+  const product = products.find((p) => (p.slug ?? toProductSlug(p.title)) === slug);
 
   if (!product) notFound();
 
