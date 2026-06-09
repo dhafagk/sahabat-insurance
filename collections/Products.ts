@@ -11,14 +11,35 @@ export const Products: CollectionConfig = {
     {
       name: "title",
       type: "text",
-      required: true,
       localized: true,
     },
     {
       name: "description",
       type: "textarea",
-      required: true,
       localized: true,
+    },
+    {
+      name: "slug",
+      type: "text",
+      unique: true,
+      index: true,
+      admin: {
+        position: "sidebar",
+        description: "URL-friendly identifier. Auto-filled from the title (set on first save, not overwritten).",
+      },
+      hooks: {
+        beforeValidate: [
+          ({ value, data }) => {
+            if (value) return value;
+            if (!data?.title) return value;
+            return (data.title as string)
+              .toLowerCase()
+              .trim()
+              .replace(/[^a-z0-9\s-]/g, "")
+              .replace(/\s+/g, "-");
+          },
+        ],
+      },
     },
     {
       name: "icon",
@@ -26,7 +47,8 @@ export const Products: CollectionConfig = {
       label: "Icon",
       relationTo: "media",
       admin: {
-        description: "Upload an SVG or PNG icon for this product (recommended: SVG, square format)",
+        description:
+          "Upload an SVG or PNG icon for this product (recommended: SVG, square format)",
       },
     },
     {
