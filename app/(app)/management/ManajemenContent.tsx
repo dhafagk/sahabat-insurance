@@ -2,17 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Star, Target, Users, Shield, TrendingUp, Trophy } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-
-const iconMap: Record<string, LucideIcon> = {
-  Star,
-  Target,
-  Users,
-  Shield,
-  TrendingUp,
-  Trophy,
-};
+import { Users } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -28,12 +18,6 @@ const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 };
 
-export interface HighlightItem {
-  icon: string;
-  title: string;
-  description?: string | null;
-}
-
 export interface BoardMember {
   photo?: { url?: string | null } | null;
   name: string;
@@ -45,7 +29,6 @@ export interface TataKelolaColumn {
 }
 
 export interface ManajemenContentProps {
-  highlights: HighlightItem[];
   boardOfCommissioners: {
     title: string;
     members: BoardMember[];
@@ -54,6 +37,7 @@ export interface ManajemenContentProps {
     title: string;
     members: BoardMember[];
   };
+  boardDisplayOrder: "directors_first" | "commissioners_first";
   tataKelola: {
     title: string;
     subtitle: string;
@@ -61,7 +45,7 @@ export interface ManajemenContentProps {
   };
 }
 
-function MemberCard({ member }: { member: BoardMember; index: number }) {
+function MemberCard({ member }: { member: BoardMember }) {
   const photoUrl = member.photo?.url ?? null;
 
   return (
@@ -101,107 +85,81 @@ function MemberCard({ member }: { member: BoardMember; index: number }) {
   );
 }
 
+interface BoardSectionProps {
+  title: string;
+  members: BoardMember[];
+}
+
+function BoardSection({ title, members }: BoardSectionProps) {
+  return (
+    <div>
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="text-center mb-12"
+      >
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">
+          {title}
+        </h2>
+      </motion.div>
+
+      <motion.div
+        variants={stagger}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-60px" }}
+        className="flex flex-wrap justify-center gap-10"
+      >
+        {members.map((member, i) => (
+          <MemberCard key={i} member={member} />
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
 export default function ManajemenContent({
-  highlights,
   boardOfCommissioners,
   boardOfDirectors,
+  boardDisplayOrder,
   tataKelola,
 }: ManajemenContentProps) {
+  const colCount = tataKelola.columns.length;
+  const gridColsClass =
+    colCount === 1
+      ? "grid-cols-1"
+      : colCount === 2
+        ? "sm:grid-cols-2"
+        : "sm:grid-cols-3";
+
+  const directorsSection = (
+    <BoardSection
+      key="directors"
+      title={boardOfDirectors.title}
+      members={boardOfDirectors.members}
+    />
+  );
+
+  const commissionersSection = (
+    <BoardSection
+      key="commissioners"
+      title={boardOfCommissioners.title}
+      members={boardOfCommissioners.members}
+    />
+  );
+
+  const orderedBoards =
+    boardDisplayOrder === "commissioners_first"
+      ? [commissionersSection, directorsSection]
+      : [directorsSection, commissionersSection];
+
   return (
     <>
-      {/* ── Highlights ─────────────────────────────────────────────── */}
-      <section className="max-w-5xl mx-auto px-6 py-16">
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
-          className="grid sm:grid-cols-3 gap-6"
-        >
-          {highlights.map((item, i) => {
-            const Icon = iconMap[item.icon] ?? Star;
-            return (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                className="rounded-2xl p-6 flex flex-col gap-3 bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-50">
-                  <Icon size={20} className="text-indigo-600" aria-hidden />
-                </div>
-                <h3 className="font-bold text-slate-800 text-sm leading-snug">
-                  {item.title}
-                </h3>
-                {item.description && (
-                  <p className="text-slate-500 text-xs leading-relaxed">
-                    {item.description}
-                  </p>
-                )}
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </section>
-
       <section className="py-16 bg-slate-50">
         <div className="max-w-5xl mx-auto px-6 flex flex-col gap-20">
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-center mb-12"
-            >
-              <p className="text-indigo-500 text-xs font-semibold tracking-widest uppercase mb-2">
-                Pimpinan Eksekutif
-              </p>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">
-                {boardOfDirectors.title}
-              </h2>
-            </motion.div>
-
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-60px" }}
-              className="flex flex-wrap justify-center gap-10"
-            >
-              {boardOfDirectors.members.map((member, i) => (
-                <MemberCard key={i} member={member} index={i} />
-              ))}
-            </motion.div>
-          </div>
-
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-center mb-12"
-            >
-              <p className="text-indigo-500 text-xs font-semibold tracking-widest uppercase mb-2">
-                Dewan Pengawas
-              </p>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">
-                {boardOfCommissioners.title}
-              </h2>
-            </motion.div>
-
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-60px" }}
-              className="flex flex-wrap justify-center gap-10"
-            >
-              {boardOfCommissioners.members.map((member, i) => (
-                <MemberCard key={i} member={member} index={i} />
-              ))}
-            </motion.div>
-          </div>
+          {orderedBoards}
         </div>
       </section>
 
@@ -228,7 +186,7 @@ export default function ManajemenContent({
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-60px" }}
-            className="grid sm:grid-cols-3 gap-8"
+            className={`grid ${gridColsClass} gap-8`}
           >
             {tataKelola.columns.map((col, i) => (
               <motion.div

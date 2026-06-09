@@ -1,4 +1,4 @@
-﻿import { cache } from "react";
+import { cache } from "react";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import type { Metadata } from "next";
@@ -6,11 +6,7 @@ import Link from "next/link";
 import Navbar from "../components/Navbar";
 import ManajemenContent from "./ManajemenContent";
 import { getLocale } from "../lib/locale";
-import type {
-  HighlightItem,
-  BoardMember,
-  TataKelolaColumn,
-} from "./ManajemenContent";
+import type { BoardMember, TataKelolaColumn } from "./ManajemenContent";
 
 export const dynamic = "force-dynamic";
 
@@ -31,27 +27,6 @@ export async function generateMetadata(): Promise<Metadata> {
     description: data?.pageSubtitle ?? undefined,
   };
 }
-
-const DEFAULT_HIGHLIGHTS: HighlightItem[] = [
-  {
-    icon: "TrendingUp",
-    title: "Menghasilkan keuntungan bagi tim profesional",
-    description:
-      "Kami berkomitmen untuk memberikan nilai terbaik melalui kepemimpinan yang berpengalaman dan strategi bisnis yang solid.",
-  },
-  {
-    icon: "Star",
-    title: "Ciptakan semangat",
-    description:
-      "Mendorong inovasi dan semangat kerja tim yang tinggi untuk mencapai tujuan bersama secara berkelanjutan.",
-  },
-  {
-    icon: "Users",
-    title: "Pemberdayaan karyawan",
-    description:
-      "Investasi pada sumber daya manusia yang kompeten, etis, dan berdedikasi tinggi sebagai aset utama perusahaan.",
-  },
-];
 
 const DEFAULT_COMMISSIONERS: BoardMember[] = [
   { name: "Retno Yuwansari", position: "President Commissioner", photo: null },
@@ -90,15 +65,6 @@ export default async function ManajemenPage() {
     raw?.pageSubtitle ??
     "Dipimpin oleh para profesional berpengalaman yang berkomitmen pada keunggulan";
 
-  const highlights: HighlightItem[] =
-    Array.isArray(raw?.highlights) && raw.highlights.length > 0
-      ? raw.highlights.map((h: HighlightItem) => ({
-          icon: h.icon ?? "Star",
-          title: h.title,
-          description: h.description ?? null,
-        }))
-      : DEFAULT_HIGHLIGHTS;
-
   const bocTitle: string =
     raw?.boardOfCommissioners?.title ?? "Board of Commissioners";
   const bocMembers: BoardMember[] =
@@ -121,6 +87,11 @@ export default async function ManajemenPage() {
           photo: m.photo ?? null,
         }))
       : DEFAULT_DIRECTORS;
+
+  const boardDisplayOrder: "directors_first" | "commissioners_first" =
+    raw?.boardDisplayOrder === "commissioners_first"
+      ? "commissioners_first"
+      : "directors_first";
 
   const tataTitle: string = raw?.tataKelola?.title ?? "Tata Kelola";
   const tataSubtitle: string =
@@ -169,9 +140,9 @@ export default async function ManajemenPage() {
       <main className="bg-white min-h-screen">
         <div>
           <ManajemenContent
-            highlights={highlights}
             boardOfCommissioners={{ title: bocTitle, members: bocMembers }}
             boardOfDirectors={{ title: bodTitle, members: bodMembers }}
+            boardDisplayOrder={boardDisplayOrder}
             tataKelola={{
               title: tataTitle,
               subtitle: tataSubtitle,

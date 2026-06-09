@@ -26,41 +26,6 @@ export const Manajemen: GlobalConfig = {
         "Dipimpin oleh para profesional berpengalaman yang berkomitmen pada keunggulan",
     },
     {
-      name: "highlights",
-      type: "array",
-      label: "Sorotan Utama",
-      maxRows: 3,
-      fields: [
-        {
-          name: "icon",
-          type: "select",
-          label: "Ikon",
-          options: [
-            { label: "Bintang", value: "Star" },
-            { label: "Target", value: "Target" },
-            { label: "Pengguna", value: "Users" },
-            { label: "Perisai", value: "Shield" },
-            { label: "Grafik", value: "TrendingUp" },
-            { label: "Piala", value: "Trophy" },
-          ],
-          defaultValue: "Star",
-        },
-        {
-          name: "title",
-          type: "text",
-          required: true,
-          label: "Judul",
-          localized: true,
-        },
-        {
-          name: "description",
-          type: "textarea",
-          label: "Deskripsi",
-          localized: true,
-        },
-      ],
-    },
-    {
       name: "boardOfCommissioners",
       type: "group",
       label: "Dewan Komisaris",
@@ -98,6 +63,16 @@ export const Manajemen: GlobalConfig = {
             },
           ],
         },
+      ],
+    },
+    {
+      name: "boardDisplayOrder",
+      type: "select",
+      label: "Urutan Tampil Dewan",
+      defaultValue: "directors_first",
+      options: [
+        { label: "Direksi dulu, lalu Komisaris", value: "directors_first" },
+        { label: "Komisaris dulu, lalu Direksi", value: "commissioners_first" },
       ],
     },
     {
