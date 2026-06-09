@@ -3,7 +3,7 @@ import { sql } from "@payloadcms/db-postgres";
 
 export async function up({ db }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-    ALTER TABLE "products" ADD COLUMN "slug" varchar;
+    ALTER TABLE "products" ADD COLUMN IF NOT EXISTS "slug" varchar;
     CREATE UNIQUE INDEX IF NOT EXISTS "products_slug_idx" ON "products" USING btree ("slug");
     ALTER TABLE "products_locales" ALTER COLUMN "title" DROP NOT NULL;
     ALTER TABLE "products_locales" ALTER COLUMN "description" DROP NOT NULL;
