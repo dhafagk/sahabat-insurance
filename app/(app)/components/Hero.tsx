@@ -17,7 +17,13 @@ const stagger = {
   show: { transition: { staggerChildren: 0.18 } },
 };
 
+export interface HeroTitleLine {
+  text: string;
+  highlight?: boolean | null;
+}
+
 export interface HeroData {
+  titleLines?: HeroTitleLine[] | null;
   descriptionDesktop?: string | null;
   descriptionMobile?: string | null;
   whatsappUrl?: string | null;
@@ -47,7 +53,17 @@ const DEFAULTS = {
   ctaTertiaryHref: "#premi",
 };
 
+const DEFAULT_TITLE_LINES: HeroTitleLine[] = [
+  { text: "Perlindungan Tepat" },
+  { text: "untuk Setiap Tahap" },
+  { text: "Kehidupan Anda" },
+];
+
 export default function Hero({ data }: HeroProps) {
+  const titleLines =
+    data?.titleLines && data.titleLines.length > 0
+      ? data.titleLines
+      : DEFAULT_TITLE_LINES;
   const descDesktop = data?.descriptionDesktop ?? DEFAULTS.descriptionDesktop;
   const descMobile = data?.descriptionMobile ?? DEFAULTS.descriptionMobile;
   const whatsappUrl = data?.whatsappUrl ?? DEFAULTS.whatsappUrl;
@@ -87,12 +103,17 @@ export default function Hero({ data }: HeroProps) {
                 aria-hidden="true"
               />
             </span> */}
-            <span className="">
-              Perlindungan Tepat
-              <br />
-              untuk Setiap Tahap
-              <br />
-              Kehidupan Anda
+            <span>
+              {titleLines.map((line, i) => (
+                <span key={i}>
+                  <span
+                    className={line.highlight ? "text-yellow-300" : undefined}
+                  >
+                    {line.text}
+                  </span>
+                  {i < titleLines.length - 1 && <br />}
+                </span>
+              ))}
             </span>
           </motion.h1>
 

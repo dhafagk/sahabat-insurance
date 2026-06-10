@@ -30,6 +30,34 @@ export const LandingPage: GlobalConfig = {
           label: "Hero",
           fields: [
             {
+              name: "titleLines",
+              type: "array",
+              label: "Title Lines",
+              admin: {
+                description:
+                  "Each entry is one line of the main hero heading. Rendered top-to-bottom with a line break between them. Leave empty to use the site default.",
+              },
+              fields: [
+                {
+                  name: "text",
+                  type: "text",
+                  required: true,
+                  localized: true,
+                  label: "Text",
+                },
+                {
+                  name: "highlight",
+                  type: "checkbox",
+                  label: "Highlight (accent colour)",
+                  defaultValue: false,
+                  admin: {
+                    description:
+                      "Renders this line in the brand accent colour.",
+                  },
+                },
+              ],
+            },
+            {
               name: "descriptionDesktop",
               type: "text",
               label: "Description (Desktop)",
@@ -88,8 +116,18 @@ export const LandingPage: GlobalConfig = {
           name: "promoStrip",
           label: "Promo Strip",
           fields: [
-            { name: "heading", type: "text", label: "Heading", localized: true },
-            { name: "buttonLabel", type: "text", label: "Button Label", localized: true },
+            {
+              name: "heading",
+              type: "text",
+              label: "Heading",
+              localized: true,
+            },
+            {
+              name: "buttonLabel",
+              type: "text",
+              label: "Button Label",
+              localized: true,
+            },
             { name: "buttonHref", type: "text", label: "Button Href" },
           ],
         },
@@ -99,8 +137,18 @@ export const LandingPage: GlobalConfig = {
           name: "productsSection",
           label: "Products",
           fields: [
-            { name: "badge", type: "text", label: "Badge Label", localized: true },
-            { name: "heading", type: "text", label: "Section Heading", localized: true },
+            {
+              name: "badge",
+              type: "text",
+              label: "Badge Label",
+              localized: true,
+            },
+            {
+              name: "heading",
+              type: "text",
+              label: "Section Heading",
+              localized: true,
+            },
           ],
         },
 
@@ -109,9 +157,24 @@ export const LandingPage: GlobalConfig = {
           name: "whyChooseUs",
           label: "Why Choose Us",
           fields: [
-            { name: "badge", type: "text", label: "Badge Label", localized: true },
-            { name: "heading", type: "text", label: "Section Heading", localized: true },
-            { name: "description", type: "text", label: "Body Text", localized: true },
+            {
+              name: "badge",
+              type: "text",
+              label: "Badge Label",
+              localized: true,
+            },
+            {
+              name: "heading",
+              type: "text",
+              label: "Section Heading",
+              localized: true,
+            },
+            {
+              name: "description",
+              type: "text",
+              label: "Body Text",
+              localized: true,
+            },
             {
               name: "reasons",
               type: "array",
@@ -124,7 +187,12 @@ export const LandingPage: GlobalConfig = {
                   options: ICON_OPTIONS,
                   required: true,
                 },
-                { name: "title", type: "text", required: true, localized: true },
+                {
+                  name: "title",
+                  type: "text",
+                  required: true,
+                  localized: true,
+                },
                 { name: "body", type: "text", required: true, localized: true },
               ],
             },
@@ -134,7 +202,12 @@ export const LandingPage: GlobalConfig = {
               label: "Section Image",
               relationTo: "media",
             },
-            { name: "ctaLabel", type: "text", label: "CTA Button Label", localized: true },
+            {
+              name: "ctaLabel",
+              type: "text",
+              label: "CTA Button Label",
+              localized: true,
+            },
             { name: "ctaHref", type: "text", label: "CTA Button Href" },
           ],
         },
@@ -144,8 +217,18 @@ export const LandingPage: GlobalConfig = {
           name: "newsSection",
           label: "News",
           fields: [
-            { name: "badge", type: "text", label: "Badge Label", localized: true },
-            { name: "heading", type: "text", label: "Section Heading", localized: true },
+            {
+              name: "badge",
+              type: "text",
+              label: "Badge Label",
+              localized: true,
+            },
+            {
+              name: "heading",
+              type: "text",
+              label: "Section Heading",
+              localized: true,
+            },
           ],
         },
 
@@ -154,8 +237,18 @@ export const LandingPage: GlobalConfig = {
           name: "ctaBanner",
           label: "CTA Banner",
           fields: [
-            { name: "heading", type: "text", label: "Heading", localized: true },
-            { name: "subtext", type: "text", label: "Subtext", localized: true },
+            {
+              name: "heading",
+              type: "text",
+              label: "Heading",
+              localized: true,
+            },
+            {
+              name: "subtext",
+              type: "text",
+              label: "Subtext",
+              localized: true,
+            },
             {
               name: "primaryLabel",
               type: "text",
@@ -196,7 +289,12 @@ export const LandingPage: GlobalConfig = {
                     { label: "Phone", value: "phone" },
                   ],
                 },
-                { name: "label", type: "text", required: true, localized: true },
+                {
+                  name: "label",
+                  type: "text",
+                  required: true,
+                  localized: true,
+                },
                 { name: "sublabel", type: "text", localized: true },
                 { name: "href", type: "text", label: "Link URL" },
                 {
