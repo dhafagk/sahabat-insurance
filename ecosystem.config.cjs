@@ -1,9 +1,9 @@
-process.loadEnvFile()
+process.loadEnvFile();
 
 module.exports = {
   apps: [
     {
-      name: "sahabat-insurance",
+      name: process.env.NAME,
       script: "npm",
       args: "start",
       env: {
