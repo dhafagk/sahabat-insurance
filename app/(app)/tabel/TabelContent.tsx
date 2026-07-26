@@ -17,6 +17,13 @@ interface TabelContentProps {
   tables: DataTable[];
 }
 
+// Shared cell-value styling for the ✓ / — sentinels used across desktop + mobile.
+function valueClass(v: string | undefined): string {
+  if (v === "✓") return "text-success font-bold";
+  if (v === "—" || v == null) return "text-slate-300";
+  return "text-text-primary";
+}
+
 export default function TabelContent({ tables }: TabelContentProps) {
   const [query, setQuery] = useState("");
 
@@ -172,7 +179,7 @@ export default function TabelContent({ tables }: TabelContentProps) {
                 </div>
               </div>
 
-              <div className="overflow-x-auto">
+              <div className="hidden sm:block overflow-x-auto">
                 <table className="w-full text-sm" aria-label={table.title}>
                   <thead>
                     <tr className="bg-navy/4 border-b border-slate-100">
@@ -217,6 +224,41 @@ export default function TabelContent({ tables }: TabelContentProps) {
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile: each row stacked as label / value so nothing scrolls off-screen */}
+              <div className="sm:hidden divide-y divide-slate-100">
+                {table.rows.map((row, rowIndex) => {
+                  const [firstCol, ...restCols] = table.columns;
+                  return (
+                    <div key={rowIndex} className="px-5 py-4">
+                      {firstCol && (
+                        <p className="font-semibold text-text-primary text-[15px] leading-snug mb-3">
+                          {row[firstCol] ?? "—"}
+                        </p>
+                      )}
+                      {restCols.length > 0 && (
+                        <dl className="flex flex-col gap-2">
+                          {restCols.map((col) => (
+                            <div
+                              key={col}
+                              className="flex items-baseline justify-between gap-4"
+                            >
+                              <dt className="text-xs text-text-muted shrink-0">
+                                {col}
+                              </dt>
+                              <dd
+                                className={`text-sm text-right ${valueClass(row[col])}`}
+                              >
+                                {row[col] ?? "—"}
+                              </dd>
+                            </div>
+                          ))}
+                        </dl>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
 
               {table.rows.length === 0 && (

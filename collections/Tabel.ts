@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload'
+import { importTableEndpoint } from './tabelImport'
 
 export const Tabel: CollectionConfig = {
   slug: 'tabel',
+  endpoints: [importTableEndpoint],
   admin: {
     useAsTitle: 'title',
     group: 'Halaman',
@@ -70,7 +72,17 @@ export const Tabel: CollectionConfig = {
       name: 'tables',
       type: 'array',
       label: 'Tabel',
+      admin: { initCollapsed: true },
       fields: [
+        {
+          name: 'importer',
+          type: 'ui',
+          admin: {
+            components: {
+              Field: './components/admin/TableImporter#TableImporter',
+            },
+          },
+        },
         {
           name: 'category',
           type: 'text',
@@ -116,7 +128,8 @@ export const Tabel: CollectionConfig = {
           type: 'array',
           label: 'Baris Data',
           admin: {
-            description: 'Jumlah sel tiap baris harus sama dengan jumlah kolom di atas.',
+            initCollapsed: true,
+            description: 'Jumlah sel tiap baris harus sama dengan jumlah kolom di atas. Gunakan tombol Impor Excel di atas untuk mengisi cepat.',
           },
           fields: [
             {

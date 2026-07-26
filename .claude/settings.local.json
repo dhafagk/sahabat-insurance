@@ -29,7 +29,10 @@
       "Bash(xargs grep -l -i \"hero\")",
       "Bash(xargs grep -l \"HeroData\\\\|hero:\")",
       "Bash(dir C:\\\\Users\\\\kdhafa\\\\Documents\\\\ngoding\\\\sahabat-insurance *)",
-      "Bash(Select-Object Name)"
+      "Bash(Select-Object Name)",
+      "Bash(xargs grep -l \"fetchFooter\\\\|footer\\\\|FooterConfig\")",
+      "Bash(grep -iE '^\\(xlsx|exceljs\\)$')",
+      "Bash(xargs grep -ln \"req.data\")"
     ]
   }
 }
