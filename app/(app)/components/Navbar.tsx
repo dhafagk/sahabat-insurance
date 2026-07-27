@@ -7,7 +7,6 @@ import type {
   NavbarData,
   NavItem,
   DesktopNavLink,
-  MobileSection,
   CtaButton,
 } from "./navbarTypes";
 
@@ -109,37 +108,6 @@ const DEFAULT_NAV: NavbarData = {
     { href: "#about", label: "Company", dropdownItems: DEFAULT_COMPANY },
     { href: "#news", label: "News" },
   ],
-  mobile: [
-    {
-      name: "Menu",
-      items: [
-        { href: "https://wa.me/622150508080", label: "Claim Via Whatsapp" },
-      ],
-    },
-    {
-      name: "Products",
-      items: DEFAULT_PRODUCTS.map((item) => ({
-        href: item.href,
-        label: item.title,
-        subItems: item.subItems?.map((s) => ({ href: s.href, label: s.title })),
-      })),
-    },
-    {
-      name: "Services",
-      items: DEFAULT_SERVICES.map((item) => ({
-        href: item.href,
-        label: item.title,
-      })),
-    },
-    {
-      name: "Company",
-      items: DEFAULT_COMPANY.map((item) => ({
-        href: item.href,
-        label: item.title,
-        subItems: item.subItems?.map((s) => ({ href: s.href, label: s.title })),
-      })),
-    },
-  ],
 };
 
 // ─── Payload → NavbarData mapper ─────────────────────────────────────────────
@@ -172,34 +140,12 @@ function mapPayloadToNavbarData(raw: any): NavbarData | null {
       : undefined,
   }));
 
-  const mobile: MobileSection[] = [
-    {
-      name: "Menu",
-      items: [
-        { href: "https://wa.me/622150508080", label: "Claim Via Whatsapp" },
-      ],
-    },
-    ...desktop
-      .filter((link) => link.dropdownItems && link.dropdownItems.length > 0)
-      .map((link) => ({
-        name: link.label,
-        items: (link.dropdownItems ?? []).map((navItem) => ({
-          href: navItem.href,
-          label: navItem.title,
-          subItems: navItem.subItems?.map((sub) => ({
-            href: sub.href,
-            label: sub.title,
-          })),
-        })),
-      })),
-  ];
-
   const ctaButton: CtaButton =
     raw?.ctaButton?.label && raw?.ctaButton?.href
       ? { label: raw.ctaButton.label, href: raw.ctaButton.href }
       : DEFAULT_CTA;
 
-  return { desktop, mobile, ctaButton };
+  return { desktop, ctaButton };
 }
 
 // ─── Server component ─────────────────────────────────────────────────────────

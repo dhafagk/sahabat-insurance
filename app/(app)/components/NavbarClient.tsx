@@ -12,7 +12,12 @@ import {
 } from "./ui/navigation-menu";
 import React, { useState } from "react";
 import { ArrowRight, ChevronRight, Menu, X } from "lucide-react";
-import type { NavbarData, NavItem, MobileSection, CtaButton } from "./navbarTypes";
+import type {
+  NavbarData,
+  NavItem,
+  DesktopNavLink,
+  CtaButton,
+} from "./navbarTypes";
 import SearchButton from "./SearchButton";
 import SearchOverlay from "./SearchOverlay";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -124,7 +129,7 @@ export default function NavbarClient({ data, locale }: Props) {
           {isMobileOpen && (
             <div className="no-scrollbar absolute right-0 top-[calc(100%+8px)] max-h-[calc(85vh-5rem)] w-[calc(100vw-2rem)] max-w-sm overflow-y-auto rounded-2xl border border-slate-200/60 bg-white shadow-2xl shadow-[#1e3a8a]/10 md:hidden">
               <MobileMenuContent
-                nav={data.mobile}
+                nav={data.desktop}
                 locale={locale}
                 ctaButton={ctaButton}
                 onClose={() => setIsMobileOpen(false)}
@@ -149,47 +154,58 @@ function MobileMenuContent({
   ctaButton,
   onClose,
 }: {
-  nav: MobileSection[];
+  nav: DesktopNavLink[];
   locale: Locale;
   ctaButton: CtaButton;
   onClose: () => void;
 }) {
   return (
     <div className="flex flex-col gap-8 p-6">
-      {nav.map((category, index) => (
-        <div className="flex flex-col gap-3" key={index}>
-          <p className="text-xs font-semibold uppercase tracking-widest text-text-muted">
-            {category.name}
-          </p>
-          <div className="flex flex-col gap-1">
-            {category.items.map((item, i) => (
-              <React.Fragment key={i}>
-                <Link
-                  href={item.href}
-                  className="py-1 text-base font-medium text-text-primary transition-colors hover:text-[#1e3a8a]"
-                  onClick={onClose}
-                >
-                  {item.label}
-                </Link>
-                {item.subItems && item.subItems.length > 0 && (
-                  <div className="mb-1 flex flex-col gap-0.5 border-l-2 border-slate-100 pl-4">
-                    {item.subItems.map((sub, j) => (
-                      <Link
-                        key={j}
-                        href={sub.href}
-                        className="py-0.5 text-sm font-medium text-text-muted transition-colors hover:text-[#1e3a8a]"
-                        onClick={onClose}
-                      >
-                        {sub.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </React.Fragment>
-            ))}
+      {nav.map((link, index) =>
+        link.dropdownItems && link.dropdownItems.length > 0 ? (
+          <div className="flex flex-col gap-3" key={index}>
+            <p className="text-xs font-semibold uppercase tracking-widest text-text-muted">
+              {link.label}
+            </p>
+            <div className="flex flex-col gap-1">
+              {link.dropdownItems.map((item, i) => (
+                <React.Fragment key={i}>
+                  <Link
+                    href={item.href}
+                    className="py-1 text-base font-medium text-text-primary transition-colors hover:text-[#1e3a8a]"
+                    onClick={onClose}
+                  >
+                    {item.title}
+                  </Link>
+                  {item.subItems && item.subItems.length > 0 && (
+                    <div className="mb-1 flex flex-col gap-0.5 border-l-2 border-slate-100 pl-4">
+                      {item.subItems.map((sub, j) => (
+                        <Link
+                          key={j}
+                          href={sub.href}
+                          className="py-0.5 text-sm font-medium text-text-muted transition-colors hover:text-[#1e3a8a]"
+                          onClick={onClose}
+                        >
+                          {sub.title}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ) : (
+          <Link
+            key={index}
+            href={link.href}
+            className="text-xs font-semibold uppercase tracking-widest text-text-primary transition-colors hover:text-[#1e3a8a]"
+            onClick={onClose}
+          >
+            {link.label}
+          </Link>
+        ),
+      )}
 
       <div className="flex flex-col gap-3">
         <p className="text-xs font-semibold uppercase tracking-widest text-text-muted">

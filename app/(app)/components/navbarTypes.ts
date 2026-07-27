@@ -16,24 +16,13 @@ export interface DesktopNavLink {
   dropdownItems?: NavItem[];
 }
 
-export interface MobileNavItem {
-  href: string;
-  label: string;
-  subItems?: { href: string; label: string }[];
-}
-
-export interface MobileSection {
-  name: string;
-  items: MobileNavItem[];
-}
-
 export interface CtaButton {
   label: string;
   href: string;
 }
 
+// ponytail: one nav list drives desktop and mobile — no separate mobile shape to drift
 export interface NavbarData {
   desktop: DesktopNavLink[];
-  mobile: MobileSection[];
   ctaButton: CtaButton;
 }
