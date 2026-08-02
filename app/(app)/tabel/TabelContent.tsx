@@ -32,6 +32,11 @@ export default function TabelContent({ tables }: TabelContentProps) {
     [tables],
   );
 
+  const cities = useMemo(
+    () => Array.from(new Set(tables.map((t) => t.title))).sort(),
+    [tables],
+  );
+
   const filtered = useMemo(() => {
     if (!query.trim()) return tables;
     const q = query.toLowerCase();
@@ -86,6 +91,21 @@ export default function TabelContent({ tables }: TabelContentProps) {
               </button>
             )}
           </div>
+          {cities.length > 1 && (
+            <select
+              value={cities.includes(query) ? query : ""}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full sm:w-56 shrink-0 px-4 py-3 rounded-xl border border-slate-200 bg-card text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-navy focus:border-navy transition-all"
+              aria-label="Filter berdasarkan kota"
+            >
+              <option value="">Semua kota</option>
+              {cities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+          )}
           <p className="text-sm text-text-muted shrink-0">
             {query ? (
               <>
@@ -159,11 +179,13 @@ export default function TabelContent({ tables }: TabelContentProps) {
               <div className="px-6 py-5 border-b border-slate-100">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                      <span className="text-xs font-semibold text-accent bg-accent/10 px-2.5 py-0.5 rounded-full">
-                        {table.category}
-                      </span>
-                    </div>
+                    {table.category && (
+                      <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                        <span className="text-xs font-semibold text-accent bg-accent/10 px-2.5 py-0.5 rounded-full">
+                          {table.category}
+                        </span>
+                      </div>
+                    )}
                     <h2 className="text-lg font-bold text-text-primary leading-snug">
                       {table.title}
                     </h2>
