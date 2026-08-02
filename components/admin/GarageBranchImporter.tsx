@@ -3,14 +3,12 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { useDocumentInfo, useLocale } from '@payloadcms/ui'
 import type { UIFieldClientComponent } from 'payload'
-import { cellToString, downloadTemplate, parseSheet } from './tableImportShared'
+import { downloadTemplate, parseSheet } from './tableImportShared'
 
-export const TableImporter: UIFieldClientComponent = ({ path }) => {
+export const GarageBranchImporter: UIFieldClientComponent = () => {
   const { id } = useDocumentInfo()
   const localeObj = useLocale()
   const locale = typeof localeObj === 'string' ? localeObj : localeObj?.code
-  // path looks like "tables.0.importer" — the index is the middle segment.
-  const tableIndex = Number(path.split('.')[1])
 
   const inputRef = useRef<HTMLInputElement>(null)
   const [busy, setBusy] = useState(false)
@@ -31,24 +29,23 @@ export const TableImporter: UIFieldClientComponent = ({ path }) => {
       setMsg(null)
       try {
         const parsed = await parseSheet(file)
-        const res = await fetch(`/api/tabel/${id}/import`, {
+        const res = await fetch(`/api/garage-branches/${id}/import`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
-          body: JSON.stringify({ tableIndex, ...parsed, locale }),
+          body: JSON.stringify({ ...parsed, locale }),
         })
         if (!res.ok) {
           const body = await res.json().catch(() => ({}))
           throw new Error(body?.error || `Gagal impor (${res.status}).`)
         }
-        // Data written server-side; reload to show it in the form.
         window.location.reload()
       } catch (err) {
         setMsg({ ok: false, text: err instanceof Error ? err.message : 'Gagal impor.' })
         setBusy(false)
       }
     },
-    [id, tableIndex, locale],
+    [id, locale],
   )
 
   return (
