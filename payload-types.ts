@@ -75,6 +75,7 @@ export interface Config {
     pages: Page;
     unduhan: Unduhan;
     tabel: Tabel;
+    'garage-branches': GarageBranch;
     'download-leads': DownloadLead;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -91,6 +92,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     unduhan: UnduhanSelect<false> | UnduhanSelect<true>;
     tabel: TabelSelect<false> | TabelSelect<true>;
+    'garage-branches': GarageBranchesSelect<false> | GarageBranchesSelect<true>;
     'download-leads': DownloadLeadsSelect<false> | DownloadLeadsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -197,8 +199,12 @@ export interface Media {
  */
 export interface Product {
   id: number;
-  title: string;
-  description: string;
+  title?: string | null;
+  description?: string | null;
+  /**
+   * URL-friendly identifier. Auto-filled from the title (set on first save, not overwritten).
+   */
+  slug?: string | null;
   /**
    * Upload an SVG or PNG icon for this product (recommended: SVG, square format)
    */
@@ -423,7 +429,7 @@ export interface Tabel {
             }[]
           | null;
         /**
-         * Jumlah sel tiap baris harus sama dengan jumlah kolom di atas.
+         * Jumlah sel tiap baris harus sama dengan jumlah kolom di atas. Gunakan tombol Impor Excel di atas untuk mengisi cepat.
          */
         rows?:
           | {
@@ -433,6 +439,52 @@ export interface Tabel {
                     id?: string | null;
                   }[]
                 | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "garage-branches".
+ */
+export interface GarageBranch {
+  id: number;
+  /**
+   * Halaman "Tabel" tempat cabang ini ditampilkan, mis. Daftar Bengkel.
+   */
+  page: number | Tabel;
+  title: string;
+  /**
+   * Opsional. Kosongkan jika belum dikategorikan.
+   */
+  category?: ('authorize' | 'general') | null;
+  description?: string | null;
+  /**
+   * Kosongkan untuk urutan sesuai input.
+   */
+  order?: number | null;
+  /**
+   * Daftar kolom dari kiri ke kanan. Urutan ini harus sama dengan urutan sel di setiap baris.
+   */
+  columns?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Jumlah sel tiap baris harus sama dengan jumlah kolom di atas. Gunakan tombol Impor Excel di atas untuk mengisi cepat.
+   */
+  rows?:
+    | {
+        cells?:
+          | {
+              value?: string | null;
               id?: string | null;
             }[]
           | null;
@@ -512,6 +564,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tabel';
         value: number | Tabel;
+      } | null)
+    | ({
+        relationTo: 'garage-branches';
+        value: number | GarageBranch;
       } | null)
     | ({
         relationTo: 'download-leads';
@@ -606,6 +662,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  slug?: T;
   icon?: T;
   riplay?:
     | T
@@ -749,6 +806,36 @@ export interface TabelSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "garage-branches_select".
+ */
+export interface GarageBranchesSelect<T extends boolean = true> {
+  page?: T;
+  title?: T;
+  category?: T;
+  description?: T;
+  order?: T;
+  columns?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  rows?:
+    | T
+    | {
+        cells?:
+          | T
+          | {
+              value?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "download-leads_select".
  */
 export interface DownloadLeadsSelect<T extends boolean = true> {
@@ -806,6 +893,19 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface LandingPage {
   id: number;
   hero?: {
+    /**
+     * Each entry is one line of the main hero heading. Rendered top-to-bottom with a line break between them. Leave empty to use the site default.
+     */
+    titleLines?:
+      | {
+          text: string;
+          /**
+           * Renders this line in the brand accent colour.
+           */
+          highlight?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
     descriptionDesktop?: string | null;
     descriptionMobile?: string | null;
     whatsappUrl?: string | null;
@@ -937,14 +1037,6 @@ export interface Manajeman {
   id: number;
   pageTitle?: string | null;
   pageSubtitle?: string | null;
-  highlights?:
-    | {
-        icon?: ('Star' | 'Target' | 'Users' | 'Shield' | 'TrendingUp' | 'Trophy') | null;
-        title: string;
-        description?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   boardOfCommissioners?: {
     title?: string | null;
     members?:
@@ -956,6 +1048,7 @@ export interface Manajeman {
         }[]
       | null;
   };
+  boardDisplayOrder?: ('directors_first' | 'commissioners_first') | null;
   boardOfDirectors?: {
     title?: string | null;
     members?:
@@ -1171,6 +1264,13 @@ export interface LandingPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
+        titleLines?:
+          | T
+          | {
+              text?: T;
+              highlight?: T;
+              id?: T;
+            };
         descriptionDesktop?: T;
         descriptionMobile?: T;
         whatsappUrl?: T;
@@ -1289,14 +1389,6 @@ export interface VisiMisiSelect<T extends boolean = true> {
 export interface ManajemenSelect<T extends boolean = true> {
   pageTitle?: T;
   pageSubtitle?: T;
-  highlights?:
-    | T
-    | {
-        icon?: T;
-        title?: T;
-        description?: T;
-        id?: T;
-      };
   boardOfCommissioners?:
     | T
     | {
@@ -1310,6 +1402,7 @@ export interface ManajemenSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  boardDisplayOrder?: T;
   boardOfDirectors?:
     | T
     | {

@@ -32,6 +32,19 @@ const fetchDoc = cache(async (slug: string, locale: string) => {
   return result.docs[0] ?? null;
 });
 
+const fetchBranches = cache(async (pageId: string | number, locale: string) => {
+  const payload = await getPayloadInstance();
+  const result = await payload.find({
+    collection: "garage-branches",
+    where: { page: { equals: pageId } },
+    sort: "order",
+    depth: 0,
+    locale,
+    limit: 500,
+  });
+  return result.docs;
+});
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const locale = await getLocale();
@@ -75,9 +88,11 @@ export default async function TabelDetailPage({ params }: PageProps) {
   const doc = await fetchDoc(slug, locale);
   if (!doc) notFound();
 
-  const tables: DataTable[] = Array.isArray(doc.tables) && doc.tables.length > 0
-    ? normaliseTables(doc.tables)
-    : [];
+  const branches = await fetchBranches(doc.id, locale);
+  const tables: DataTable[] = [
+    ...(Array.isArray(doc.tables) ? normaliseTables(doc.tables) : []),
+    ...(branches.length > 0 ? normaliseTables(branches) : []),
+  ];
 
   return (
     <>

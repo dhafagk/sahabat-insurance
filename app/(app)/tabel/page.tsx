@@ -33,20 +33,42 @@ export default async function TabelIndexPage() {
       locale,
     });
 
+    const branchesResult = await payload.find({
+      collection: "garage-branches",
+      depth: 0,
+      locale,
+      limit: 1000,
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const branchesByPage = new Map<string, any[]>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    for (const branch of branchesResult.docs as any[]) {
+      const pageId = String(
+        typeof branch.page === "object" ? branch.page?.id : branch.page,
+      );
+      const list = branchesByPage.get(pageId) ?? [];
+      list.push(branch);
+      branchesByPage.set(pageId, list);
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cards = result.docs.map((doc: any) => {
       const tables = Array.isArray(doc.tables) ? doc.tables : [];
-      const rowCount = tables.reduce(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (sum: number, t: any) =>
-          sum + (Array.isArray(t.rows) ? t.rows.length : 0),
-        0,
-      );
+      const branches = branchesByPage.get(String(doc.id)) ?? [];
+      const rowCount =
+        tables.reduce(
+          (sum: number, t: any) => sum + (Array.isArray(t.rows) ? t.rows.length : 0),
+          0,
+        ) +
+        branches.reduce(
+          (sum: number, b: any) => sum + (Array.isArray(b.rows) ? b.rows.length : 0),
+          0,
+        );
       return {
         title: doc.title,
         description: doc.description ?? null,
         slug: doc.slug,
-        tableCount: tables.length,
+        tableCount: tables.length + branches.length,
         rowCount,
       };
     });
