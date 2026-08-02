@@ -46,7 +46,8 @@ async function migrate() {
     const table = tables[i];
     await payload.create({
       collection: "garage-branches",
-      locale: "all",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      locale: "all" as any,
       data: {
         page: page.id,
         title: table.title,

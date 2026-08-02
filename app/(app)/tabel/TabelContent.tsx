@@ -28,7 +28,7 @@ export default function TabelContent({ tables }: TabelContentProps) {
   const [query, setQuery] = useState("");
 
   const categories = useMemo(
-    () => Array.from(new Set(tables.map((t) => t.category))),
+    () => Array.from(new Set(tables.map((t) => t.category).filter(Boolean))),
     [tables],
   );
 
@@ -41,17 +41,23 @@ export default function TabelContent({ tables }: TabelContentProps) {
     if (!query.trim()) return tables;
     const q = query.toLowerCase();
     return tables
-      .map((table) => ({
-        ...table,
-        rows: table.rows.filter((row) =>
-          Object.values(row).some((v) => v.toLowerCase().includes(q)),
-        ),
-      }))
+      .map((table) => {
+        const titleMatches = table.title.toLowerCase().includes(q);
+        return {
+          ...table,
+          rows: titleMatches
+            ? table.rows
+            : table.rows.filter((row) =>
+                Object.values(row).some((v) => v.toLowerCase().includes(q)),
+              ),
+        };
+      })
       .filter(
         (table) =>
           table.rows.length > 0 ||
           table.title.toLowerCase().includes(q) ||
-          table.description.toLowerCase().includes(q),
+          table.description.toLowerCase().includes(q) ||
+          table.category.toLowerCase() === q,
       );
   }, [query, tables]);
 
