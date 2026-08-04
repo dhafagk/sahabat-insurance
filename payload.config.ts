@@ -14,6 +14,7 @@ import { Pages } from "./collections/Pages";
 import { Unduhan } from "./collections/Unduhan";
 import { Tabel } from "./collections/Tabel";
 import { GarageBranch } from "./collections/GarageBranch";
+import { GarageBranchRow } from "./collections/GarageBranchRow";
 import { DownloadLeads } from "./collections/DownloadLeads";
 import { LandingPage } from "./globals/LandingPage";
 import { VisiMisi } from "./globals/VisiMisi";
@@ -61,6 +62,7 @@ export default buildConfig({
     Unduhan,
     Tabel,
     GarageBranch,
+    GarageBranchRow,
     DownloadLeads,
   ],
   globals: [

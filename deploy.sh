@@ -13,4 +13,5 @@ pm2 reload ecosystem.config.cjs || pm2 start ecosystem.config.cjs
 # persist process list so it comes back after a reboot
 pm2 save
 
-echo "Done. Run 'pm2 startup' ONCE on this server (as instructed by its output) so PM2 auto-boots."
+echo "Done."
+# echo "Done. Run 'pm2 startup' ONCE on this server (as instructed by its output) so PM2 auto-boots."

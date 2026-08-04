@@ -3,10 +3,19 @@ import { addDataAndFileToRequest } from 'payload'
 
 const MAX_ROWS = 5000
 const MAX_COLS = 100
+const CONCURRENCY = 20
+
+async function runInBatches<T>(items: T[], size: number, fn: (item: T, index: number) => Promise<unknown>) {
+  for (let i = 0; i < items.length; i += size) {
+    await Promise.all(items.slice(i, i + size).map((item, offset) => fn(item, i + offset)))
+  }
+}
 
 // POST /api/garage-branches/:id/import  { columns: string[], rows: string[][], locale }
 // A garage-branches doc IS one table (unlike `tabel`, which nests many tables
-// per doc), so this writes columns/rows directly onto the doc — no tableIndex.
+// per doc). Rows live in the `garage-branch-rows` collection (one doc per
+// row) rather than an embedded array — keeps the admin edit screen from
+// having to mount thousands of nested array rows at once.
 export const importGarageBranchEndpoint: Endpoint = {
   path: '/:id/import',
   method: 'post',
@@ -55,8 +64,6 @@ export const importGarageBranchEndpoint: Endpoint = {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const existingColumns: any[] = Array.isArray(existing.columns) ? existing.columns : []
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const existingRows: any[] = Array.isArray(existing.rows) ? existing.rows : []
 
     await req.payload.update({
       collection: 'garage-branches',
@@ -65,15 +72,58 @@ export const importGarageBranchEndpoint: Endpoint = {
       req,
       data: {
         columns: columns.map((label, i) => ({ id: existingColumns[i]?.id, label })),
-        rows: rows.map((cells, ri) => ({
-          id: existingRows[ri]?.id,
-          cells: cells.map((value, ci) => ({
-            id: existingRows[ri]?.cells?.[ci]?.id,
-            value,
-          })),
-        })),
       },
     })
+
+    const existingRowsResult = await req.payload.find({
+      collection: 'garage-branch-rows',
+      where: { branch: { equals: id } },
+      sort: 'order',
+      locale,
+      depth: 0,
+      pagination: false,
+      req,
+    })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const existingRows: any[] = existingRowsResult.docs
+
+    // Update/create rows in place so re-importing preserves each row's id
+    // and category (only 'authorize' status is admin-set — imports must not
+    // reset it back to 'general').
+    await runInBatches(rows, CONCURRENCY, async (cells, ri) => {
+      const cellsData = cells.map((value, ci) => ({
+        id: existingRows[ri]?.cells?.[ci]?.id,
+        value,
+      }))
+
+      if (existingRows[ri]) {
+        return req.payload.update({
+          collection: 'garage-branch-rows',
+          id: existingRows[ri].id,
+          locale,
+          req,
+          data: { order: ri, cells: cellsData },
+        })
+      }
+
+      return req.payload.create({
+        collection: 'garage-branch-rows',
+        locale,
+        req,
+        data: { branch: Number(id), order: ri, category: 'general', cells: cellsData },
+      })
+    })
+
+    // Import replaces the whole table for this branch — drop any rows beyond
+    // the newly uploaded count.
+    const leftoverRows = existingRows.slice(rows.length)
+    await runInBatches(leftoverRows, CONCURRENCY, (row) =>
+      req.payload.delete({
+        collection: 'garage-branch-rows',
+        id: row.id,
+        req,
+      }),
+    )
 
     return Response.json({ ok: true, rows: rows.length, columns: columns.length })
   },

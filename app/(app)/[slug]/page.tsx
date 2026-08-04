@@ -12,6 +12,8 @@ import ArticleBody from "../components/ArticleBody";
 import TimelineBlock from "../components/blocks/TimelineBlock";
 import TabelContent from "../tabel/TabelContent";
 import type { DataTable } from "../tabel/TabelContent";
+import BengkelList from "../tabel/BengkelList";
+import type { BengkelEntry } from "../tabel/BengkelList";
 import UnduhContent from "../unduhan/UnduhContent";
 import type { AccordionSection, DownloadItem } from "../unduhan/UnduhContent";
 
@@ -50,6 +52,49 @@ const fetchTabel = cache(async (slug: string, locale: string) => {
     locale,
   });
   return result.docs[0] ?? null;
+});
+
+const fetchBranches = cache(async (pageId: string | number, locale: string) => {
+  const payload = await getPayloadInstance();
+  const result = await payload.find({
+    collection: "garage-branches",
+    where: { page: { equals: pageId } },
+    sort: "order",
+    depth: 0,
+    locale,
+    limit: 500,
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const branchIds = result.docs.map((b: any) => b.id);
+  if (branchIds.length === 0) return result.docs;
+
+  const rowsResult = await payload.find({
+    collection: "garage-branch-rows",
+    where: { branch: { in: branchIds } },
+    sort: "order",
+    depth: 0,
+    locale,
+    pagination: false,
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const rowsByBranch = new Map<string, any[]>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  for (const row of rowsResult.docs as any[]) {
+    const branchId = String(
+      typeof row.branch === "object" ? row.branch?.id : row.branch,
+    );
+    const list = rowsByBranch.get(branchId) ?? [];
+    list.push(row);
+    rowsByBranch.set(branchId, list);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return result.docs.map((branch: any) => ({
+    ...branch,
+    rows: rowsByBranch.get(String(branch.id)) ?? [],
+  }));
 });
 
 const fetchUnduhan = cache(async (slug: string, locale: string) => {
@@ -91,6 +136,30 @@ function normaliseTables(raw: any[]): DataTable[] {
       columns,
       rows,
     };
+  });
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function normaliseBranchEntries(raw: any[]): BengkelEntry[] {
+  return raw.flatMap((branch) => {
+    const columns: string[] = (branch.columns ?? []).map(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (c: any) => c.label ?? "",
+    );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (branch.rows ?? []).map((row: any, rowIndex: number) => {
+      const values: Record<string, string> = {};
+      columns.forEach((col, i) => {
+        values[col] = row.cells?.[i]?.value ?? "—";
+      });
+      return {
+        id: row.id ?? `${branch.id}-${rowIndex}`,
+        category: row.category ?? "",
+        city: branch.title ?? "",
+        columns,
+        values,
+      };
+    });
   });
 }
 
@@ -244,10 +313,12 @@ export default async function PageDetail({ params }: PageProps) {
   // 2. Try tabel collection
   const tabelDoc = await fetchTabel(slug, locale);
   if (tabelDoc) {
-    const tables: DataTable[] =
-      Array.isArray(tabelDoc.tables) && tabelDoc.tables.length > 0
-        ? normaliseTables(tabelDoc.tables)
-        : [];
+    const branches = await fetchBranches(tabelDoc.id, locale);
+    const tables: DataTable[] = Array.isArray(tabelDoc.tables)
+      ? normaliseTables(tabelDoc.tables)
+      : [];
+    const bengkelEntries: BengkelEntry[] =
+      branches.length > 0 ? normaliseBranchEntries(branches) : [];
 
     return (
       <>
@@ -285,9 +356,9 @@ export default async function PageDetail({ params }: PageProps) {
 
         <main className="bg-bg min-h-screen">
           <div className="max-w-7xl mx-auto px-6 py-12">
-            {tables.length > 0 ? (
-              <TabelContent tables={tables} />
-            ) : (
+            {tables.length > 0 && <TabelContent tables={tables} />}
+            {bengkelEntries.length > 0 && <BengkelList entries={bengkelEntries} />}
+            {tables.length === 0 && bengkelEntries.length === 0 && (
               <p className="text-center text-text-muted py-24">
                 Belum ada tabel yang tersedia.
               </p>

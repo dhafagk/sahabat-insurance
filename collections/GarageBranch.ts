@@ -11,7 +11,7 @@ export const GarageBranch: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Halaman',
-    defaultColumns: ['title', 'category', 'page'],
+    defaultColumns: ['title', 'page'],
   },
   fields: [
     {
@@ -32,19 +32,6 @@ export const GarageBranch: CollectionConfig = {
       required: true,
       localized: true,
       label: 'Kota / Wilayah',
-    },
-    {
-      name: 'category',
-      type: 'select',
-      label: 'Kategori',
-      required: false,
-      options: [
-        { label: 'Authorize', value: 'authorize' },
-        { label: 'General', value: 'general' },
-      ],
-      admin: {
-        description: 'Opsional. Kosongkan jika belum dikategorikan.',
-      },
     },
     {
       name: 'description',
@@ -88,14 +75,40 @@ export const GarageBranch: CollectionConfig = {
       ],
     },
     {
+      name: 'entries',
+      type: 'join',
+      label: 'Baris Data',
+      collection: 'garage-branch-rows',
+      on: 'branch',
+      defaultSort: 'order',
+      defaultLimit: 20,
+      admin: {
+        defaultColumns: ['name', 'category', 'order'],
+      },
+    },
+    {
+      // Superseded by the `garage-branch-rows` collection (joined above as
+      // `entries`) — a single doc holding thousands of nested array rows is
+      // what made the admin edit screen lag. Kept read-only + hidden so old
+      // data isn't lost; not written to by the importer or the app anymore.
       name: 'rows',
       type: 'array',
-      label: 'Baris Data',
+      label: 'Baris Data (lama)',
       admin: {
-        initCollapsed: true,
-        description: 'Jumlah sel tiap baris harus sama dengan jumlah kolom di atas. Gunakan tombol Impor Excel di atas untuk mengisi cepat.',
+        hidden: true,
       },
       fields: [
+        {
+          name: 'category',
+          type: 'select',
+          label: 'Kategori',
+          required: true,
+          defaultValue: 'general',
+          options: [
+            { label: 'Authorized', value: 'authorize' },
+            { label: 'Umum', value: 'general' },
+          ],
+        },
         {
           name: 'cells',
           type: 'array',

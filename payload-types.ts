@@ -76,13 +76,18 @@ export interface Config {
     unduhan: Unduhan;
     tabel: Tabel;
     'garage-branches': GarageBranch;
+    'garage-branch-rows': GarageBranchRow;
     'download-leads': DownloadLead;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    'garage-branches': {
+      entries: 'garage-branch-rows';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -93,6 +98,7 @@ export interface Config {
     unduhan: UnduhanSelect<false> | UnduhanSelect<true>;
     tabel: TabelSelect<false> | TabelSelect<true>;
     'garage-branches': GarageBranchesSelect<false> | GarageBranchesSelect<true>;
+    'garage-branch-rows': GarageBranchRowsSelect<false> | GarageBranchRowsSelect<true>;
     'download-leads': DownloadLeadsSelect<false> | DownloadLeadsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -459,10 +465,6 @@ export interface GarageBranch {
    */
   page: number | Tabel;
   title: string;
-  /**
-   * Opsional. Kosongkan jika belum dikategorikan.
-   */
-  category?: ('authorize' | 'general') | null;
   description?: string | null;
   /**
    * Kosongkan untuk urutan sesuai input.
@@ -477,17 +479,45 @@ export interface GarageBranch {
         id?: string | null;
       }[]
     | null;
-  /**
-   * Jumlah sel tiap baris harus sama dengan jumlah kolom di atas. Gunakan tombol Impor Excel di atas untuk mengisi cepat.
-   */
+  entries?: {
+    docs?: (number | GarageBranchRow)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   rows?:
     | {
+        category: 'authorize' | 'general';
         cells?:
           | {
               value?: string | null;
               id?: string | null;
             }[]
           | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "garage-branch-rows".
+ */
+export interface GarageBranchRow {
+  id: number;
+  /**
+   * Diambil otomatis dari kolom pertama (Nama).
+   */
+  name?: string | null;
+  branch: number | GarageBranch;
+  order?: number | null;
+  /**
+   * Default Umum. Hanya admin yang boleh mengubah ke Authorized.
+   */
+  category: 'authorize' | 'general';
+  cells?:
+    | {
+        value?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -568,6 +598,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'garage-branches';
         value: number | GarageBranch;
+      } | null)
+    | ({
+        relationTo: 'garage-branch-rows';
+        value: number | GarageBranchRow;
       } | null)
     | ({
         relationTo: 'download-leads';
@@ -811,7 +845,6 @@ export interface TabelSelect<T extends boolean = true> {
 export interface GarageBranchesSelect<T extends boolean = true> {
   page?: T;
   title?: T;
-  category?: T;
   description?: T;
   order?: T;
   columns?:
@@ -820,15 +853,35 @@ export interface GarageBranchesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  entries?: T;
   rows?:
     | T
     | {
+        category?: T;
         cells?:
           | T
           | {
               value?: T;
               id?: T;
             };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "garage-branch-rows_select".
+ */
+export interface GarageBranchRowsSelect<T extends boolean = true> {
+  name?: T;
+  branch?: T;
+  order?: T;
+  category?: T;
+  cells?:
+    | T
+    | {
+        value?: T;
         id?: T;
       };
   updatedAt?: T;

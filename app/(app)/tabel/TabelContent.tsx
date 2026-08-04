@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Search, X, TableProperties } from "lucide-react";
+import { MapPin, Search, Tag, TableProperties, X } from "lucide-react";
 
 export interface DataTable {
   id: string;
@@ -24,8 +24,15 @@ function valueClass(v: string | undefined): string {
   return "text-text-primary";
 }
 
+// Raw category values are CMS slugs (e.g. "authorize"); display them properly capitalised.
+function categoryLabel(category: string): string {
+  return category.charAt(0).toUpperCase() + category.slice(1);
+}
+
 export default function TabelContent({ tables }: TabelContentProps) {
-  const [query, setQuery] = useState("");
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeCity, setActiveCity] = useState<string | null>(null);
 
   const categories = useMemo(
     () => Array.from(new Set(tables.map((t) => t.category).filter(Boolean))),
@@ -38,10 +45,13 @@ export default function TabelContent({ tables }: TabelContentProps) {
   );
 
   const filtered = useMemo(() => {
-    if (!query.trim()) return tables;
-    const q = query.toLowerCase();
+    const q = search.trim().toLowerCase();
+
     return tables
+      .filter((table) => !activeCategory || table.category === activeCategory)
+      .filter((table) => !activeCity || table.title === activeCity)
       .map((table) => {
+        if (!q) return table;
         const titleMatches = table.title.toLowerCase().includes(q);
         return {
           ...table,
@@ -52,16 +62,24 @@ export default function TabelContent({ tables }: TabelContentProps) {
               ),
         };
       })
-      .filter(
-        (table) =>
+      .filter((table) => {
+        if (!q) return true;
+        return (
           table.rows.length > 0 ||
           table.title.toLowerCase().includes(q) ||
-          table.description.toLowerCase().includes(q) ||
-          table.category.toLowerCase() === q,
-      );
-  }, [query, tables]);
+          table.description.toLowerCase().includes(q)
+        );
+      });
+  }, [search, activeCategory, activeCity, tables]);
 
   const totalRows = tables.reduce((sum, t) => sum + t.rows.length, 0);
+  const hasActiveFilters = Boolean(search.trim() || activeCategory || activeCity);
+
+  function clearAllFilters() {
+    setSearch("");
+    setActiveCategory(null);
+    setActiveCity(null);
+  }
 
   return (
     <>
@@ -70,10 +88,10 @@ export default function TabelContent({ tables }: TabelContentProps) {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
-        className="mb-10"
+        className="bg-card rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 mb-8"
       >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-          <div className="relative flex-1 max-w-lg">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1">
             <Search
               size={16}
               className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
@@ -81,15 +99,15 @@ export default function TabelContent({ tables }: TabelContentProps) {
             />
             <input
               type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Cari..."
-              className="w-full pl-10 pr-10 py-3 rounded-xl border border-slate-200 bg-card text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-navy focus:border-navy transition-all"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Cari nama, alamat, PIC..."
+              className="w-full h-11 pl-10 pr-10 rounded-xl border border-slate-200 bg-bg text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-navy focus:border-navy transition-all"
               aria-label="Cari data dalam tabel"
             />
-            {query && (
+            {search && (
               <button
-                onClick={() => setQuery("")}
+                onClick={() => setSearch("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-200 hover:bg-slate-300 flex items-center justify-center transition-colors"
                 aria-label="Hapus pencarian"
               >
@@ -98,54 +116,87 @@ export default function TabelContent({ tables }: TabelContentProps) {
             )}
           </div>
           {cities.length > 1 && (
-            <select
-              value={cities.includes(query) ? query : ""}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-full sm:w-56 shrink-0 px-4 py-3 rounded-xl border border-slate-200 bg-card text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-navy focus:border-navy transition-all"
-              aria-label="Filter berdasarkan kota"
-            >
-              <option value="">Semua kota</option>
-              {cities.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
+            <div className="relative sm:w-56 shrink-0">
+              <MapPin
+                size={16}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
+                aria-hidden="true"
+              />
+              <select
+                value={activeCity ?? ""}
+                onChange={(e) => setActiveCity(e.target.value || null)}
+                className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-bg text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-navy focus:border-navy transition-all appearance-none"
+                aria-label="Filter berdasarkan kota"
+              >
+                <option value="">Semua kota</option>
+                {cities.map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+            </div>
           )}
-          <p className="text-sm text-text-muted shrink-0">
-            {query ? (
-              <>
-                Hasil untuk{" "}
-                <span className="font-medium text-text-primary">
-                  &ldquo;{query}&rdquo;
-                </span>
-              </>
-            ) : (
-              <>
-                {totalRows} data dalam {tables.length} tabel
-              </>
-            )}
-          </p>
         </div>
 
-        {/* Category pills */}
+        {/* Category filter */}
         {categories.length > 1 && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-slate-100">
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-text-muted mr-1">
+              <Tag size={13} aria-hidden="true" />
+              Kategori
+            </span>
+            <button
+              onClick={() => setActiveCategory(null)}
+              aria-pressed={activeCategory === null}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy ${
+                activeCategory === null
+                  ? "bg-navy text-white border-navy"
+                  : "bg-bg text-text-muted border-slate-200 hover:border-navy/40 hover:text-navy"
+              }`}
+            >
+              Semua
+            </button>
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setQuery(cat === query ? "" : cat)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 ${
-                  query === cat
+                onClick={() => setActiveCategory(cat === activeCategory ? null : cat)}
+                aria-pressed={activeCategory === cat}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy ${
+                  activeCategory === cat
                     ? "bg-navy text-white border-navy"
-                    : "bg-white text-text-muted border-slate-200 hover:border-navy/40 hover:text-navy"
+                    : "bg-bg text-text-muted border-slate-200 hover:border-navy/40 hover:text-navy"
                 }`}
               >
-                {cat}
+                {categoryLabel(cat)}
               </button>
             ))}
           </div>
         )}
+
+        {/* Result summary */}
+        <div className="flex items-center justify-between gap-3 mt-4 text-xs text-text-muted">
+          <span>
+            {totalRows} data dalam {tables.length} tabel
+            {hasActiveFilters && (
+              <>
+                {" "}
+                &middot;{" "}
+                <span className="font-medium text-text-primary">
+                  {filtered.reduce((sum, t) => sum + t.rows.length, 0)} cocok
+                </span>
+              </>
+            )}
+          </span>
+          {hasActiveFilters && (
+            <button
+              onClick={clearAllFilters}
+              className="font-medium text-navy hover:underline shrink-0"
+            >
+              Hapus semua filter
+            </button>
+          )}
+        </div>
       </motion.div>
 
       {/* Tables */}
@@ -163,10 +214,12 @@ export default function TabelContent({ tables }: TabelContentProps) {
             />
           </div>
           <p className="text-text-muted text-sm">
-            Tidak ada data yang cocok dengan &ldquo;{query}&rdquo;
+            {search
+              ? <>Tidak ada data yang cocok dengan &ldquo;{search}&rdquo;</>
+              : "Tidak ada data yang cocok dengan filter ini."}
           </p>
           <button
-            onClick={() => setQuery("")}
+            onClick={clearAllFilters}
             className="text-navy text-sm font-medium hover:underline"
           >
             Hapus filter
@@ -187,8 +240,9 @@ export default function TabelContent({ tables }: TabelContentProps) {
                   <div>
                     {table.category && (
                       <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                        <span className="text-xs font-semibold text-accent bg-accent/10 px-2.5 py-0.5 rounded-full">
-                          {table.category}
+                        <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent bg-accent/10 px-2.5 py-1 rounded-full">
+                          <span className="w-1.5 h-1.5 rounded-full bg-accent" aria-hidden="true" />
+                          {categoryLabel(table.category)}
                         </span>
                       </div>
                     )}
@@ -201,7 +255,13 @@ export default function TabelContent({ tables }: TabelContentProps) {
                       </p>
                     )}
                   </div>
-                  <span className="shrink-0 text-xs text-text-muted bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-lg">
+                  <span
+                    className={`shrink-0 text-xs font-medium px-3 py-1.5 rounded-lg border ${
+                      table.rows.length === 0
+                        ? "text-text-muted bg-slate-50 border-slate-100"
+                        : "text-navy bg-navy/6 border-navy/10"
+                    }`}
+                  >
                     {table.rows.length} data
                   </span>
                 </div>

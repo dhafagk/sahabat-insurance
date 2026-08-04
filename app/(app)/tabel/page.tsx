@@ -52,6 +52,27 @@ export default async function TabelIndexPage() {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const branchIds = branchesResult.docs.map((b: any) => b.id);
+    const rowCountByBranch = new Map<string, number>();
+    if (branchIds.length > 0) {
+      const rowsResult = await payload.find({
+        collection: "garage-branch-rows",
+        where: { branch: { in: branchIds } },
+        depth: 0,
+        locale,
+        pagination: false,
+        select: { branch: true },
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      for (const row of rowsResult.docs as any[]) {
+        const branchId = String(
+          typeof row.branch === "object" ? row.branch?.id : row.branch,
+        );
+        rowCountByBranch.set(branchId, (rowCountByBranch.get(branchId) ?? 0) + 1);
+      }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cards = result.docs.map((doc: any) => {
       const tables = Array.isArray(doc.tables) ? doc.tables : [];
       const branches = branchesByPage.get(String(doc.id)) ?? [];
@@ -61,7 +82,7 @@ export default async function TabelIndexPage() {
           0,
         ) +
         branches.reduce(
-          (sum: number, b: any) => sum + (Array.isArray(b.rows) ? b.rows.length : 0),
+          (sum: number, b: any) => sum + (rowCountByBranch.get(String(b.id)) ?? 0),
           0,
         );
       return {
@@ -123,7 +144,7 @@ export default async function TabelIndexPage() {
               {cards.map((card) => (
                 <Link
                   key={card.slug}
-                  href={`/tabel/${card.slug}`}
+                  href={`/${card.slug}`}
                   className="group bg-card rounded-2xl border border-slate-200 p-6 hover:border-navy hover:shadow-xl transition-all duration-300"
                 >
                   <div className="w-12 h-12 rounded-xl bg-navy/8 group-hover:bg-navy flex items-center justify-center mb-5 transition-colors duration-300">
